@@ -471,7 +471,10 @@
         </div>
         <div class="terminal" style="margin-top:48px"><span class="prompt">server$</span> grep "ERROR" text/app.log | wc -l
 <span class="prompt">server$</span> ./qe/fake-pw.x -in qe/si.scf.in &gt; fake.out 2&gt; fake.err
-<span class="prompt">server$</span> ./qe/fake-pw.x -in qe/si.scf.in &gt; fake.log 2&gt;&amp;1</div>
+<span class="prompt">server$</span> wc -c fake.err     <span class="comment"># 성공하면 보통 0 bytes</span>
+<span class="prompt">server$</span> ./qe/fake-pw.x -in qe/no-file.in &gt; bad.out 2&gt; bad.err
+<span class="prompt">server$</span> cat bad.err
+<span class="prompt">server$</span> ./qe/fake-pw.x -in qe/no-file.in &gt; bad.log 2&gt;&amp;1</div>
       </section>
 
       <section class="slide" data-title="Search and inspect">
@@ -551,7 +554,7 @@
 <span class="prompt">server$</span> cd ~/linux-practice/examples/qe
 <span class="prompt">server$</span> ./fake-pw.x -in si.scf.in &gt; fake.out 2&gt; fake.err
 <span class="prompt">server$</span> more fake.out
-<span class="prompt">server$</span> cat fake.err</div>
+<span class="prompt">server$</span> wc -c fake.err   <span class="comment"># 0이면 stderr 없음</span></div>
           <div class="terminal"><span class="comment"># 실제 QE 기본형</span>
 <span class="prompt">server$</span> pw.x -in si.scf.in &gt; si.scf.out 2&gt; si.scf.err
 

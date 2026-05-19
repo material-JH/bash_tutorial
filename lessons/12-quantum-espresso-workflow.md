@@ -141,8 +141,10 @@ server$ mpirun -np 4 pw.x -in si.scf.in > si.scf.out 2>&1
 server$ ./fake-pw.x -in si.scf.in > fake.out 2> fake.err
 server$ ls -l fake.out fake.err
 server$ more fake.out
-server$ cat fake.err
+server$ wc -c fake.err
 ```
+
+정상 실행이면 `fake.err`는 비어 있을 수 있습니다. `wc -c fake.err`가 `0`을 보이면 stderr로 나온 메시지가 없다는 뜻입니다.
 
 일부러 입력 파일을 틀리게 주면 stderr를 확인할 수 있습니다.
 

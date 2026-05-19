@@ -99,8 +99,10 @@ server$ command -v bash
 server$ file fake-pw.x
 server$ ./fake-pw.x -in si.scf.in > fake.out 2> fake.err
 server$ tail -n 10 fake.out
-server$ cat fake.err
+server$ wc -c fake.err
 ```
+
+`fake.err`가 0 bytes이면 오류 출력이 없었다는 뜻입니다.
 
 실제 Quantum ESPRESSO 서버에서는 보통 다음과 비슷합니다.
 

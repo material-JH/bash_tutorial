@@ -84,8 +84,10 @@ server$ cat run.err
 
 ## stdout과 stderr를 한 파일에 저장: `2>&1`
 
+성공한 명령은 stderr가 비어 있을 수 있습니다. 오류가 한 파일에 합쳐지는 것을 보려면 일부러 없는 입력 파일을 지정해 봅니다.
+
 ```bash
-server$ ./fake-pw.x -in si.scf.in > run.log 2>&1
+server$ ./fake-pw.x -in no-file.in > run.log 2>&1
 server$ more run.log
 ```
 
@@ -93,8 +95,9 @@ server$ more run.log
 
 - `> run.log`: stdout을 `run.log`로 저장
 - `2>&1`: stderr도 stdout과 같은 곳으로 보냄
+- 위 예제에서는 입력 파일이 없어서 오류 메시지도 `run.log`에 저장됨
 
-실제 Quantum ESPRESSO에서도 자주 쓰는 형태입니다.
+실제 Quantum ESPRESSO에서도 stdout과 stderr를 한 로그 파일에 모을 때 자주 쓰는 형태입니다.
 
 ```bash
 server$ pw.x -in si.scf.in > si.scf.out 2> si.scf.err

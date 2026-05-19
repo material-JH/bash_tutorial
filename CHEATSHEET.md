@@ -128,6 +128,7 @@ vim 기본키:
 | stdout 저장, 기존 내용 덮어쓰기 | `command > file.out` |
 | stdout 뒤에 추가 | `command >> file.out` |
 | stderr 저장 | `command 2> file.err` |
+| stderr 크기 확인 | `wc -c file.err` |
 | stdout과 stderr를 한 파일에 저장 | `command > file.log 2>&1` |
 | 출력도 보고 파일에도 저장 | `command | tee file.out` |
 | 앞 명령 결과를 다음 명령으로 전달 | `command1 | command2` |
