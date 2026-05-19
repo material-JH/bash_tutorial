@@ -215,6 +215,7 @@
     .terminal .local { color: var(--warm); }
     .terminal .comment { color: #8190aa; }
     .terminal .bad { color: var(--danger); }
+    .terminal.compact { font-size: 21px; line-height: 1.38; padding: 22px 26px; }
 
     .timeline { display: grid; grid-template-columns: 190px 1fr; gap: 20px 28px; align-items: start; margin-top: 34px; }
     .time { font-family: var(--mono); color: var(--accent); font-size: 26px; padding-top: 7px; }
@@ -598,6 +599,49 @@
           <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">QE</h3><p class="metric-label">`pw.x -in input > output 2> error` 구조를 이해합니다.</p></div>
         </div>
         <p class="subtitle">이제 발표를 닫고 `~/linux-practice/examples`에서 손으로 연습합니다.</p>
+      </section>
+
+      <section class="slide" data-title="Appendix: install QE">
+        <div class="slide-header"><span class="section-tag">Appendix 1</span><span>Fast install options</span></div>
+        <h2>QE를 빨리 쓰려면 패키지나 서버 모듈을 먼저 확인합니다.</h2>
+        <div class="grid-3" style="margin-top:48px">
+          <div class="card strong"><h3>Conda / Mamba</h3><div class="terminal compact" style="margin-top:22px"><span class="prompt">server$</span> conda create -n qe -c conda-forge qe
+<span class="prompt">server$</span> conda activate qe
+<span class="prompt">server$</span> pw.x -h</div><p class="small" style="margin-top:18px">conda-forge 패키지 이름은 `qe`입니다.</p></div>
+          <div class="card"><h3>Ubuntu / Debian apt</h3><div class="terminal compact" style="margin-top:22px"><span class="prompt">server$</span> sudo apt update
+<span class="prompt">server$</span> sudo apt install quantum-espresso quantum-espresso-data
+<span class="prompt">server$</span> pw.x -h</div><p class="small" style="margin-top:18px">공용 서버에서는 임의로 `sudo`를 쓰지 않습니다.</p></div>
+          <div class="card"><h3>HPC 서버 모듈</h3><div class="terminal compact" style="margin-top:22px"><span class="prompt">server$</span> module avail quantum
+<span class="prompt">server$</span> module load quantum-espresso
+<span class="prompt">server$</span> command -v pw.x</div><p class="small" style="margin-top:18px">연구실 서버에서는 보통 이 방법이 가장 안전합니다.</p></div>
+        </div>
+        <p class="subtitle">패키지 설치는 편하지만 버전이나 성능이 제한될 수 있습니다. 그래서 큰 계산용 서버에서는 컴파일 버전을 쓰기도 합니다.</p>
+      </section>
+
+      <section class="slide" data-title="Appendix: compile QE">
+        <div class="slide-header"><span class="section-tag">Appendix 2</span><span>Linux + Intel compiler build sketch</span></div>
+        <h2>Intel 컴파일은 “컴파일러 환경 → configure → make → 검증” 순서입니다.</h2>
+        <div class="grid-2" style="margin-top:42px">
+          <div class="terminal compact"><span class="comment"># Intel oneAPI + MPI wrapper 예시</span>
+<span class="prompt">server$</span> source /opt/intel/oneapi/setvars.sh
+<span class="prompt">server$</span> git clone https://gitlab.com/QEF/q-e.git
+<span class="prompt">server$</span> cd q-e
+<span class="prompt">server$</span> ./configure --enable-parallel CC=mpiicx F90=mpiifx MPIF90=mpiifx
+<span class="prompt">server$</span> make pw -j 8
+<span class="prompt">server$</span> ./bin/pw.x -h
+
+<span class="comment"># 예전 Intel 환경이면 mpiicc / mpiifort 이름일 수 있음</span></div>
+          <div class="card warn">
+            <h3>학생들에게 강조할 점</h3>
+            <ul class="clean" style="margin-top:22px">
+              <li>새 Intel oneAPI는 `icx/ifx`, MPI wrapper는 `mpiicx/mpiifx`를 주로 씁니다.</li>
+              <li>예전 Intel Parallel Studio 환경은 `icc/ifort`, `mpiicc/mpiifort`일 수 있습니다.</li>
+              <li>BLAS/LAPACK/FFT/MKL/MPI 설정은 서버마다 다르므로 `configure` 출력과 `make.inc`를 확인합니다.</li>
+              <li>컴파일 후에는 `command -v pw.x`, `pw.x -h`, 짧은 SCF 예제로 실제 실행을 확인합니다.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="subtitle">입문 수업에서는 직접 컴파일보다 “내 서버의 `pw.x`가 어디 있고, 어떤 버전인지 확인하는 법”이 더 중요합니다.</p>
       </section>
 
       <div class="footer">
