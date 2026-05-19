@@ -136,6 +136,7 @@ server$ find . -maxdepth 3 -print
 
 추가 자료:
 
+- [HTML 발표 자료](docs/linux_command_tutorial_presentation.html)
 - [치트시트](CHEATSHEET.md)
 - [예제 파일 설명](examples/README.md)
 - [튜토리얼 설계 조사 메모](RESEARCH_NOTES.md)
