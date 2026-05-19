@@ -1,0 +1,2 @@
+Warning: this is a sample stderr file.
+Real Quantum ESPRESSO errors may appear here if stderr is redirected with 2>.

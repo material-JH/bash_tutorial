@@ -1,4 +1,4 @@
-# 4. 파일과 폴더 만들기: `mkdir`, `touch`, `echo`
+# 4. 파일과 폴더 만들기, `vim`으로 편집하기
 
 원격 서버의 연습 폴더에서 시작합니다.
 
@@ -24,7 +24,13 @@ server$ mkdir -p projects/demo
 
 ```bash
 server$ ls
-server$ ls projects
+server$ tree projects
+```
+
+`tree`가 없으면:
+
+```bash
+server$ find projects -maxdepth 3 -print
 ```
 
 ## 빈 파일 만들기: `touch`
@@ -36,7 +42,7 @@ server$ ls notes
 
 `touch`는 파일이 없으면 빈 파일을 만들고, 파일이 있으면 수정 시간을 갱신합니다.
 
-## 파일에 한 줄 쓰기: `echo`
+## 짧은 내용 쓰기: `echo`
 
 ```bash
 server$ echo "우유 사기" > notes/todo.txt
@@ -46,7 +52,7 @@ server$ cat notes/todo.txt
 한 줄을 추가하려면:
 
 ```bash
-server$ echo "ls와 cd 연습하기" >> notes/todo.txt
+server$ echo "vim 연습하기" >> notes/todo.txt
 server$ cat notes/todo.txt
 ```
 
@@ -55,36 +61,58 @@ server$ cat notes/todo.txt
 - `>`는 기존 내용을 지우고 새로 씁니다.
 - `>>`는 기존 내용 뒤에 추가합니다.
 
-## 여러 줄 쓰기: `printf`
+## `vim`으로 파일 읽고 편집하기
+
+서버에서 입력 파일을 수정할 때는 `vim`이 매우 흔합니다.
 
 ```bash
-server$ printf "첫 번째 줄\n두 번째 줄\n세 번째 줄\n" > notes/memo.txt
-server$ cat notes/memo.txt
+server$ vim notes/todo.txt
 ```
 
-`\n`은 줄바꿈을 뜻합니다.
+vim 기본 흐름:
 
-## 편집기 사용
+1. 처음 열리면 명령 모드입니다.
+2. `i`를 누르면 입력 모드가 됩니다.
+3. 글자를 수정합니다.
+4. `Esc`를 누르면 다시 명령 모드로 돌아옵니다.
+5. `:wq`를 입력하고 Enter를 누르면 저장 후 종료합니다.
 
-서버에 따라 사용할 수 있는 편집기가 다릅니다.
+자주 쓰는 vim 명령:
 
-가장 흔한 초보자용 편집기:
+| 키 | 의미 |
+|---|---|
+| `i` | 입력 모드 시작 |
+| `Esc` | 명령 모드로 돌아가기 |
+| `:w` | 저장 |
+| `:q` | 종료 |
+| `:wq` | 저장 후 종료 |
+| `:q!` | 저장하지 않고 강제 종료 |
+| `/word` | word 검색 |
+| `n` | 다음 검색 결과 |
+| `gg` | 파일 맨 위 |
+| `G` | 파일 맨 아래 |
+
+## Quantum ESPRESSO 입력 파일 열기
+
+예제 입력 파일을 복사한 뒤 vim으로 열어 봅니다.
 
 ```bash
-server$ nano notes/todo.txt
+server$ mkdir -p qe-practice
+server$ cp ~/linux-practice/examples/qe/si.scf.in qe-practice/
+server$ cd qe-practice
+server$ vim si.scf.in
 ```
 
-`nano`에서 저장하고 나가기:
+확인할 부분:
 
-1. `Ctrl + O`: 저장
-2. Enter: 파일 이름 확인
-3. `Ctrl + X`: 종료
+- `calculation = 'scf'`
+- `prefix = 'si'`
+- `outdir = './tmp'`
+- `pseudo_dir = './pseudo'`
+- `ecutwfc = 40`
+- `K_POINTS automatic`
 
-`vim`만 있는 서버도 있지만, 완전 초보자에게는 조금 어렵습니다. 처음에는 `nano`가 있는지 확인하세요.
-
-```bash
-server$ which nano
-```
+처음에는 값을 바꾸지 말고 파일 구조를 읽는 연습만 해도 충분합니다.
 
 ## 파일 이름 규칙
 
@@ -93,7 +121,8 @@ server$ which nano
 좋은 예:
 
 ```text
-my-notes.txt
+si.scf.in
+si.scf.out
 project_report.txt
 ```
 
@@ -109,24 +138,16 @@ server$ ls "my notes.txt"
 리눅스는 대소문자를 구분합니다.
 
 ```text
-report.txt
-Report.txt
-REPORT.txt
+si.scf.in
+Si.scf.in
+SI.SCF.IN
 ```
 
 이 세 파일은 서로 다른 파일일 수 있습니다.
-
-## 실습
-
-```bash
-server$ cd ~/linux-practice
-server$ mkdir -p journal/2026
-server$ echo "오늘 SSH로 리눅스 서버에 접속했다." > journal/2026/day1.txt
-server$ cat journal/2026/day1.txt
-```
 
 ## 체크포인트
 
 1. `mkdir -p`의 장점은 무엇인가요?
 2. `>`와 `>>`의 차이는 무엇인가요?
-3. 리눅스에서 `memo.txt`와 `Memo.txt`는 같은 파일인가요?
+3. vim에서 저장 후 종료하려면 무엇을 입력하나요?
+4. Quantum ESPRESSO 입력 파일은 보통 어떤 확장자를 쓰나요?

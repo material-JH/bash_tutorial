@@ -1,0 +1,6 @@
+INFO 2026-05-19 10:00:00 job started
+INFO 2026-05-19 10:00:01 reading input file
+WARNING 2026-05-19 10:00:02 pseudo directory not checked
+ERROR 2026-05-19 10:00:03 missing file: Si.pbe-n-kjpaw_psl.1.0.0.UPF
+INFO 2026-05-19 10:00:04 retry after fixing path
+INFO 2026-05-19 10:00:05 job finished

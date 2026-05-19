@@ -5,30 +5,28 @@
 연습 폴더에서 시작합니다.
 
 ```bash
-server$ cd ~/linux-practice
-server$ mkdir -p permissions-practice
-server$ cd permissions-practice
+server$ cd ~/linux-practice/examples
 ```
 
 ## 권한 보기: `ls -l`
 
 ```bash
-server$ echo "hello" > hello.txt
-server$ ls -l hello.txt
+server$ ls -l scripts/hello.sh
+server$ ls -l qe/fake-pw.x
 ```
 
 예:
 
 ```text
--rw-r--r-- 1 student01 student01 6 May 19 10:00 hello.txt
+-rwxr-xr-x 1 student01 student01 90 May 19 10:00 hello.sh
 ```
 
-앞의 `-rw-r--r--` 부분이 권한입니다.
+앞의 `-rwxr-xr-x` 부분이 권한입니다.
 
 대략 이렇게 읽습니다.
 
 ```text
--  rw-  r--  r--
+-  rwx  r-x  r-x
 |  |    |    |
 |  |    |    다른 사용자
 |  |    그룹
@@ -44,38 +42,56 @@ server$ ls -l hello.txt
 | `w` | write, 쓰기 |
 | `x` | execute, 실행 |
 
-## 작은 스크립트 만들기
+## 스크립트 실행
 
 ```bash
-server$ printf '#!/usr/bin/env bash\necho "Hello from a script"\n' > hello.sh
-server$ ls -l hello.sh
+server$ ./scripts/hello.sh
 ```
 
-실행해 봅니다.
+현재 폴더의 실행 파일은 보통 `./`를 붙여 실행합니다.
+
+## 실행 권한 추가/제거
+
+복사본으로 연습합니다.
 
 ```bash
-server$ ./hello.sh
+server$ cp scripts/hello.sh ~/linux-practice/hello-copy.sh
+server$ cd ~/linux-practice
+server$ ls -l hello-copy.sh
+server$ chmod -x hello-copy.sh
+server$ ls -l hello-copy.sh
+server$ ./hello-copy.sh
 ```
 
-`Permission denied`가 나올 수 있습니다. 아직 실행 권한이 없기 때문입니다.
+실행 권한이 없으면 `Permission denied`가 나올 수 있습니다.
 
-실행 권한 추가:
+다시 실행 권한을 줍니다.
 
 ```bash
-server$ chmod +x hello.sh
-server$ ls -l hello.sh
-server$ ./hello.sh
+server$ chmod +x hello-copy.sh
+server$ ls -l hello-copy.sh
+server$ ./hello-copy.sh
 ```
 
-## 왜 `./hello.sh`라고 쓰나요?
+## 바이너리 실행 파일과 스크립트
 
-현재 폴더의 파일을 실행하려면 `./`를 붙이는 경우가 많습니다.
+Quantum ESPRESSO의 `pw.x`는 보통 컴파일된 실행 파일입니다. 예제의 `fake-pw.x`는 셸 스크립트이지만 실행 방식은 비슷하게 연습할 수 있습니다.
 
 ```bash
-server$ ./hello.sh
+server$ cd ~/linux-practice/examples/qe
+server$ file fake-pw.x
+server$ ./fake-pw.x -in si.scf.in > fake.out 2> fake.err
+server$ tail -n 5 fake.out
 ```
 
-뜻은 “현재 폴더에 있는 `hello.sh`를 실행하라”입니다.
+실제 서버에서는:
+
+```bash
+server$ command -v pw.x
+server$ pw.x -in si.scf.in > si.scf.out 2> si.scf.err
+```
+
+처럼 실행합니다.
 
 ## `sudo`란?
 
@@ -95,22 +111,11 @@ server$ sudo apt update
 - 비밀번호를 요구할 수 있습니다.
 - 비밀번호 입력 중 화면에 아무것도 안 보일 수 있습니다.
 - 명령이 실패했다고 무조건 `sudo`를 붙이면 안 됩니다.
-
-## 실습
-
-```bash
-server$ ls -l hello.sh
-server$ chmod -x hello.sh
-server$ ls -l hello.sh
-server$ chmod +x hello.sh
-server$ ls -l hello.sh
-server$ ./hello.sh
-```
-
-권한 문자열에서 `x`가 생겼다가 없어지는 것을 관찰하세요.
+- `tree`, `vim`, `pw.x`가 없으면 먼저 module, conda, 서버 문서를 확인하거나 관리자에게 문의하세요.
 
 ## 체크포인트
 
 1. 권한에서 `x`는 무엇을 의미하나요?
-2. `chmod +x hello.sh`는 무엇을 하나요?
-3. 원격 공용 서버에서 `sudo`를 조심해야 하는 이유는 무엇인가요?
+2. `chmod +x hello-copy.sh`는 무엇을 하나요?
+3. 현재 폴더의 실행 파일 앞에 `./`를 붙이는 이유는 무엇인가요?
+4. 원격 공용 서버에서 `sudo`를 조심해야 하는 이유는 무엇인가요?

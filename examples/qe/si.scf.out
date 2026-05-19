@@ -1,0 +1,19 @@
+Program PWSCF v.7.3 starts on 19May2026 at 10:00:00
+
+     This is an example output file for command-line practice.
+     It is not a full scientific result.
+
+     Self-consistent Calculation
+
+     iteration #  1
+     total energy              =     -15.81234567 Ry
+     estimated scf accuracy    <       0.00010000 Ry
+
+     iteration #  2
+     total energy              =     -15.82345678 Ry
+     estimated scf accuracy    <       0.00000100 Ry
+
+!    total energy              =     -15.82345678 Ry
+     convergence has been achieved in   2 iterations
+
+JOB DONE.

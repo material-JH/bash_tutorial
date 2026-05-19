@@ -1,0 +1,12 @@
+line 1: Linux command practice
+line 2: SSH remote server
+line 3: Quantum ESPRESSO input file
+line 4: vim can read and edit text
+line 5: more can page through text
+line 6: grep searches text
+line 7: head shows the beginning
+line 8: tail shows the ending
+line 9: redirection saves output
+line 10: command -v checks executables
+line 11: tree shows directory structure
+line 12: find -exec runs commands on matches

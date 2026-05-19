@@ -9,10 +9,10 @@ server$ ls --help
 server$ cp --help
 ```
 
-출력이 너무 길면 `less`로 넘겨서 봅니다.
+출력이 너무 길면 `more`로 넘겨서 봅니다.
 
 ```bash
-server$ ls --help | less
+server$ ls --help | more
 ```
 
 나가려면 `q`를 누릅니다.
@@ -54,7 +54,7 @@ Ctrl + R
 예:
 
 ```bash
-server$ cd ~/linu<Tab>
+server$ cd ~/linux-pr<Tab>
 ```
 
 아래처럼 완성될 수 있습니다.
@@ -97,13 +97,27 @@ bash: cd: no-such-folder: No such file or directory
 - 사용하려던 대상: `no-such-folder`
 - 실패 이유: 그런 파일이나 폴더가 없음
 
+Quantum ESPRESSO 실행 에러도 같은 방식으로 읽습니다.
+
+```bash
+server$ ./fake-pw.x > run.out 2> run.err
+server$ cat run.err
+```
+
+에러 메시지에서 확인할 것:
+
+- 어떤 명령이 실패했는가?
+- 어떤 입력 파일을 찾지 못했는가?
+- stdout(`.out`)과 stderr(`.err`) 중 어디에 메시지가 있는가?
+
 ## 원격 서버 작업에서 자주 확인할 것
 
 ```bash
 server$ whoami
 server$ hostname
 server$ pwd
-server$ ls -la
+server$ command -v pw.x
+server$ command -v mpirun
 ```
 
 특히 여러 서버를 쓰는 사람은 `hostname`으로 내가 어느 서버에 있는지 자주 확인하세요.
@@ -118,12 +132,14 @@ server$ ls -la
 | 디스크 사용량 | `df`, `du` |
 | 파일 전송 | `scp`, `rsync`, `sftp` |
 | 원격 접속 | `ssh` |
-| 패키지 관리 | `apt`, `dnf`, `brew` |
+| 환경 모듈 | `module avail`, `module load`, `module list` |
+| 작업 스케줄러 | `sbatch`, `squeue`, `scancel` |
 | 버전 관리 | `git` |
 | 텍스트 처리 | `sort`, `uniq`, `cut`, `sed`, `awk` |
 
 ## 체크포인트
 
-1. `less`나 `man`에서 나가려면 어떤 키를 누르나요?
+1. `more`나 `man`에서 나가려면 어떤 키를 누르나요?
 2. 실행 중인 명령을 멈추려면 어떤 단축키를 쓰나요?
-3. Tab 자동완성은 왜 유용한가요?
+3. `command -v pw.x`는 무엇을 확인하나요?
+4. Tab 자동완성은 왜 유용한가요?
