@@ -1,91 +1,85 @@
-# 5. Reading text: `cat`, `less`, `head`, `tail`
+# 5. 텍스트 파일 읽기: `cat`, `less`, `head`, `tail`
 
-The terminal is excellent for reading text files, logs, configuration files, and command output.
+리눅스 서버에서는 설정 파일, 로그 파일, 결과 파일을 텍스트로 읽는 일이 많습니다.
 
-Start in the practice folder:
-
-```bash
-cd ~/linux-practice
-```
-
-## Create a sample file
-
-Run:
+연습 폴더에서 시작합니다.
 
 ```bash
-mkdir -p text
-printf "line 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\nline 12\n" > text/sample.txt
+server$ cd ~/linux-practice
 ```
 
-## Print a whole file: `cat`
+## 샘플 파일 만들기
 
 ```bash
-cat text/sample.txt
+server$ mkdir -p text
+server$ printf "line 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\nline 12\n" > text/sample.txt
 ```
 
-`cat` is useful for small files. It is not comfortable for huge files because everything scrolls by.
-
-## Page through a file: `less`
+## 전체 출력: `cat`
 
 ```bash
-less text/sample.txt
+server$ cat text/sample.txt
 ```
 
-Inside `less`:
+`cat`은 짧은 파일을 빠르게 볼 때 좋습니다. 긴 파일에는 적합하지 않습니다.
 
-| Key | Action |
+## 페이지 단위로 읽기: `less`
+
+```bash
+server$ less text/sample.txt
+```
+
+`less` 안에서 자주 쓰는 키:
+
+| 키 | 동작 |
 |---|---|
-| Space | next page |
-| `b` | previous page |
-| `/word` | search for word |
-| `n` | next search match |
-| `q` | quit |
+| Space | 다음 페이지 |
+| `b` | 이전 페이지 |
+| `/word` | word 검색 |
+| `n` | 다음 검색 결과 |
+| `q` | 종료 |
 
-If you get stuck in `less`, press `q`.
+나가고 싶으면 `q`를 누르세요.
 
-## Show the beginning: `head`
-
-```bash
-head text/sample.txt
-head -n 3 text/sample.txt
-```
-
-`head -n 3` shows the first 3 lines.
-
-## Show the end: `tail`
+## 앞부분 보기: `head`
 
 ```bash
-tail text/sample.txt
-tail -n 3 text/sample.txt
+server$ head text/sample.txt
+server$ head -n 3 text/sample.txt
 ```
 
-`tail` is common for log files, because new messages are often added at the end.
+`head -n 3`은 앞의 3줄만 보여줍니다.
 
-## Follow a growing file: `tail -f`
-
-This is useful for logs.
-
-Run:
+## 뒷부분 보기: `tail`
 
 ```bash
-tail -f text/sample.txt
+server$ tail text/sample.txt
+server$ tail -n 3 text/sample.txt
 ```
 
-It waits for new lines. Stop it with:
+`tail`은 로그 파일을 볼 때 자주 씁니다. 로그는 보통 새 내용이 파일 끝에 추가되기 때문입니다.
+
+## 계속 지켜보기: `tail -f`
+
+```bash
+server$ tail -f text/sample.txt
+```
+
+이 명령은 새 줄이 추가될 때까지 기다립니다. 멈추려면:
 
 ```text
 Ctrl + C
 ```
 
-## Try it
+## 실습
 
 ```bash
-echo "line 13" >> text/sample.txt
-tail -n 5 text/sample.txt
+server$ echo "line 13" >> text/sample.txt
+server$ tail -n 5 text/sample.txt
 ```
 
-## Checkpoint
+## 체크포인트
 
-1. Which command is better for a very long file: `cat` or `less`?
-2. How do you quit `less`?
-3. What does `tail -n 5 file.txt` show?
+1. 긴 파일은 `cat`과 `less` 중 무엇으로 보는 것이 좋나요?
+2. `less`에서 나가려면 어떤 키를 누르나요?
+3. `tail -n 5 file.txt`는 무엇을 보여주나요?

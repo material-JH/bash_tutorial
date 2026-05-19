@@ -1,117 +1,105 @@
-# 8. Searching and inspecting files
+# 8. 검색과 검사: `grep`, `find`, `wc`
 
-Searching is one of the most useful command-line skills.
+원격 서버에서는 많은 파일 중 필요한 내용을 빠르게 찾는 능력이 중요합니다.
 
-Start in the practice folder:
-
-```bash
-cd ~/linux-practice
-mkdir -p search-practice/logs
-cd search-practice
-```
-
-## Create sample files
+연습 폴더에서 시작합니다.
 
 ```bash
-cat > notes.txt <<'EOF'
-Linux is useful.
-The terminal can search text quickly.
-Practice makes commands less scary.
-EOF
-
-cat > logs/app.log <<'EOF'
-INFO started
-ERROR missing file
-INFO retrying
-ERROR network timeout
-INFO stopped
-EOF
+server$ cd ~/linux-practice
+server$ mkdir -p search-practice/logs
+server$ cd search-practice
 ```
 
-If the `cat > file <<'EOF'` syntax feels strange, read it as: "write the following lines into this file until EOF".
-
-## Search inside files with `grep`
+## 샘플 파일 만들기
 
 ```bash
-grep "terminal" notes.txt
+server$ printf "Linux is useful.\nThe terminal can search text quickly.\nPractice makes commands less scary.\n" > notes.txt
+server$ printf "INFO started\nERROR missing file\nINFO retrying\nERROR network timeout\nINFO stopped\n" > logs/app.log
 ```
 
-Search case-insensitively:
+## 파일 안에서 검색: `grep`
 
 ```bash
-grep -i "linux" notes.txt
+server$ grep "terminal" notes.txt
 ```
 
-Search recursively inside a folder:
+대소문자 무시:
 
 ```bash
-grep -R "ERROR" .
+server$ grep -i "linux" notes.txt
 ```
 
-Show line numbers:
+폴더 안을 재귀적으로 검색:
 
 ```bash
-grep -n "ERROR" logs/app.log
+server$ grep -R "ERROR" .
 ```
 
-## Count with `wc`
+줄 번호 표시:
 
 ```bash
-wc notes.txt
+server$ grep -n "ERROR" logs/app.log
 ```
 
-Output has lines, words, and bytes.
-
-Count only lines:
+## 개수 세기: `wc`
 
 ```bash
-wc -l notes.txt
+server$ wc notes.txt
 ```
 
-Count matching lines:
+보통 줄 수, 단어 수, 바이트 수가 나옵니다.
+
+줄 수만 세기:
 
 ```bash
-grep "ERROR" logs/app.log | wc -l
+server$ wc -l notes.txt
 ```
 
-## Find files by name with `find`
+검색 결과 줄 수 세기:
 
 ```bash
-find . -name "*.txt"
-find . -name "*.log"
+server$ grep "ERROR" logs/app.log | wc -l
 ```
 
-Meaning:
+## 파일 이름으로 찾기: `find`
 
-- `find` searches for files.
-- `.` means start in the current directory.
-- `-name "*.txt"` means names ending in `.txt`.
-
-## Inspect command locations with `which`
+현재 폴더 아래에서 `.txt` 파일 찾기:
 
 ```bash
-which ls
-which grep
+server$ find . -name "*.txt"
 ```
 
-This shows where the executable program lives.
-
-## Try it
-
-1. Find all `.log` files.
-2. Search for `INFO` in the current folder recursively.
-3. Count how many `ERROR` lines are in `logs/app.log`.
-
-Commands:
+`.log` 파일 찾기:
 
 ```bash
-find . -name "*.log"
-grep -R "INFO" .
-grep "ERROR" logs/app.log | wc -l
+server$ find . -name "*.log"
 ```
 
-## Checkpoint
+뜻:
 
-1. What does `grep -i` do?
-2. What does `grep -R` do?
-3. What does `find . -name "*.txt"` mean?
+- `find`: 파일을 찾는 명령어
+- `.`: 현재 폴더에서 시작
+- `-name "*.txt"`: 이름이 `.txt`로 끝나는 파일
+
+## 명령어 위치 확인: `which`
+
+```bash
+server$ which ls
+server$ which grep
+```
+
+실행되는 프로그램이 어디에 있는지 보여줍니다.
+
+## 실습
+
+```bash
+server$ find . -name "*.log"
+server$ grep -R "INFO" .
+server$ grep "ERROR" logs/app.log | wc -l
+```
+
+## 체크포인트
+
+1. `grep -i`는 무엇을 하나요?
+2. `grep -R`은 무엇을 하나요?
+3. `find . -name "*.txt"`에서 `.`은 무엇을 의미하나요?

@@ -1,155 +1,146 @@
-# 3. Navigation: `pwd`, `ls`, `cd`
+# 3. 위치와 이동: `pwd`, `ls`, `cd`
 
-Navigation means moving through folders.
+이번 장부터는 원격 서버에 SSH로 접속한 상태라고 가정합니다.
 
-Start in the practice folder:
-
-```bash
-cd ~/linux-practice
-```
-
-## Show where you are: `pwd`
+먼저 연습 폴더로 이동하세요.
 
 ```bash
-pwd
+server$ cd ~/linux-practice
 ```
 
-Example output:
+## 현재 위치 보기: `pwd`
+
+```bash
+server$ pwd
+```
+
+예:
 
 ```text
-/home/ava/linux-practice
+/home/student01/linux-practice
 ```
 
-This is your current working directory.
+`pwd`는 print working directory의 약자입니다. 현재 작업 중인 폴더를 보여줍니다.
 
-## List files: `ls`
+## 파일 목록 보기: `ls`
 
 ```bash
-ls
+server$ ls
 ```
 
-If the folder is empty, `ls` may print nothing. That is normal.
+아무것도 출력되지 않으면 현재 폴더가 비어 있다는 뜻입니다.
 
-Try a long listing:
+자세히 보려면:
 
 ```bash
-ls -l
+server$ ls -l
 ```
 
-Try showing hidden files:
+숨김 파일까지 보려면:
 
 ```bash
-ls -a
+server$ ls -a
 ```
 
-Hidden files usually begin with a dot, like `.bashrc`.
-
-Combine options:
+둘을 합치면:
 
 ```bash
-ls -la
+server$ ls -la
 ```
 
-## Create folders for navigation practice
+## 이동 연습용 폴더 만들기
 
 ```bash
-mkdir -p animals/cats animals/dogs plants/trees
+server$ mkdir -p animals/cats animals/dogs plants/trees
 ```
 
-Now list them:
+확인:
 
 ```bash
-ls
-ls animals
+server$ ls
+server$ ls animals
 ```
 
-## Change directory: `cd`
+## 폴더 이동: `cd`
 
-Move into `animals`:
+`animals` 폴더로 이동합니다.
 
 ```bash
-cd animals
-pwd
-ls
+server$ cd animals
+server$ pwd
+server$ ls
 ```
 
-Move into `cats`:
+`cats` 폴더로 이동합니다.
 
 ```bash
-cd cats
-pwd
+server$ cd cats
+server$ pwd
 ```
 
-Move up one level:
+한 단계 위로 이동합니다.
 
 ```bash
-cd ..
-pwd
+server$ cd ..
+server$ pwd
 ```
 
-Move to your home folder:
+홈 폴더로 이동합니다.
 
 ```bash
-cd ~
-pwd
+server$ cd ~
+server$ pwd
 ```
 
-Return to the practice folder:
+다시 연습 폴더로 돌아옵니다.
 
 ```bash
-cd ~/linux-practice
+server$ cd ~/linux-practice
 ```
 
-## Relative and absolute paths
+## 절대 경로와 상대 경로
 
-An absolute path starts from the root `/` or your home shortcut `~`:
+절대 경로는 루트(`/`) 또는 홈(`~`)에서 시작하는 전체 주소입니다.
 
 ```bash
-cd ~/linux-practice/animals/dogs
+server$ cd ~/linux-practice/animals/dogs
 ```
 
-A relative path starts from where you are now:
+상대 경로는 현재 위치를 기준으로 이동합니다.
 
 ```bash
-cd animals/dogs
+server$ cd animals/dogs
 ```
 
-Both can reach the same place, depending on where you start.
+현재 위치가 `~/linux-practice`라면 두 명령은 같은 곳으로 갑니다.
 
-## Special path symbols
+## 특수 기호
 
-| Symbol | Meaning |
+| 기호 | 의미 |
 |---|---|
-| `.` | current directory |
-| `..` | parent directory |
-| `~` | your home directory |
-| `/` | root of the filesystem |
+| `.` | 현재 폴더 |
+| `..` | 부모 폴더 |
+| `~` | 내 홈 폴더 |
+| `/` | 리눅스 파일 시스템의 최상위 |
 
-Examples:
+## 실습
 
-```bash
-cd .
-cd ..
-cd ~
-```
-
-## Try it
-
-From `~/linux-practice`, run:
+`~/linux-practice`에서 시작하세요.
 
 ```bash
-cd animals/dogs
-pwd
-cd ../../plants/trees
-pwd
-cd ../..
-pwd
+server$ cd ~/linux-practice
+server$ cd animals/dogs
+server$ pwd
+server$ cd ../../plants/trees
+server$ pwd
+server$ cd ../..
+server$ pwd
 ```
 
-Read each path out loud. This makes paths feel less mysterious.
+각 단계에서 내가 어디에 있는지 말로 설명해 보세요.
 
-## Checkpoint
+## 체크포인트
 
-1. What is the difference between `cd animals` and `cd /animals`?
-2. What does `..` mean?
-3. Why might `ls` show no output in an empty folder?
+1. `pwd`는 무엇을 보여주나요?
+2. `cd ..`는 어디로 이동하나요?
+3. `cd animals`와 `cd /animals`는 왜 다를 수 있나요?

@@ -1,141 +1,132 @@
-# 4. Files and folders: `mkdir`, `touch`, editors
+# 4. 파일과 폴더 만들기: `mkdir`, `touch`, `echo`
 
-Start in the practice folder:
-
-```bash
-cd ~/linux-practice
-```
-
-## Make directories with `mkdir`
-
-Create one folder:
+원격 서버의 연습 폴더에서 시작합니다.
 
 ```bash
-mkdir notes
+server$ cd ~/linux-practice
 ```
 
-Create nested folders:
+## 폴더 만들기: `mkdir`
+
+하나의 폴더를 만듭니다.
 
 ```bash
-mkdir -p projects/demo
+server$ mkdir notes
 ```
 
-List the result:
+중첩 폴더를 한 번에 만듭니다.
 
 ```bash
-ls
-ls projects
+server$ mkdir -p projects/demo
 ```
 
-## Create empty files with `touch`
+확인:
 
 ```bash
-touch notes/todo.txt
-ls notes
+server$ ls
+server$ ls projects
 ```
 
-`touch` creates an empty file if it does not exist. If it already exists, `touch` updates its timestamp.
-
-## Add text with redirection
-
-You can write simple text into a file:
+## 빈 파일 만들기: `touch`
 
 ```bash
-echo "buy milk" > notes/todo.txt
+server$ touch notes/todo.txt
+server$ ls notes
 ```
 
-Read it:
+`touch`는 파일이 없으면 빈 파일을 만들고, 파일이 있으면 수정 시간을 갱신합니다.
+
+## 파일에 한 줄 쓰기: `echo`
 
 ```bash
-cat notes/todo.txt
+server$ echo "우유 사기" > notes/todo.txt
+server$ cat notes/todo.txt
 ```
 
-Append another line:
+한 줄을 추가하려면:
 
 ```bash
-echo "learn ls and cd" >> notes/todo.txt
-cat notes/todo.txt
+server$ echo "ls와 cd 연습하기" >> notes/todo.txt
+server$ cat notes/todo.txt
 ```
 
-Important:
+중요:
 
-- `>` replaces the file content.
-- `>>` appends to the file.
+- `>`는 기존 내용을 지우고 새로 씁니다.
+- `>>`는 기존 내용 뒤에 추가합니다.
 
-## Edit files
-
-Beginner-friendly editors vary by system.
-
-Common choices:
+## 여러 줄 쓰기: `printf`
 
 ```bash
-nano notes/todo.txt
+server$ printf "첫 번째 줄\n두 번째 줄\n세 번째 줄\n" > notes/memo.txt
+server$ cat notes/memo.txt
 ```
 
-If you use Visual Studio Code and it is installed:
+`\n`은 줄바꿈을 뜻합니다.
+
+## 편집기 사용
+
+서버에 따라 사용할 수 있는 편집기가 다릅니다.
+
+가장 흔한 초보자용 편집기:
 
 ```bash
-code notes/todo.txt
+server$ nano notes/todo.txt
 ```
 
-In WSL, `explorer.exe .` opens the current Linux folder in Windows Explorer:
+`nano`에서 저장하고 나가기:
+
+1. `Ctrl + O`: 저장
+2. Enter: 파일 이름 확인
+3. `Ctrl + X`: 종료
+
+`vim`만 있는 서버도 있지만, 완전 초보자에게는 조금 어렵습니다. 처음에는 `nano`가 있는지 확인하세요.
 
 ```bash
-explorer.exe .
+server$ which nano
 ```
 
-On macOS, this opens the current folder in Finder:
+## 파일 이름 규칙
 
-```bash
-open .
-```
+처음에는 공백 없는 이름을 권장합니다.
 
-On many Linux desktops:
-
-```bash
-xdg-open .
-```
-
-## File names with spaces
-
-Avoid spaces in command-line practice if you can. Prefer:
+좋은 예:
 
 ```text
 my-notes.txt
 project_report.txt
 ```
 
-If a file has spaces, quote it:
+공백이 있는 이름은 따옴표가 필요합니다.
 
 ```bash
-touch "my notes.txt"
-ls "my notes.txt"
+server$ touch "my notes.txt"
+server$ ls "my notes.txt"
 ```
 
-## Case matters
+## 대소문자 구분
 
-Linux is case-sensitive:
+리눅스는 대소문자를 구분합니다.
 
 ```text
-Report.txt
 report.txt
+Report.txt
 REPORT.txt
 ```
 
-These can be three different files.
+이 세 파일은 서로 다른 파일일 수 있습니다.
 
-## Try it
-
-Create a small folder and file:
+## 실습
 
 ```bash
-mkdir -p journal/2026
-echo "Today I used the terminal." > journal/2026/day1.txt
-cat journal/2026/day1.txt
+server$ cd ~/linux-practice
+server$ mkdir -p journal/2026
+server$ echo "오늘 SSH로 리눅스 서버에 접속했다." > journal/2026/day1.txt
+server$ cat journal/2026/day1.txt
 ```
 
-## Checkpoint
+## 체크포인트
 
-1. What is the difference between `>` and `>>`?
-2. Why should beginners avoid spaces in filenames?
-3. Are `notes.txt` and `Notes.txt` the same file on Linux?
+1. `mkdir -p`의 장점은 무엇인가요?
+2. `>`와 `>>`의 차이는 무엇인가요?
+3. 리눅스에서 `memo.txt`와 `Memo.txt`는 같은 파일인가요?

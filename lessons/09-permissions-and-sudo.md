@@ -1,116 +1,116 @@
-# 9. Permissions, executables, and `sudo`
+# 9. 권한, 실행 파일, `sudo`
 
-Linux has permissions that control who can read, write, or run files.
+리눅스 서버에서는 파일마다 읽기, 쓰기, 실행 권한이 있습니다.
 
-Start in the practice folder:
-
-```bash
-cd ~/linux-practice
-mkdir -p permissions-practice
-cd permissions-practice
-```
-
-## View permissions with `ls -l`
+연습 폴더에서 시작합니다.
 
 ```bash
-echo "hello" > hello.txt
-ls -l hello.txt
+server$ cd ~/linux-practice
+server$ mkdir -p permissions-practice
+server$ cd permissions-practice
 ```
 
-Example output:
+## 권한 보기: `ls -l`
+
+```bash
+server$ echo "hello" > hello.txt
+server$ ls -l hello.txt
+```
+
+예:
 
 ```text
--rw-r--r-- 1 ava ava 6 May 19 10:00 hello.txt
+-rw-r--r-- 1 student01 student01 6 May 19 10:00 hello.txt
 ```
 
-The first part is permissions:
+앞의 `-rw-r--r--` 부분이 권한입니다.
+
+대략 이렇게 읽습니다.
 
 ```text
--rw-r--r--
+-  rw-  r--  r--
+|  |    |    |
+|  |    |    다른 사용자
+|  |    그룹
+|  소유자
+파일 종류
 ```
 
-Read it as:
+글자의 의미:
 
-- First character: file type (`-` file, `d` directory).
-- Next three: owner permissions.
-- Next three: group permissions.
-- Last three: everyone else.
-
-Letters:
-
-| Letter | Meaning |
+| 글자 | 의미 |
 |---|---|
-| `r` | read |
-| `w` | write |
-| `x` | execute/run |
+| `r` | read, 읽기 |
+| `w` | write, 쓰기 |
+| `x` | execute, 실행 |
 
-## Create a tiny script
-
-```bash
-cat > hello.sh <<'EOF'
-#!/usr/bin/env bash
-echo "Hello from a script"
-EOF
-```
-
-Try to run it:
+## 작은 스크립트 만들기
 
 ```bash
-./hello.sh
+server$ printf '#!/usr/bin/env bash\necho "Hello from a script"\n' > hello.sh
+server$ ls -l hello.sh
 ```
 
-You may get "Permission denied" because it is not executable yet.
-
-Make it executable:
+실행해 봅니다.
 
 ```bash
-chmod +x hello.sh
+server$ ./hello.sh
 ```
 
-Run it again:
+`Permission denied`가 나올 수 있습니다. 아직 실행 권한이 없기 때문입니다.
+
+실행 권한 추가:
 
 ```bash
-./hello.sh
+server$ chmod +x hello.sh
+server$ ls -l hello.sh
+server$ ./hello.sh
 ```
 
-## Why `./hello.sh`?
+## 왜 `./hello.sh`라고 쓰나요?
 
-The current folder is not automatically searched for commands. `./hello.sh` means "run `hello.sh` from this folder".
-
-## What is `sudo`?
-
-`sudo` means "run this command as administrator/root".
-
-Example:
+현재 폴더의 파일을 실행하려면 `./`를 붙이는 경우가 많습니다.
 
 ```bash
-sudo apt update
+server$ ./hello.sh
 ```
 
-On Ubuntu/Debian, this asks the package manager to refresh software lists.
+뜻은 “현재 폴더에 있는 `hello.sh`를 실행하라”입니다.
 
-Important safety notes:
+## `sudo`란?
 
-- `sudo` can change system files.
-- It may ask for your password.
-- When typing your password, the terminal may show nothing. That is normal.
-- Do not use `sudo` just because a command failed. First understand why it failed.
+`sudo`는 관리자 권한으로 명령어를 실행합니다.
 
-## Try it
+예:
 
 ```bash
-ls -l hello.sh
-chmod -x hello.sh
-ls -l hello.sh
-chmod +x hello.sh
-ls -l hello.sh
-./hello.sh
+server$ sudo apt update
 ```
 
-Watch how the permission letters change.
+하지만 원격 공용 서버에서는 일반 사용자가 `sudo` 권한이 없을 수 있습니다. 연구실/회사/HPC 서버에서는 무단으로 `sudo`를 사용하려고 하지 마세요.
 
-## Checkpoint
+중요:
 
-1. What does `x` mean in file permissions?
-2. Why might `./hello.sh` fail before `chmod +x hello.sh`?
-3. Why should you be careful with `sudo`?
+- `sudo`는 시스템 파일을 바꿀 수 있습니다.
+- 비밀번호를 요구할 수 있습니다.
+- 비밀번호 입력 중 화면에 아무것도 안 보일 수 있습니다.
+- 명령이 실패했다고 무조건 `sudo`를 붙이면 안 됩니다.
+
+## 실습
+
+```bash
+server$ ls -l hello.sh
+server$ chmod -x hello.sh
+server$ ls -l hello.sh
+server$ chmod +x hello.sh
+server$ ls -l hello.sh
+server$ ./hello.sh
+```
+
+권한 문자열에서 `x`가 생겼다가 없어지는 것을 관찰하세요.
+
+## 체크포인트
+
+1. 권한에서 `x`는 무엇을 의미하나요?
+2. `chmod +x hello.sh`는 무엇을 하나요?
+3. 원격 공용 서버에서 `sudo`를 조심해야 하는 이유는 무엇인가요?

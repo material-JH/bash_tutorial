@@ -1,105 +1,122 @@
-# 1. What the terminal is
+# 1. 터미널, 셸, 명령어란 무엇인가
 
-If you are used to Windows Explorer or macOS Finder, the terminal can look unfriendly at first. It is just another way to control the computer: you type instructions instead of clicking icons.
+터미널은 처음 보면 낯설지만, 본질적으로는 컴퓨터에게 글자로 지시를 내리는 창입니다.
 
-## Key words
+Windows 탐색기나 macOS Finder에서는 폴더를 더블클릭하고 파일을 드래그합니다. 터미널에서는 같은 일을 명령어로 합니다.
 
-### Terminal
+## 터미널
 
-The terminal is the app or window where you type commands.
+터미널은 명령어를 입력하는 앱 또는 창입니다.
 
-Examples:
+예:
 
-- Windows: Windows Terminal running WSL/Ubuntu
-- macOS: Terminal or iTerm2
-- Linux: Terminal, GNOME Terminal, Konsole, etc.
+- Windows: Windows Terminal, PowerShell, WSL Ubuntu
+- macOS: Terminal, iTerm2
+- Linux: Terminal, GNOME Terminal, Konsole
 
-### Shell
+## 셸
 
-The shell is the program inside the terminal that reads your command and starts programs.
+셸(shell)은 터미널 안에서 명령어를 읽고 실행하는 프로그램입니다.
 
-Common shells:
+대표적인 셸:
 
-- `bash`: very common on Linux
-- `zsh`: default on modern macOS
-- `fish`: friendly alternative shell
+- `bash`: 리눅스 서버에서 매우 흔함
+- `zsh`: 최신 macOS의 기본 셸
+- `fish`: 사용하기 편한 대체 셸
 
-This tutorial uses Bash-style commands, but most examples also work in `zsh`.
+이 튜토리얼은 리눅스 서버에서 흔히 쓰는 Bash 기준으로 설명합니다.
 
-### Prompt
+## 프롬프트
 
-The prompt is the text that appears before your cursor. It means the shell is ready.
+프롬프트(prompt)는 “명령어를 입력할 준비가 되었다”는 표시입니다.
 
-It may look like this:
-
-```bash
-user@computer:~$
-```
-
-or this:
+예:
 
 ```bash
-$
+student01@server:~$
 ```
 
-When tutorials show commands, they often include `$` to mean "type this at the prompt". You do not type the `$` itself.
-
-## Command anatomy
-
-Most commands look like this:
+튜토리얼에서는 상황을 더 명확히 하려고 이렇게 표시합니다.
 
 ```bash
-command option argument
+local$ echo hello
+server$ pwd
 ```
 
-Example:
+실제로 입력하는 것은 `echo hello`, `pwd`뿐입니다. `local$`, `server$`는 입력하지 않습니다.
+
+## 명령어의 기본 구조
+
+대부분의 명령어는 아래 구조를 가집니다.
+
+```bash
+명령어 옵션 대상
+```
+
+예:
 
 ```bash
 ls -l Documents
 ```
 
-- `ls` is the command.
-- `-l` is an option, also called a flag.
-- `Documents` is an argument, the thing the command works on.
+- `ls`: 명령어
+- `-l`: 옵션. 명령어의 동작 방식을 바꿉니다.
+- `Documents`: 대상. 명령어가 적용될 파일이나 폴더입니다.
 
-Options can be short or long:
+긴 옵션도 있습니다.
 
 ```bash
-ls -a
 ls --all
 ```
 
-Both mean "show all files", including hidden files.
-
-## Why learn the command line?
-
-The command line is useful because it is:
-
-- Fast for repeated tasks.
-- Precise: commands say exactly what happened.
-- Scriptable: you can save commands and run them later.
-- Common in development, data science, servers, research computing, and troubleshooting.
-
-## Try it
-
-Open a terminal and run:
+짧은 옵션으로는 보통 이렇게 씁니다.
 
 ```bash
-echo Hello terminal
+ls -a
 ```
 
-You should see:
+둘 다 숨김 파일을 포함해서 보여 달라는 뜻입니다.
+
+## 원격 서버를 쓸 때의 큰 그림
+
+이 튜토리얼에서는 대부분의 명령어를 원격 리눅스 서버에서 실행한다고 가정합니다.
+
+흐름은 다음과 같습니다.
 
 ```text
-Hello terminal
+내 컴퓨터 터미널 열기
+        ↓
+ssh 명령어로 원격 서버 접속
+        ↓
+원격 서버 안에서 pwd, ls, cd 같은 리눅스 명령어 실행
+        ↓
+exit으로 접속 종료
 ```
 
-`echo` prints text back to you.
+중요한 점:
 
-## Checkpoint
+- `ssh`를 실행하기 전에는 내 컴퓨터에 있습니다.
+- `ssh` 접속 후에는 원격 서버 안에 있습니다.
+- 같은 `ls` 명령어라도 어디에서 실행하느냐에 따라 보는 파일이 다릅니다.
 
-Answer in your own words:
+## 첫 명령어
 
-1. What is the difference between a terminal and a shell?
-2. In `ls -l Documents`, which part is the command?
-3. Should you type the `$` symbol shown in examples?
+내 컴퓨터 터미널에서 실행해 보세요.
+
+```bash
+local$ echo 안녕하세요
+```
+
+출력:
+
+```text
+안녕하세요
+```
+
+`echo`는 글자를 화면에 출력하는 명령어입니다.
+
+## 체크포인트
+
+1. 터미널과 셸은 어떻게 다른가요?
+2. `ls -l Documents`에서 명령어는 어느 부분인가요?
+3. 예제의 `local$`, `server$`를 실제로 입력해야 하나요?

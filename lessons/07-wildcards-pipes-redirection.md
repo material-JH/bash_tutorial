@@ -1,126 +1,114 @@
-# 7. Wildcards, pipes, and redirection
+# 7. 와일드카드, 파이프, 리다이렉션
 
-This lesson shows why the shell is powerful: it can match many files and connect commands.
+셸의 힘은 여러 파일을 한 번에 다루고, 명령어끼리 연결할 수 있다는 데 있습니다.
 
-Start in the practice folder:
-
-```bash
-cd ~/linux-practice
-mkdir -p shell-power
-cd shell-power
-```
-
-## Create sample files
+연습 폴더에서 시작합니다.
 
 ```bash
-echo "apple" > fruit.txt
-echo "carrot" > vegetable.txt
-echo "banana" > yellow-fruit.txt
-echo "notes" > notes.md
-ls
+server$ cd ~/linux-practice
+server$ mkdir -p shell-power
+server$ cd shell-power
 ```
 
-## Wildcards
-
-A wildcard is a pattern that matches filenames.
-
-### `*` matches any text
+## 샘플 파일 만들기
 
 ```bash
-ls *.txt
+server$ echo "apple" > fruit.txt
+server$ echo "carrot" > vegetable.txt
+server$ echo "banana" > yellow-fruit.txt
+server$ echo "notes" > notes.md
+server$ ls
 ```
 
-This lists files ending in `.txt`.
+## 와일드카드 `*`
+
+`*`는 “아무 글자나 0개 이상”을 뜻합니다.
+
+`.txt`로 끝나는 파일:
 
 ```bash
-ls *fruit*
+server$ ls *.txt
 ```
 
-This lists files with `fruit` anywhere in the name.
-
-### Preview before destructive commands
-
-Good:
+이름에 `fruit`가 들어가는 파일:
 
 ```bash
-ls *.txt
+server$ ls *fruit*
 ```
 
-Then, only if the list is correct:
+## 삭제 전에 반드시 미리 보기
+
+좋은 습관:
 
 ```bash
-rm *.txt
+server$ ls *.txt
 ```
 
-Do not use `rm` with wildcards until you have previewed the match.
-
-## Redirection
-
-Redirection sends command output to a file.
-
-Replace file content:
+목록이 맞는지 확인한 뒤에만:
 
 ```bash
-echo "first line" > output.txt
-cat output.txt
+server$ rm *.txt
 ```
 
-Append to file:
+초보자는 와일드카드와 `rm`을 함께 쓸 때 특히 조심해야 합니다.
+
+## 리다이렉션
+
+리다이렉션은 명령어 출력을 파일로 보내는 기능입니다.
+
+파일 내용을 새로 씁니다.
 
 ```bash
-echo "second line" >> output.txt
-cat output.txt
+server$ echo "first line" > output.txt
+server$ cat output.txt
 ```
 
-Remember:
-
-- `>` replaces.
-- `>>` appends.
-
-## Pipes
-
-A pipe sends the output of one command into another command.
+파일 뒤에 추가합니다.
 
 ```bash
-ls | wc -l
+server$ echo "second line" >> output.txt
+server$ cat output.txt
 ```
 
-This means:
+정리:
 
-1. `ls` lists files.
-2. `|` sends that list to the next command.
-3. `wc -l` counts lines.
+- `>`: 덮어쓰기
+- `>>`: 추가하기
 
-## More pipe examples
+## 파이프 `|`
 
-Create a file:
+파이프는 앞 명령어의 출력을 뒤 명령어의 입력으로 보냅니다.
 
 ```bash
-printf "error: disk\ninfo: start\nerror: network\ninfo: stop\n" > app.log
+server$ ls | wc -l
 ```
 
-Show only error lines:
+뜻:
+
+1. `ls`가 파일 목록을 출력합니다.
+2. `|`가 그 출력을 다음 명령으로 넘깁니다.
+3. `wc -l`이 줄 수를 셉니다.
+
+## 로그 검색 예시
 
 ```bash
-grep "error" app.log
+server$ printf "ERROR disk\nINFO start\nERROR network\nINFO stop\n" > app.log
+server$ grep "ERROR" app.log
+server$ grep "ERROR" app.log | wc -l
 ```
 
-Count error lines:
+마지막 명령은 `ERROR`가 들어간 줄 수를 셉니다.
+
+## 실습
 
 ```bash
-grep "error" app.log | wc -l
+server$ ls -la > listing.txt
+server$ cat listing.txt
+server$ wc -l listing.txt
 ```
 
-## Try it
+## 체크포인트
 
-```bash
-ls -la > listing.txt
-cat listing.txt
-wc -l listing.txt
-```
-
-## Checkpoint
-
-1. What does `*.txt` match?
-2. What is the difference between `>` and `>>`?
-3. In `grep "error" app.log | wc -l`, which command runs first?
+1. `*.txt`는 어떤 파일을 의미하나요?
+2. `>`와 `>>`의 차이는 무엇인가요?
+3. `grep "ERROR" app.log | wc -l`에서 먼저 실행되는 명령어는 무엇인가요?

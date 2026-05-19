@@ -1,134 +1,142 @@
-# 11. Final practice project
+# 11. 최종 실습 프로젝트
 
-This project combines the main skills from the tutorial.
+목표: 원격 리눅스 서버에 SSH로 접속해서 작은 노트 프로젝트를 만들고, 검색하고, 백업하고, 간단한 스크립트까지 실행합니다.
 
-Goal: create a small organized note collection, inspect it, search it, and archive your command output.
+## 0단계: 서버 접속
 
-Start clean:
+내 컴퓨터에서:
 
 ```bash
-cd ~/linux-practice
-mkdir -p final-project
-cd final-project
+local$ ssh student01@linux.example.edu
 ```
 
-## Step 1: Create a folder structure
+자신의 사용자명과 서버 주소로 바꿔서 실행하세요.
+
+서버에서 확인:
 
 ```bash
-mkdir -p notes logs backup
+server$ whoami
+server$ hostname
+server$ pwd
 ```
 
-Check it:
+## 1단계: 프로젝트 폴더 만들기
 
 ```bash
-ls -la
+server$ cd ~/linux-practice
+server$ mkdir -p final-project
+server$ cd final-project
+server$ mkdir -p notes logs backup
+server$ ls -la
 ```
 
-## Step 2: Create note files
+## 2단계: 노트 파일 만들기
 
 ```bash
-echo "Linux command line notes" > notes/summary.txt
-echo "pwd shows the current directory" >> notes/summary.txt
-echo "ls lists files" >> notes/summary.txt
-echo "cd changes directory" >> notes/summary.txt
+server$ echo "리눅스 명령어 노트" > notes/summary.txt
+server$ echo "pwd는 현재 위치를 보여준다" >> notes/summary.txt
+server$ echo "ls는 파일 목록을 보여준다" >> notes/summary.txt
+server$ echo "cd는 폴더를 이동한다" >> notes/summary.txt
 
-printf "TODO\npractice grep\npractice pipes\nreview permissions\n" > notes/todo.txt
+server$ printf "TODO\ngrep 연습\npipe 연습\npermission 복습\n" > notes/todo.txt
 ```
 
-## Step 3: Read files
+## 3단계: 파일 읽기
 
 ```bash
-cat notes/summary.txt
-less notes/todo.txt
+server$ cat notes/summary.txt
+server$ less notes/todo.txt
 ```
 
-Remember: press `q` to quit `less`.
+`less`에서 나가려면 `q`를 누릅니다.
 
-## Step 4: Search files
+## 4단계: 검색
 
 ```bash
-grep "practice" notes/todo.txt
-grep -R "directory" notes/
+server$ grep "연습" notes/todo.txt
+server$ grep -R "위치" notes/
 ```
 
-## Step 5: Count lines
+## 5단계: 줄 수 세기
 
 ```bash
-wc -l notes/summary.txt
-wc -l notes/todo.txt
+server$ wc -l notes/summary.txt
+server$ wc -l notes/todo.txt
 ```
 
-## Step 6: Save command output
+## 6단계: 명령어 출력 저장
 
 ```bash
-ls -la notes > logs/notes-listing.txt
-cat logs/notes-listing.txt
+server$ ls -la notes > logs/notes-listing.txt
+server$ cat logs/notes-listing.txt
 ```
 
-Append the current location:
+현재 위치를 뒤에 추가합니다.
 
 ```bash
-pwd >> logs/notes-listing.txt
-cat logs/notes-listing.txt
+server$ pwd >> logs/notes-listing.txt
+server$ cat logs/notes-listing.txt
 ```
 
-## Step 7: Copy files to backup
+## 7단계: 백업 만들기
 
 ```bash
-cp -r notes backup/notes-backup
-find backup -name "*.txt"
+server$ cp -r notes backup/notes-backup
+server$ find backup -name "*.txt"
 ```
 
-## Step 8: Rename a file
+## 8단계: 파일 이름 바꾸기
 
 ```bash
-mv notes/todo.txt notes/tasks.txt
-ls notes
+server$ mv notes/todo.txt notes/tasks.txt
+server$ ls notes
 ```
 
-## Step 9: Make a small script
+## 9단계: 작은 스크립트 만들기
 
 ```bash
-cat > show-project.sh <<'EOF'
-#!/usr/bin/env bash
-echo "Project location:"
-pwd
-echo
-echo "Text files:"
-find . -name "*.txt"
-echo
-echo "Lines containing practice:"
-grep -R "practice" .
-EOF
-
-chmod +x show-project.sh
-./show-project.sh
+server$ printf '#!/usr/bin/env bash\necho "Project location:"\npwd\necho\necho "Text files:"\nfind . -name "*.txt"\necho\necho "Lines containing 연습:"\ngrep -R "연습" .\n' > show-project.sh
+server$ chmod +x show-project.sh
+server$ ./show-project.sh
 ```
 
-## Step 10: Clean up safely
+## 10단계: 안전하게 정리
 
-Preview before deleting:
+삭제 전 확인:
 
 ```bash
-ls backup
+server$ ls backup
 ```
 
-Delete the backup copy only if you are sure:
+백업 복사본만 삭제:
 
 ```bash
-rm -r backup/notes-backup
+server$ rm -r backup/notes-backup
 ```
 
-## Final self-check
-
-You should now be able to explain what each command does:
+## 11단계: 접속 종료
 
 ```bash
+server$ exit
+```
+
+내 컴퓨터 터미널로 돌아왔는지 확인합니다.
+
+## 최종 자기 점검
+
+아래 명령어를 설명할 수 있으면 입문 단계를 잘 마친 것입니다.
+
+```bash
+ssh
+exit
+whoami
+hostname
 pwd
 ls -la
 cd
 mkdir -p
 echo
+printf
 cat
 less
 grep
@@ -140,4 +148,4 @@ chmod +x
 rm -r
 ```
 
-If any command feels unclear, return to the lesson where it first appeared.
+아직 헷갈리는 명령어가 있다면 해당 lesson으로 돌아가서 다시 실습하세요.

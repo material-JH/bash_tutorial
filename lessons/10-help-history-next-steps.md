@@ -1,129 +1,129 @@
-# 10. Help, history, shortcuts, and next steps
+# 10. 도움말, 기록, 자동완성, 단축키
 
-You do not need to memorize every command. You need to know how to get help.
+명령어를 모두 외울 필요는 없습니다. 대신 도움말을 찾는 방법을 알아야 합니다.
 
-## Short help
-
-Many commands support `--help`:
+## 짧은 도움말: `--help`
 
 ```bash
-ls --help
-cp --help
+server$ ls --help
+server$ cp --help
 ```
 
-This can print a lot of text. You can pipe it into `less`:
+출력이 너무 길면 `less`로 넘겨서 봅니다.
 
 ```bash
-ls --help | less
+server$ ls --help | less
 ```
 
-Press `q` to quit `less`.
+나가려면 `q`를 누릅니다.
 
-## Manual pages
-
-Use `man` for the manual page:
+## 매뉴얼: `man`
 
 ```bash
-man ls
+server$ man ls
 ```
 
-Inside `man`:
+`man` 안에서 자주 쓰는 키:
 
-| Key | Action |
+| 키 | 동작 |
 |---|---|
-| Space | next page |
-| `b` | previous page |
-| `/word` | search |
-| `n` | next match |
-| `q` | quit |
+| Space | 다음 페이지 |
+| `b` | 이전 페이지 |
+| `/word` | word 검색 |
+| `n` | 다음 검색 결과 |
+| `q` | 종료 |
 
-## Command history
-
-Show previous commands:
+## 명령어 기록: `history`
 
 ```bash
-history
+server$ history
 ```
 
-Use the Up Arrow to bring back a previous command.
+이전 명령을 다시 불러오려면 위쪽 화살표를 누릅니다.
 
-Search history:
+기록 검색:
 
 ```text
 Ctrl + R
 ```
 
-Type part of a command. Press Enter to run it, or press Esc/Ctrl+C to cancel depending on your shell.
+## 자동완성: Tab
 
-## Tab completion
+명령어나 경로를 조금 입력한 뒤 Tab을 누르면 자동완성이 됩니다.
 
-Start typing a command or path, then press Tab.
-
-Example:
+예:
 
 ```bash
-cd ~/linu<Tab>
+server$ cd ~/linu<Tab>
 ```
 
-The shell may complete it to:
+아래처럼 완성될 수 있습니다.
 
 ```bash
-cd ~/linux-practice
+server$ cd ~/linux-practice
 ```
 
-Tab completion reduces typing and prevents spelling mistakes.
+자동완성은 오타를 줄이고 긴 경로 입력을 편하게 합니다.
 
-## Useful keyboard shortcuts
+## 자주 쓰는 단축키
 
-| Shortcut | Meaning |
+| 단축키 | 의미 |
 |---|---|
-| `Ctrl + C` | stop current command |
-| `Ctrl + L` | clear the screen |
-| `Ctrl + A` | beginning of line |
-| `Ctrl + E` | end of line |
-| `Ctrl + U` | delete from cursor to beginning |
-| `Ctrl + K` | delete from cursor to end |
-| `Ctrl + R` | search command history |
+| `Ctrl + C` | 실행 중인 명령 중지 |
+| `Ctrl + L` | 화면 정리 |
+| `Ctrl + A` | 줄 맨 앞으로 이동 |
+| `Ctrl + E` | 줄 맨 뒤로 이동 |
+| `Ctrl + U` | 커서 앞부분 삭제 |
+| `Ctrl + K` | 커서 뒷부분 삭제 |
+| `Ctrl + R` | 명령 기록 검색 |
 
-## Reading errors
+## 에러 읽는 법
 
-When a command fails, read the error slowly.
-
-Example:
+예:
 
 ```bash
-cd no-such-folder
+server$ cd no-such-folder
 ```
 
-Possible output:
+출력:
 
 ```text
 bash: cd: no-such-folder: No such file or directory
 ```
 
-This tells you:
+천천히 읽으면 다음을 알 수 있습니다.
 
-- Which command failed: `cd`
-- What it tried to use: `no-such-folder`
-- Why it failed: no such file or directory
+- 실패한 명령어: `cd`
+- 사용하려던 대상: `no-such-folder`
+- 실패 이유: 그런 파일이나 폴더가 없음
 
-## Next commands to learn later
+## 원격 서버 작업에서 자주 확인할 것
 
-After this tutorial, learn these gradually:
+```bash
+server$ whoami
+server$ hostname
+server$ pwd
+server$ ls -la
+```
 
-| Topic | Commands |
+특히 여러 서버를 쓰는 사람은 `hostname`으로 내가 어느 서버에 있는지 자주 확인하세요.
+
+## 다음에 배울 만한 명령어
+
+| 주제 | 명령어 |
 |---|---|
-| Downloading | `curl`, `wget` |
-| Archives | `tar`, `zip`, `unzip` |
-| Processes | `ps`, `top`, `kill` |
-| Disk usage | `df`, `du` |
-| Networking | `ping`, `ssh`, `scp` |
-| Package management | `apt`, `dnf`, `brew` |
-| Version control | `git` |
-| Text processing | `sed`, `awk`, `cut`, `sort`, `uniq` |
+| 파일 다운로드 | `curl`, `wget` |
+| 압축 | `tar`, `zip`, `unzip` |
+| 프로세스 확인 | `ps`, `top`, `kill` |
+| 디스크 사용량 | `df`, `du` |
+| 파일 전송 | `scp`, `rsync`, `sftp` |
+| 원격 접속 | `ssh` |
+| 패키지 관리 | `apt`, `dnf`, `brew` |
+| 버전 관리 | `git` |
+| 텍스트 처리 | `sort`, `uniq`, `cut`, `sed`, `awk` |
 
-## Checkpoint
+## 체크포인트
 
-1. How do you quit `man` or `less`?
-2. What shortcut stops a running command?
-3. Why is Tab completion useful?
+1. `less`나 `man`에서 나가려면 어떤 키를 누르나요?
+2. 실행 중인 명령을 멈추려면 어떤 단축키를 쓰나요?
+3. Tab 자동완성은 왜 유용한가요?
