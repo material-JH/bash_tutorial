@@ -1,8 +1,8 @@
 # 리눅스 명령어 입문 튜토리얼
 
 Windows/macOS 사용자와 리눅스 터미널 초보자를 위한 한국어 튜토리얼입니다.
-워크숍에서는 KISTI 슈퍼컴퓨터 5호기 누리온(NURION)에 접속해 실습할 수 있도록, 마지막 장에 누리온 전용 PBS/scratch/QE 실행 메모를 따로 넣었습니다.
-자세한 설명은 각 lesson 파일에 나누어 두었습니다.
+워크숍에서는 먼저 KISTI 슈퍼컴퓨터 5호기 누리온(NURION)에 로그인하고, 그 서버 안에서 리눅스 터미널을 실습합니다.
+누리온 로그인용 HTML 자료와 리눅스 명령어 본 수업 HTML 자료를 따로 제공합니다.
 
 ## 목차
 
@@ -24,7 +24,8 @@ Windows/macOS 사용자와 리눅스 터미널 초보자를 위한 한국어 튜
 
 ### 자료
 
-- [HTML 발표 자료](https://material-jh.github.io/bash_tutorial/linux_command_tutorial_presentation.html)
+- [누리온 로그인 HTML 발표 자료](https://material-jh.github.io/bash_tutorial/nurion_login_tutorial.html)
+- [리눅스 명령어 HTML 발표 자료](https://material-jh.github.io/bash_tutorial/linux_command_tutorial_presentation.html)
 - [치트시트](CHEATSHEET.md)
 - [예제 파일 설명](examples/README.md)
 - [튜토리얼 설계 조사 메모](RESEARCH_NOTES.md)

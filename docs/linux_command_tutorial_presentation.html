@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>리눅스 명령어 입문 — SSH 원격 서버와 Quantum ESPRESSO 작업 흐름</title>
+  <title>리눅스 명령어 입문 — 누리온에서 배우는 터미널과 Quantum ESPRESSO 작업 흐름</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=Roboto:wght@400;500;700;900&display=swap');
 
@@ -394,15 +394,15 @@
   <div class="viewport">
     <main class="deck" id="deck" aria-live="polite">
       <section class="slide active" data-title="Title">
-        <div class="slide-header"><span class="section-tag">Linux command tutorial</span><span>SSH + Nurion + QE beginner guide</span></div>
+        <div class="slide-header"><span class="section-tag">Linux command tutorial</span><span>After Nurion login · Linux terminal + QE</span></div>
         <div class="two-col-title">
           <div>
             <h1>리눅스 터미널을 <span class="accent">연구 도구</span>로 쓰기</h1>
-            <p class="subtitle">Windows/macOS 사용자도 SSH로 누리온에 접속해 파일을 찾고, 읽고, 수정하고, PBS로 Quantum ESPRESSO 계산을 제출할 수 있게 만드는 입문 발표 자료입니다.</p>
+            <p class="subtitle">누리온 로그인 튜토리얼을 먼저 마친 뒤, 같은 서버 화면에서 파일을 찾고, 읽고, 수정하고, PBS로 Quantum ESPRESSO 계산을 제출하는 입문 발표 자료입니다.</p>
           </div>
           <div class="card strong">
-            <div class="metric">local$ → login01 → qsub</div>
-            <p class="metric-label">오늘의 목표는 “명령어 암기”가 아니라 안전한 서버 작업 흐름을 익히는 것입니다.</p>
+            <div class="metric">login01에서 pwd → ls → qsub</div>
+            <p class="metric-label">오늘의 목표는 “명령어 암기”가 아니라 누리온 안에서 안전하게 위치 확인, 파일 관리, job 제출을 하는 흐름을 익히는 것입니다.</p>
           </div>
         </div>
         <div class="hero-band"></div>
@@ -411,9 +411,9 @@
 
       <section class="slide" data-title="Session roadmap">
         <div class="slide-header"><span class="section-tag">Roadmap</span><span>1-hour hands-on flow</span></div>
-        <h2>1시간 진행: 핵심 개념을 짧게 설명하고 바로 손으로 확인하기</h2>
+        <h2>누리온에 로그인한 상태에서 바로 손으로 확인하기</h2>
         <div class="timeline">
-          <div class="time">0:00–0:10</div><div class="time-item"><h3>터미널과 SSH</h3><p>로컬 컴퓨터와 누리온 로그인 노드를 구분하고 `ssh`로 접속합니다.</p></div>
+          <div class="time">0:00–0:10</div><div class="time-item"><h3>누리온 접속 확인</h3><p>이미 로그인한 누리온 화면에서 `hostname`, `whoami`, `pwd`를 확인합니다.</p></div>
           <div class="time">0:10–0:25</div><div class="time-item"><h3>위치와 파일</h3><p>`pwd`, `ls`, `cd`, `cp`, `mv`로 현재 위치와 파일 이동을 연습합니다.</p></div>
           <div class="time">0:25–0:38</div><div class="time-item"><h3>텍스트 읽기와 `vim`</h3><p>`more`, `head`, `tail`, `vim`으로 입력 파일과 출력 로그를 확인합니다.</p></div>
           <div class="time">0:38–0:50</div><div class="time-item"><h3>누리온 작업 위치</h3><p>home은 보관, scratch는 실행 장소임을 배우고 scratch에서 `qsub`합니다.</p></div>
@@ -423,32 +423,31 @@
 
       <section class="slide" data-title="Local vs server">
         <div class="slide-header"><span class="section-tag">Mental model</span><span>Two computers, two prompts</span></div>
-        <h2>가장 먼저 배울 것은 “지금 어디에서 실행 중인가?”입니다.</h2>
+        <h2>로그인 후 첫 질문: “지금 누리온의 어느 폴더에 있는가?”</h2>
         <div class="grid-2" style="margin-top:54px">
-          <div class="card warn"><h3><span class="mono warm">local$</span> 내 컴퓨터</h3><ul class="clean" style="margin-top:24px"><li>Windows Terminal, PowerShell, macOS Terminal</li><li>SSH 접속을 시작하는 위치</li><li>내 Desktop/Finder/Explorer 파일이 있는 곳</li></ul></div>
-          <div class="card strong"><h3><span class="mono accent2">server$</span> 원격 서버</h3><ul class="clean" style="margin-top:24px"><li>SSH 로그인 후 보이는 리눅스 환경</li><li>연구실/HPC/클라우드 계산 파일이 있는 곳</li><li>`pw.x`, `mpirun`, 출력 로그를 다루는 곳</li></ul></div>
+          <div class="card warn"><h3><span class="mono warm">local$</span> 내 컴퓨터</h3><ul class="clean" style="margin-top:24px"><li>로그인 튜토리얼에서 이미 사용한 터미널</li><li>필요하면 다시 SSH를 시작하는 위치</li><li>내 Desktop/Finder/Explorer 파일이 있는 곳</li></ul></div>
+          <div class="card strong"><h3><span class="mono accent2">server$</span> 원격 서버</h3><ul class="clean" style="margin-top:24px"><li>지금 수업을 진행하는 누리온 환경</li><li>home, scratch, QE 파일이 있는 곳</li><li>`pwd`, `ls`, `cp`, `mv`, `qsub`를 연습하는 곳</li></ul></div>
         </div>
-        <p class="subtitle"><span class="danger">중요:</span> `local$`, `server$`는 설명용 표시입니다. 실제로 입력하지 않습니다.</p>
+        <p class="subtitle"><span class="danger">중요:</span> 수업 중에는 대부분 <span class="mono accent2">server$</span>, 즉 누리온 로그인 노드에서 명령을 입력합니다.</p>
       </section>
 
       <section class="slide" data-title="SSH login">
         <div class="slide-header"><span class="section-tag">SSH</span><span>First connection</span></div>
-        <h2>SSH는 “내 컴퓨터의 터미널을 서버 안으로 연결”합니다.</h2>
+        <h2>SSH 로그인은 별도 자료에서 먼저 끝냅니다. 여기서는 접속 확인만 합니다.</h2>
         <div class="grid-2" style="margin-top:48px">
-          <div class="terminal"><span class="prompt local">local$</span> ssh student01@linux.example.edu
-<span class="comment"># 포트가 다르면</span>
-<span class="prompt local">local$</span> ssh -p 2222 student01@linux.example.edu
-<span class="comment"># 접속 후 확인</span>
-<span class="prompt">server$</span> whoami
+          <div class="terminal"><span class="comment"># 누리온 로그인 후 확인</span>
 <span class="prompt">server$</span> hostname
+<span class="prompt">server$</span> whoami
 <span class="prompt">server$</span> pwd
+
+<span class="comment"># 필요할 때 종료</span>
 <span class="prompt">server$</span> exit</div>
           <div class="card">
-            <h3>처음 접속할 때 자주 당황하는 것</h3>
+            <h3>로그인 후 자주 당황하는 것</h3>
             <ul class="clean" style="margin-top:24px">
-              <li>비밀번호를 입력해도 화면에 글자가 보이지 않을 수 있습니다.</li>
-              <li>fingerprint 질문은 처음 보는 서버인지 확인하는 절차입니다.</li>
-              <li>접속 후의 `pwd`는 내 노트북 폴더가 아니라 서버 폴더입니다.</li>
+              <li>프롬프트 모양은 계정/터미널마다 다를 수 있습니다.</li>
+              <li>hostname이 login01처럼 보이면 누리온 로그인 노드입니다.</li>
+              <li>`pwd` 결과가 /home01/... 이면 누리온 home에 있는 것입니다.</li>
             </ul>
           </div>
         </div>
@@ -771,7 +770,7 @@ mpirun -np "$NP" pw.x -in scf.in &gt; scf.out 2&gt;&amp;1</div>
           <div class="card"><div class="metric">3</div><h3 style="margin-top:18px">로그</h3><p class="metric-label">계산 성공 여부는 출력 파일과 검색 결과로 판단합니다.</p></div>
           <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">QE</h3><p class="metric-label">`qsub → qstat → output 확인` 흐름을 이해합니다.</p></div>
         </div>
-        <p class="subtitle">이제 발표를 닫고 `~/linux-practice/examples`에서 손으로 연습합니다.</p>
+        <p class="subtitle">먼저 누리온 로그인 튜토리얼을 마치고, 이 발표는 `~/linux-practice/examples`에서 손으로 연습합니다.</p>
       </section>
 
       <section class="slide" data-title="Appendix: install QE">
