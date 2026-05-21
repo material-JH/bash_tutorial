@@ -62,7 +62,6 @@
     ul.clean, ol.clean { margin: 22px 0 0; padding-left: 30px; font-size: 29px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
     .terminal { background: linear-gradient(180deg, var(--terminal), #162536); color: var(--terminal-ink); border-left: 6px solid var(--accent-2); padding: 30px 34px; font-family: var(--mono); font-size: 30px; line-height: 1.45; white-space: pre-wrap; box-shadow: 0 18px 44px rgba(16,25,35,.20); }
     .terminal.compact { font-size: 25px; line-height: 1.42; }
-    .terminal.tiny { font-size: 20px; line-height: 1.28; padding: 24px 28px; }
     .prompt { color: #38d2ff; font-weight: 900; }
     .local { color: #ffd166; }
     .comment { color: #9cafbf; }
@@ -150,99 +149,22 @@ Last login: Thu May 21 13:48:08 2026 from 220.67.148.1</div>
         </div>
       </section>
 
-      <section class="slide" data-title="Nurion welcome banner">
-        <div class="slide-header"><span class="tag">Login banner</span><span>what appears after login</span></div>
-        <h2>로그인 후 긴 안내문이 나와도 당황하지 않습니다.</h2>
-        <div class="terminal tiny" style="margin-top:38px">================ KISTI 5th NURION System ====================
- * Any unauthorized attempts to use/access the system can be
-   investigated and prosecuted by the related Act
-
- * Queue Policies
-        Queue    |Wall-Clock |Max Running|   Max Waiting   |
-  - normal       |    48h    |    200    |       200       |
-  - long         | 48h~120h  |      7    |        10       |
-  - flat         |    48h    |     40    |        50       |
-  - debug        |    12h    |      2    |         2       |
-  - commercial   |    48h    |      2    |         6       |
-  - norm_skl     |    48h    |      2    |         4       |
-  - new_skl      |    48h    |      2    |         2       |
-  (Use the #showq &amp; #pbs_status commands for more queue info.)
-
- * Mandatory PBS Application Name option (#PBS -A App_Name)
-  - Allowed App_Name: nastran gaussian openfoam wrf vasp gromacs
-    qe qmc bwa inhouse tf caffe pytorch siesta cp2k gamess etc</div>
-        <p class="subtitle">이 화면은 “공지사항 + 사용 정책”입니다. 오늘 로그인 수업에서는 전부 외우지 않고, 아래로 지나간 뒤 프롬프트가 나오는지만 확인합니다.</p>
-      </section>
-
-      <section class="slide" data-title="Nurion notices">
-        <div class="slide-header"><span class="tag">Login banner</span><span>notices and storage warning</span></div>
-        <h2>공지에서 초보자가 바로 기억할 부분은 저장 공간 경고입니다.</h2>
-        <div class="terminal tiny" style="margin-top:38px"> * Not allowed sftp and ftp services on login nodes.
-   Instead, use the dm nodes(nurion-dm.ksc.re.kr).
-
- * Preventive Maintenance
-  - 2026-05-13 09:00 ~ 19:00 (10H)
-
- * Available Environment Modules
-  - 'module [command] [modulefile]' (use --help option)
-
- * More details can be found on https://www.ksc.re.kr
-
+      <section class="slide" data-title="Login banner">
+        <div class="slide-header"><span class="tag">Login banner</span><span>do not read everything now</span></div>
+        <h2>로그인 후 긴 안내문이 나오면, 지금은 세 가지만 보면 됩니다.</h2>
+        <div class="grid-3">
+          <div class="card strong"><h3>1. 당황하지 않기</h3><p class="small">KISTI/NURION 공지, queue 정책, 계정 정보가 한 번에 출력됩니다. 정상 화면입니다.</p></div>
+          <div class="card warn"><h3>2. /scratch 경고</h3><p class="small"><span class="mono">/scratch</span>의 오래 사용하지 않은 파일은 삭제될 수 있습니다. 중요한 파일은 보관 위치에 백업합니다.</p></div>
+          <div class="card"><h3>3. 프롬프트 찾기</h3><p class="small">공지문이 끝난 뒤 명령어를 입력할 수 있는 <span class="mono">server$</span> 상태가 되었는지 확인합니다.</p></div>
+        </div>
+        <div class="terminal compact" style="margin-top:38px">================ KISTI 5th NURION System ====================
+ * Queue Policies ...
+ * Mandatory PBS Application Name option (#PBS -A App_Name) ...
  +---------------------------------------------------------------+
  |[WARNING] Files in /scratch unused for 15 days will be deleted |
- | (&quot;ls -lu&quot; to check access time)                               |
- +---------------------------------------------------------------+</div>
-        <div class="grid-2" style="margin-top:34px">
-          <div class="card warn"><h3>/scratch는 임시 공간</h3><p class="small">오랫동안 사용하지 않은 파일은 삭제될 수 있습니다. 중요한 파일은 home 또는 백업 위치에 보관합니다.</p></div>
-          <div class="card"><h3>공지 날짜 확인</h3><p class="small">점검 일정과 정책은 바뀔 수 있습니다. 로그인할 때 보이는 최신 안내를 기준으로 합니다.</p></div>
-        </div>
-      </section>
-
-      <section class="slide" data-title="More Nurion notices">
-        <div class="slide-header"><span class="tag">Login banner</span><span>additional system notices</span></div>
-        <h2>나머지 안내는 필요할 때 다시 찾아보는 참고 정보입니다.</h2>
-        <div class="terminal tiny" style="margin-top:38px"> * [INFO] PBS provides the estimated start time for your jobs.
- - simple estimated start time check
-   $ qstat -T
- - detailed estimated start time check
-   $ qstat -f [JOB ID] | grep 'estimated.start_time'
-
- * Ansys software is available again (2022-09-16~ )
- - For use, please apply to account@ksc.re.kr by specifying
-   the account, affiliation, and ID
-
- * After logging in to a login node,
-   users can access other login(login[01-04]) or DM(dm[2-4] nodes
-   via public key authentication without needing to enter credentials again
-
- * BurstBuffer(IME) boosts I/O performance
-  - Required option(#PBS -P burst_buffer),Use /scratch_ime for job I/O
-  - IME is only a cache,flush data to /scratch using #imequota CMDs</div>
-        <p class="subtitle">오늘은 로그인 확인까지만 합니다. Queue, PBS, BurstBuffer 같은 실행 정책은 다음 발표자가 자세히 설명합니다.</p>
-      </section>
-
-      <section class="slide" data-title="Account and quota">
-        <div class="slide-header"><span class="tag">Account info</span><span>quota screen</span></div>
-        <h2>마지막에는 내 계정과 저장 공간 사용량이 보입니다.</h2>
-        <div class="terminal tiny" style="margin-top:38px">=================== Account Information ====================
- * Account  :              pd1914
- * Due Date :          2026/08/20
- * Allocated  SRU Time :           36,000 [sec]
-  &gt;     Used  SRU Time :                0 [sec]
- -----------------------------------------------------------
- *  Available SRU Time :           36,000 [sec] [100.00%]
- -----------------------------------------------------------
-  Account manager
-  - E-mail : account@ksc.re.kr        Tel : 080-041-1991
-============================================================
-* a2114a01 Lustre Filesystem Quota Status (&quot;*&quot; exceeded quota)
-------------------------------------------------------------
-Filesystem       KBytes        Quota      Files      Quota
-------------------------------------------------------------
-   /home01       1.066G          64G      31804     200000
-  /scratch       51.64M         100T        239    1000000
-============================================================</div>
-        <p class="subtitle"><span class="mono">/home01</span>와 <span class="mono">/scratch</span>의 사용량, quota를 보여 주는 화면입니다. 별표(*)가 있으면 quota 초과를 의미합니다.</p>
+ +---------------------------------------------------------------+
+=================== Account Information ====================
+* a2114a01 Lustre Filesystem Quota Status ...</div>
       </section>
 
       <section class="slide" data-title="After login">
