@@ -471,17 +471,18 @@
         <div class="slide-header"><span class="section-tag">Safe practice</span><span>Use committed examples</span></div>
         <h2>실습은 항상 안전한 폴더와 실제 예제 파일로 시작합니다.</h2>
         <div class="grid-2" style="margin-top:48px">
-          <div class="terminal"><span class="prompt">server$</span> git clone https://github.com/material-JH/bash_tutorial.git ~/bash_tutorial
+          <div class="terminal"><span class="prompt">server$</span> mkdir -p ~/git
+<span class="prompt">server$</span> git clone https://github.com/material-JH/bash_tutorial.git ~/git/bash_tutorial
 <span class="prompt">server$</span> mkdir -p ~/linux-practice
-<span class="prompt">server$</span> cp -r ~/bash_tutorial/examples ~/linux-practice/
+<span class="prompt">server$</span> cp -r ~/git/bash_tutorial/examples ~/linux-practice/
 <span class="prompt">server$</span> cd ~/linux-practice/examples
 <span class="prompt">server$</span> pwd</div>
           <div class="card strong">
-            <h3>왜 예제 파일을 미리 넣었나?</h3>
+            <h3>원본과 실습 폴더를 분리합니다</h3>
             <ul class="clean" style="margin-top:24px">
-              <li>초보자는 따옴표와 특수문자 때문에 파일 생성부터 막힐 수 있습니다.</li>
-              <li>실제 로그, QE 입력/출력, 실행 파일, 바이너리 샘플로 연습합니다.</li>
-              <li>삭제 연습도 공동 연구 데이터가 아닌 sandbox 안에서만 합니다.</li>
+              <li><span class="mono">~/git/bash_tutorial</span>: 튜토리얼 원본과 homework 자료.</li>
+              <li><span class="mono">~/linux-practice</span>: 오늘 손으로 수정하고 삭제해도 되는 실습 복사본.</li>
+              <li>실습은 원본을 직접 바꾸지 않고 복사본 안에서 진행합니다.</li>
             </ul>
           </div>
         </div>
@@ -705,7 +706,7 @@
           <div class="card"><div class="metric">3</div><h3 style="margin-top:18px">로그</h3><p class="metric-label">계산 성공 여부는 출력 파일과 검색 결과로 판단합니다.</p></div>
           <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">다음 과제</h3><p class="metric-label">누리온 QE 실행 메모는 다음 세션 전 homework로 읽습니다.</p></div>
         </div>
-        <p class="subtitle">먼저 누리온 로그인 튜토리얼을 마치고, 이 발표는 `~/linux-practice/examples`에서 손으로 연습합니다.</p>
+        <p class="subtitle">튜토리얼 원본은 <span class="mono">~/git/bash_tutorial</span>에 두고, 이 발표의 손연습은 <span class="mono">~/linux-practice/examples</span> 복사본에서 진행합니다.</p>
       </section>
 
                   <div class="footer">
