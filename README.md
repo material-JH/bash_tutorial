@@ -1,6 +1,7 @@
 # 리눅스 명령어 입문 튜토리얼
 
 Windows/macOS 사용자와 리눅스 터미널 초보자를 위한 한국어 튜토리얼입니다.
+워크숍에서는 KISTI 슈퍼컴퓨터 5호기 누리온(NURION)에 접속해 실습할 수 있도록, 마지막 장에 누리온 전용 PBS/scratch/QE 실행 메모를 따로 넣었습니다.
 자세한 설명은 각 lesson 파일에 나누어 두었습니다.
 
 ## 목차
@@ -19,7 +20,7 @@ Windows/macOS 사용자와 리눅스 터미널 초보자를 위한 한국어 튜
 10. [도움말, 기록, 자동완성, 단축키](lessons/10-help-history-next-steps.md)
 11. [최종 실습 프로젝트](lessons/11-final-practice-project.md)
 12. [Quantum ESPRESSO 작업 흐름](lessons/12-quantum-espresso-workflow.md)
-13. [이 클러스터에서 QE 실행하기: PBS, scratch, 파일 관리](lessons/13-this-cluster-qe-pbs.md)
+13. [누리온(NURION)에서 QE 실행하기: PBS, scratch, 파일 관리](lessons/13-this-cluster-qe-pbs.md)
 
 ### 자료
 
