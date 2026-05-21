@@ -69,6 +69,8 @@
     .pipeline { display: grid; grid-template-columns: 1fr 110px 1fr 110px 1fr; align-items: center; gap: 20px; margin-top: 58px; }
     .pipe-node { min-height: 250px; display: grid; align-content: center; gap: 16px; background: #fff; border: 1px solid var(--line); border-top: 5px solid var(--accent); padding: 34px; }
     .pipe-arrow { color: var(--accent); font-size: 64px; text-align: center; }
+    .screenshot { width: 100%; max-height: 510px; object-fit: contain; border: 1px solid var(--line); box-shadow: 0 18px 44px rgba(0,64,152,.14); background: #fff; }
+    .image-card { background: #fff; border: 1px solid var(--line); padding: 18px; box-shadow: 0 14px 32px rgba(0,64,152,.08); }
     .mono { font-family: var(--mono); }
     .footer { position: absolute; left: 110px; right: 110px; bottom: 34px; display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,.86); background: #202832; border-top: 4px solid var(--accent); padding: 14px 18px; font-size: 20px; letter-spacing: .05em; z-index: 20; }
     .progress { width: 420px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.20); overflow: hidden; }
@@ -209,6 +211,22 @@ login01
           <div class="card strong"><h3><span class="mono">/scratch/$USER</span></h3><ul class="clean"><li>큰 작업을 위한 임시 공간</li><li>나중에 정리될 수 있음</li><li>자세한 사용법은 homework에서 읽기</li></ul></div>
         </div>
         <p class="subtitle">오늘 첫 단계는 로그인입니다. 파일 이동은 리눅스 기본 명령을 배운 뒤 다시 다룹니다.</p>
+      </section>
+
+      <section class="slide" data-title="File transfer with MobaXterm">
+        <div class="slide-header"><span class="tag">File transfer</span><span>MobaXterm + data mover node</span></div>
+        <h2>파일 전송은 MobaXterm에서 <span class="mono">nurion-dm.ksc.re.kr</span>로 접속합니다.</h2>
+        <div class="grid-2" style="grid-template-columns: 1.12fr .88fr; margin-top:38px">
+          <div class="image-card"><img class="screenshot" src="mobaxterm.png" alt="MobaXterm SFTP session example for Nurion file transfer" /></div>
+          <div>
+            <div class="card strong" style="min-height:0"><h3>초보자용 기억법</h3><ul class="clean"><li><span class="mono">nurion.ksc.re.kr</span>: 명령어를 입력하는 SSH 로그인</li><li><span class="mono">nurion-dm.ksc.re.kr</span>: 파일을 올리고 내려받는 SFTP 접속</li><li>MobaXterm의 파일 창에서 drag &amp; drop으로 전송합니다.</li></ul></div>
+            <div class="terminal compact" style="margin-top:28px">Remote host: nurion-dm.ksc.re.kr
+Username: 본인 누리온 ID
+Protocol: SFTP
+Remote folder: /home01/본인ID</div>
+          </div>
+        </div>
+        <p class="subtitle">로그인 노드에서는 SFTP/FTP를 쓰지 않고, 파일 전송용 DM node를 사용합니다.</p>
       </section>
 
       <section class="slide" data-title="If login fails">
