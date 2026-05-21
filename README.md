@@ -19,6 +19,7 @@ Windows/macOS 사용자와 리눅스 터미널 초보자를 위한 한국어 튜
 10. [도움말, 기록, 자동완성, 단축키](lessons/10-help-history-next-steps.md)
 11. [최종 실습 프로젝트](lessons/11-final-practice-project.md)
 12. [Quantum ESPRESSO 작업 흐름](lessons/12-quantum-espresso-workflow.md)
+13. [이 클러스터에서 QE 실행하기: PBS, scratch, 파일 관리](lessons/13-this-cluster-qe-pbs.md)
 
 ### 자료
 
