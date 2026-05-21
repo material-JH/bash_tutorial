@@ -394,14 +394,14 @@
   <div class="viewport">
     <main class="deck" id="deck" aria-live="polite">
       <section class="slide active" data-title="Title">
-        <div class="slide-header"><span class="section-tag">Linux command tutorial</span><span>SSH + QE beginner guide</span></div>
+        <div class="slide-header"><span class="section-tag">Linux command tutorial</span><span>SSH + Nurion + QE beginner guide</span></div>
         <div class="two-col-title">
           <div>
             <h1>리눅스 터미널을 <span class="accent">연구 도구</span>로 쓰기</h1>
-            <p class="subtitle">Windows/macOS 사용자도 SSH로 원격 서버에 접속해 파일을 찾고, 읽고, 수정하고, Quantum ESPRESSO 계산 결과를 확인할 수 있게 만드는 입문 발표 자료입니다.</p>
+            <p class="subtitle">Windows/macOS 사용자도 SSH로 누리온에 접속해 파일을 찾고, 읽고, 수정하고, PBS로 Quantum ESPRESSO 계산을 제출할 수 있게 만드는 입문 발표 자료입니다.</p>
           </div>
           <div class="card strong">
-            <div class="metric">local$ → server$ → pw.x</div>
+            <div class="metric">local$ → login01 → qsub</div>
             <p class="metric-label">오늘의 목표는 “명령어 암기”가 아니라 안전한 서버 작업 흐름을 익히는 것입니다.</p>
           </div>
         </div>
@@ -413,11 +413,11 @@
         <div class="slide-header"><span class="section-tag">Roadmap</span><span>1-hour hands-on flow</span></div>
         <h2>1시간 진행: 핵심 개념을 짧게 설명하고 바로 손으로 확인하기</h2>
         <div class="timeline">
-          <div class="time">0:00–0:10</div><div class="time-item"><h3>터미널과 SSH</h3><p>로컬 컴퓨터와 원격 서버를 구분하고 `ssh user@host`로 접속합니다.</p></div>
-          <div class="time">0:10–0:25</div><div class="time-item"><h3>위치, 이동, 구조 보기</h3><p>`pwd`, `ls`, `cd`, `tree`, `find . -maxdepth`로 서버의 폴더 구조를 읽습니다.</p></div>
+          <div class="time">0:00–0:10</div><div class="time-item"><h3>터미널과 SSH</h3><p>로컬 컴퓨터와 누리온 로그인 노드를 구분하고 `ssh`로 접속합니다.</p></div>
+          <div class="time">0:10–0:25</div><div class="time-item"><h3>위치와 파일</h3><p>`pwd`, `ls`, `cd`, `cp`, `mv`로 현재 위치와 파일 이동을 연습합니다.</p></div>
           <div class="time">0:25–0:38</div><div class="time-item"><h3>텍스트 읽기와 `vim`</h3><p>`more`, `head`, `tail`, `vim`으로 입력 파일과 출력 로그를 확인합니다.</p></div>
-          <div class="time">0:38–0:50</div><div class="time-item"><h3>파일 조작과 안전 규칙</h3><p>`cp`, `mv`, `rm -i`, 와일드카드, 리다이렉션을 안전하게 연습합니다.</p></div>
-          <div class="time">0:50–1:00</div><div class="time-item"><h3>QE 작업 흐름과 정리</h3><p>`command -v pw.x`, `pw.x -in ... > ... 2> ...`, `grep "JOB DONE"`까지 빠르게 연결합니다.</p></div>
+          <div class="time">0:38–0:50</div><div class="time-item"><h3>누리온 작업 위치</h3><p>home은 보관, scratch는 실행 장소임을 배우고 scratch에서 `qsub`합니다.</p></div>
+          <div class="time">0:50–1:00</div><div class="time-item"><h3>QE/PBS 작업 흐름</h3><p>`module load`, `qsub`, `qstat`, output 확인까지 한 번 연결합니다.</p></div>
         </div>
       </section>
 
@@ -650,6 +650,47 @@
         </div>
       </section>
 
+      <section class="slide" data-title="Nurion overview">
+        <div class="slide-header"><span class="section-tag">Nurion</span><span>Login node vs compute node</span></div>
+        <h2>누리온에서는 로그인 노드와 계산 노드를 구분합니다.</h2>
+        <div class="pipeline">
+          <div class="pipe-node"><h3>내 노트북</h3><p class="small mono">ssh<br>nurion.ksc.re.kr</p></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-node"><h3>login01</h3><p class="small mono">pwd / ls / vim<br>qsub / qstat</p></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-node"><h3>계산 노드</h3><p class="small mono">pw.x<br>xspectra.x<br>MPI 계산</p></div>
+        </div>
+        <p class="subtitle"><span class="danger">중요:</span> 로그인 노드에서 큰 계산을 직접 실행하지 말고 PBS script를 `qsub`합니다.</p>
+      </section>
+
+      <section class="slide" data-title="Nurion files">
+        <div class="slide-header"><span class="section-tag">Nurion files</span><span>home vs scratch</span></div>
+        <h2>home은 보관 장소, scratch는 실행 장소입니다.</h2>
+        <div class="grid-2" style="margin-top:48px">
+          <div class="card strong"><h3><span class="mono">/home01/$USER</span></h3><ul class="clean" style="margin-top:24px"><li>오래 보관할 입력 파일</li><li>PBS script 원본</li><li>중요한 결과 백업</li></ul></div>
+          <div class="card warn"><h3><span class="mono">/scratch/$USER</span></h3><ul class="clean" style="margin-top:24px"><li>실제 job 제출 위치</li><li>큰 output/tmp 파일 생성</li><li>나중에 정리될 수 있음</li></ul></div>
+        </div>
+        <div class="terminal compact" style="margin-top:40px"><span class="prompt">server$</span> mkdir -p /scratch/$USER/qe_projects
+<span class="prompt">server$</span> cp -r ~/qe_projects/test /scratch/$USER/qe_projects/
+<span class="prompt">server$</span> mv old.in new.in   <span class="comment"># 이름 바꾸기</span>
+<span class="prompt">server$</span> cd /scratch/$USER/qe_projects/test
+<span class="prompt">server$</span> qsub run_qe.pbs
+<span class="prompt">server$</span> cp -r /scratch/$USER/qe_projects/test ~/qe_projects/test_results</div>
+      </section>
+
+      <section class="slide" data-title="Nurion PBS">
+        <div class="slide-header"><span class="section-tag">PBS</span><span>Submit, check, cancel</span></div>
+        <h2>누리온 job은 PBS 명령 세 개로 시작합니다.</h2>
+        <div class="grid-3" style="margin-top:54px">
+          <div class="card strong"><div class="metric mono">qsub</div><h3 style="margin-top:18px">제출</h3><p class="metric-label">scratch 폴더에서 PBS script를 제출합니다.</p></div>
+          <div class="card"><div class="metric mono">qstat</div><h3 style="margin-top:18px">확인</h3><p class="metric-label">내 job이 대기(Q)인지 실행(R)인지 봅니다.</p></div>
+          <div class="card warn"><div class="metric mono">qdel</div><h3 style="margin-top:18px">취소</h3><p class="metric-label">잘못 제출한 job을 JOBID로 취소합니다.</p></div>
+        </div>
+        <div class="terminal compact" style="margin-top:42px"><span class="prompt">server$</span> qsub run_qe.pbs
+<span class="prompt">server$</span> qstat -u $USER
+<span class="prompt">server$</span> qdel JOBID</div>
+      </section>
+
       <section class="slide" data-title="QE workflow">
         <div class="slide-header"><span class="section-tag">Quantum ESPRESSO</span><span>Input → output</span></div>
         <h2>QE 작업은 “입력 파일을 읽고, 실행하고, 출력에서 증거를 찾기”입니다.</h2>
@@ -663,20 +704,27 @@
         <p class="subtitle">계산 과학 입문자는 “버튼을 누른다”보다 “파일과 로그를 읽는다”를 먼저 배워야 합니다.</p>
       </section>
 
-      <section class="slide" data-title="Run QE">
-        <div class="slide-header"><span class="section-tag">QE commands</span><span>Fake first, real later</span></div>
-        <h2>진짜 계산 전에는 fake 실행 파일로 리다이렉션을 연습합니다.</h2>
+      <section class="slide" data-title="Run QE on Nurion">
+        <div class="slide-header"><span class="section-tag">QE on Nurion</span><span>module + PBS</span></div>
+        <h2>누리온에서는 QE도 PBS script 안에서 실행합니다.</h2>
         <div class="grid-2" style="margin-top:48px">
-          <div class="terminal"><span class="comment"># 튜토리얼 예제: 안전한 fake 실행</span>
-<span class="prompt">server$</span> cd ~/linux-practice/examples/qe
-<span class="prompt">server$</span> ./fake-pw.x -in si.scf.in &gt; fake.out 2&gt; fake.err
-<span class="prompt">server$</span> more fake.out
-<span class="prompt">server$</span> wc -c fake.err   <span class="comment"># 0이면 stderr 없음</span></div>
-          <div class="terminal"><span class="comment"># 실제 QE 기본형</span>
-<span class="prompt">server$</span> pw.x -in si.scf.in &gt; si.scf.out 2&gt; si.scf.err
+          <div class="terminal compact"><span class="comment"># debug/KNL 테스트용 module</span>
+module purge
+module load craype-mic-knl
+module load intel/oneapi_21.2
+module load impi/oneapi_21.2
+module load qe/7.5
 
-<span class="comment"># MPI 병렬 실행 예</span>
-<span class="prompt">server$</span> mpirun -np 4 pw.x -in si.scf.in &gt; si.scf.out 2&gt;&amp;1</div>
+<span class="comment"># PBS script 안에서</span>
+mpirun -np "$NP" pw.x -in scf.in &gt; scf.out 2&gt;&amp;1</div>
+          <div class="card strong">
+            <h3>PBS script에 꼭 넣을 줄</h3>
+            <div class="terminal compact" style="margin-top:22px">#PBS -A qe
+#PBS -q debug
+#PBS -l select=1:ncpus=2:mpiprocs=2
+#PBS -l walltime=00:05:00</div>
+            <p class="small" style="margin-top:18px">처음에는 2 MPI rank, 5분 walltime으로 launch test부터 합니다.</p>
+          </div>
         </div>
       </section>
 
@@ -721,7 +769,7 @@
           <div class="card strong"><div class="metric">1</div><h3 style="margin-top:18px">위치</h3><p class="metric-label">항상 `local$`와 `server$`, 그리고 `pwd`를 확인합니다.</p></div>
           <div class="card"><div class="metric">2</div><h3 style="margin-top:18px">파일</h3><p class="metric-label">읽기 → 복사 → 수정 → 삭제 순서로 안전하게 다룹니다.</p></div>
           <div class="card"><div class="metric">3</div><h3 style="margin-top:18px">로그</h3><p class="metric-label">계산 성공 여부는 출력 파일과 검색 결과로 판단합니다.</p></div>
-          <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">QE</h3><p class="metric-label">`pw.x -in input > output 2> error` 구조를 이해합니다.</p></div>
+          <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">QE</h3><p class="metric-label">`qsub → qstat → output 확인` 흐름을 이해합니다.</p></div>
         </div>
         <p class="subtitle">이제 발표를 닫고 `~/linux-practice/examples`에서 손으로 연습합니다.</p>
       </section>

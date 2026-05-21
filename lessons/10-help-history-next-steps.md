@@ -130,10 +130,10 @@ server$ command -v mpirun
 | 압축 | `tar`, `zip`, `unzip` |
 | 프로세스 확인 | `ps`, `top`, `kill` |
 | 디스크 사용량 | `df`, `du` |
-| 파일 전송 | `scp`, `rsync`, `sftp` |
+| 파일 복사/전송 | `cp`, `mv`, `scp`, `sftp` |
 | 원격 접속 | `ssh` |
 | 환경 모듈 | `module avail`, `module load`, `module list` |
-| 작업 스케줄러 | `sbatch`, `squeue`, `scancel` |
+| 작업 스케줄러 | `qsub`, `qstat`, `qdel` |
 | 버전 관리 | `git` |
 | 텍스트 처리 | `sort`, `uniq`, `cut`, `sed`, `awk` |
 
