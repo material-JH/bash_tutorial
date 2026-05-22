@@ -26,6 +26,7 @@ Windows/macOS 사용자와 리눅스 터미널 초보자를 위한 한국어 튜
 
 - [누리온 로그인 HTML 발표 자료](https://material-jh.github.io/bash_tutorial/nurion_login_tutorial.html)
 - [리눅스 명령어 HTML 발표 자료](https://material-jh.github.io/bash_tutorial/linux_command_tutorial_presentation.html)
+- [숙제 읽기: 누리온 QE/PBS/scratch HTML slide deck](https://material-jh.github.io/bash_tutorial/this-cluster-qe-pbs.html)
 - [치트시트](CHEATSHEET.md)
 - [예제 파일 설명](examples/README.md)
 - [튜토리얼 설계 조사 메모](RESEARCH_NOTES.md)

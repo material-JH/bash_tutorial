@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>누리온에서 QE 실행하기 — PBS와 scratch homework deck</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=Roboto+Mono:wght@500;700&display=swap');
+    :root {
+      --bg: #eef4fa;
+      --surface: #ffffff;
+      --surface-2: #f7fbff;
+      --surface-3: #eef7ff;
+      --ink: #151515;
+      --muted: #52606d;
+      --dim: #7a8793;
+      --accent: #004098;
+      --accent-2: #00aeef;
+      --line: #d8e2ec;
+      --terminal: #101923;
+      --terminal-2: #162536;
+      --terminal-ink: #e7f6ff;
+      --warn: #b76a00;
+      --danger: #d92d20;
+      --success: #006b5f;
+      --mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 10%, rgba(0,174,239,.12), transparent 26%),
+        linear-gradient(90deg, rgba(0,64,152,.05) 1px, transparent 1px),
+        linear-gradient(rgba(0,64,152,.045) 1px, transparent 1px),
+        linear-gradient(135deg, #f7fbff 0%, var(--bg) 100%);
+      background-size: auto, 42px 42px, 42px 42px, auto;
+      overflow: hidden;
+    }
+    .viewport { width: 100vw; height: 100vh; padding: 20px; position: relative; }
+    .deck {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: center center;
+      background: var(--surface);
+      border: 1px solid #b8c9d9;
+      box-shadow: 0 26px 70px rgba(0,45,90,.16);
+      overflow: hidden;
+    }
+    .deck::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      height: 8px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent) 0 16%, var(--accent-2) 16% 23%, transparent 23%);
+      z-index: 5;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 78px 106px 96px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.99), rgba(246,250,254,.97)),
+        radial-gradient(circle at 92% 18%, rgba(0,174,239,.13), transparent 28%);
+    }
+    .slide.active { display: block; }
+    .slide::after {
+      content: "";
+      position: absolute;
+      right: 106px;
+      top: 82px;
+      width: 66px;
+      height: 66px;
+      opacity: .45;
+      background-image: radial-gradient(var(--accent) 2.5px, transparent 2.7px);
+      background-size: 18px 18px;
+      pointer-events: none;
+    }
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 21px;
+      margin-bottom: 30px;
+      letter-spacing: .02em;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+    .tag {
+      position: relative;
+      color: var(--accent);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      padding-left: 34px;
+    }
+    .tag::before, .tag::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: var(--accent-2);
+    }
+    .tag::before { left: 0; }
+    .tag::after { left: 16px; background: var(--accent); }
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: 82px;
+      line-height: 1.06;
+      letter-spacing: -.045em;
+      max-width: 1320px;
+      word-break: keep-all;
+    }
+    h2 {
+      font-size: 55px;
+      line-height: 1.13;
+      letter-spacing: -.035em;
+      max-width: 1460px;
+      word-break: keep-all;
+    }
+    h3 {
+      font-size: 32px;
+      line-height: 1.23;
+      letter-spacing: -.02em;
+      word-break: keep-all;
+    }
+    .subtitle {
+      margin-top: 24px;
+      font-size: 31px;
+      line-height: 1.45;
+      color: var(--muted);
+      max-width: 1400px;
+      word-break: keep-all;
+    }
+    .small { font-size: 27px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
+    .mini { font-size: 23px; line-height: 1.42; color: var(--muted); word-break: keep-all; }
+    .accent { color: var(--accent); }
+    .cyan { color: var(--accent-2); }
+    .danger { color: var(--danger); font-weight: 900; }
+    .success { color: var(--success); font-weight: 900; }
+    .warn-text { color: var(--warn); font-weight: 900; }
+    .mono { font-family: var(--mono); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 42px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 42px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 42px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--accent);
+      padding: 30px 32px;
+      min-height: 190px;
+      box-shadow: 0 14px 32px rgba(0,64,152,.08);
+    }
+    .card.strong { background: #f4faff; border-top-color: var(--accent-2); }
+    .card.warn { background: #fffaf2; border-top-color: var(--warn); }
+    .card.danger { background: #fff7f6; border-top-color: var(--danger); }
+    .card.success { background: #f3fbf8; border-top-color: var(--success); }
+    .terminal {
+      background: linear-gradient(180deg, var(--terminal), var(--terminal-2));
+      color: var(--terminal-ink);
+      border-left: 6px solid var(--accent-2);
+      padding: 28px 32px;
+      font-family: var(--mono);
+      font-size: 28px;
+      line-height: 1.42;
+      white-space: pre-wrap;
+      box-shadow: 0 18px 44px rgba(16,25,35,.20);
+      overflow-wrap: anywhere;
+    }
+    .terminal.compact { font-size: 24px; line-height: 1.38; padding: 24px 28px; }
+    .terminal.tiny { font-size: 20px; line-height: 1.34; padding: 22px 26px; }
+    .prompt { color: #38d2ff; font-weight: 900; }
+    .comment { color: #9cafbf; }
+    .bad { color: #ff8a80; }
+    .ok { color: #75f0bd; }
+    .gold { color: #ffd166; }
+    ul.clean, ol.clean {
+      margin: 18px 0 0;
+      padding-left: 30px;
+      font-size: 27px;
+      line-height: 1.45;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+    ol.clean li, ul.clean li { margin: 7px 0; }
+    .pipeline {
+      display: grid;
+      grid-template-columns: 1fr 92px 1fr 92px 1fr;
+      align-items: stretch;
+      gap: 18px;
+      margin-top: 44px;
+    }
+    .pipe-4 { grid-template-columns: 1fr 72px 1fr 72px 1fr 72px 1fr; }
+    .pipe-node {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--accent);
+      padding: 28px;
+      min-height: 220px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+    }
+    .pipe-node.strong { border-top-color: var(--accent-2); background: var(--surface-2); }
+    .pipe-node.warn { border-top-color: var(--warn); background: #fffaf2; }
+    .pipe-arrow { color: var(--accent); font-size: 58px; display: grid; place-items: center; font-weight: 900; }
+    .table {
+      width: 100%;
+      margin-top: 38px;
+      border-collapse: collapse;
+      font-size: 27px;
+      line-height: 1.35;
+      background: #fff;
+      box-shadow: 0 14px 32px rgba(0,64,152,.08);
+    }
+    .table th, .table td { border: 1px solid var(--line); padding: 20px 24px; vertical-align: top; word-break: keep-all; }
+    .table th { background: var(--accent); color: #fff; text-align: left; font-weight: 900; }
+    .table td:first-child { font-family: var(--mono); color: var(--accent); font-weight: 700; white-space: nowrap; }
+    .callout {
+      margin-top: 34px;
+      border-left: 8px solid var(--accent-2);
+      background: var(--surface-2);
+      padding: 24px 30px;
+      font-size: 29px;
+      line-height: 1.45;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+    .callout.warn { border-left-color: var(--warn); background: #fffaf2; }
+    .callout.danger { border-left-color: var(--danger); background: #fff7f6; }
+    .step-list { display: grid; gap: 18px; margin-top: 36px; }
+    .step {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 22px;
+      align-items: start;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--accent);
+      padding: 22px 26px;
+      box-shadow: 0 10px 26px rgba(0,64,152,.06);
+    }
+    .num {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-weight: 900;
+      font-size: 24px;
+    }
+    .split { display: grid; grid-template-columns: 1.03fr .97fr; gap: 34px; margin-top: 40px; align-items: start; }
+    .split.wide-left { grid-template-columns: 1.18fr .82fr; }
+    .split.wide-right { grid-template-columns: .86fr 1.14fr; }
+    .footer {
+      position: absolute;
+      left: 106px;
+      right: 106px;
+      bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255,255,255,.88);
+      background: #202832;
+      border-top: 4px solid var(--accent);
+      padding: 13px 18px;
+      font-size: 19px;
+      letter-spacing: .05em;
+      z-index: 20;
+    }
+    .progress { width: 430px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.20); overflow: hidden; }
+    .progress > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-2), #fff); }
+    .nav-help { position: fixed; left: 18px; bottom: 16px; z-index: 50; color: rgba(21,21,21,.58); font-size: 13px; font-family: var(--mono); }
+    .controls { position: fixed; right: 18px; bottom: 16px; display: flex; gap: 10px; z-index: 60; }
+    .controls button { width: 46px; height: 46px; border-radius: 50%; border: 0; color: #fff; background: #202832; cursor: pointer; font-size: 22px; }
+    .controls button:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; }
+    @media print {
+      body { overflow: visible; background: white; }
+      .viewport { display: block; width: auto; height: auto; padding: 0; }
+      .deck { position: relative; left: auto; top: auto; transform: none !important; width: 1920px; height: auto; border: 0; box-shadow: none; }
+      .slide { display: block !important; position: relative; width: 1920px; height: 1080px; page-break-after: always; }
+      .footer, .controls, .nav-help { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <main class="deck" id="deck" aria-live="polite">
+      <section class="slide active" data-title="Title">
+        <div class="slide-header"><span class="tag">Homework reading</span><span>Nurion · QE · PBS · scratch</span></div>
+        <h1>누리온에서 QE 실행하기:<br><span class="accent">PBS와 scratch</span>를 먼저 이해합니다.</h1>
+        <p class="subtitle">이 자료는 숙제용 읽기 slide deck입니다. 목표는 “어디에서 파일을 준비하고, 어디에서 job을 제출하고, 어디에서 결과를 찾는지”를 초보자 기준으로 익히는 것입니다.</p>
+        <div class="grid-3">
+          <div class="card strong"><h3>1. 서버 구조</h3><p class="small">로그인 노드와 계산 노드를 구분합니다.</p></div>
+          <div class="card"><h3>2. 작업 위치</h3><p class="small"><span class="mono">home</span>과 <span class="mono">scratch</span> 역할을 구분합니다.</p></div>
+          <div class="card warn"><h3>3. 제출 방법</h3><p class="small">PBS script를 만들고 <span class="mono">qsub</span>로 제출합니다.</p></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="How to read">
+        <div class="slide-header"><span class="tag">Before you start</span><span>prompt labels and safety</span></div>
+        <h2>자료에 나오는 <span class="mono">server$</span>는 “누리온에서 입력”이라는 표시입니다.</h2>
+        <div class="grid-2">
+          <div class="card strong"><h3>맞는 입력</h3><div class="terminal compact" style="margin-top:18px"><span class="prompt">server$</span> pwd</div><p class="small" style="margin-top:16px">실제로는 <span class="mono">pwd</span>만 입력합니다.</p></div>
+          <div class="card danger"><h3>틀린 입력</h3><div class="terminal compact" style="margin-top:18px"><span class="bad">server$ pwd</span></div><p class="small" style="margin-top:16px"><span class="mono">server$</span>까지 복사하면 명령어가 아닙니다.</p></div>
+        </div>
+        <div class="callout danger"><strong>중요:</strong> 로그인 노드에서 큰 QE 계산을 직접 실행하지 않습니다. 계산은 PBS script를 만들어 <span class="mono">qsub</span>로 제출합니다.</div>
+      </section>
+
+      <section class="slide" data-title="Cluster model">
+        <div class="slide-header"><span class="tag">Mental model</span><span>login node vs compute node</span></div>
+        <h2>누리온은 내 노트북이 아니라, 많은 계산 노드가 모여 있는 슈퍼컴퓨터입니다.</h2>
+        <div class="pipeline">
+          <div class="pipe-node strong"><h3>내 노트북</h3><p class="small mono">Windows / macOS</p><p class="small">SSH로 누리온에 접속합니다.</p></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-node"><h3>로그인 노드</h3><p class="small mono">login01</p><p class="small">파일 보기, 편집, <span class="mono">qsub</span> 제출 같은 가벼운 작업.</p></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-node warn"><h3>계산 노드</h3><p class="small mono">compute nodes</p><p class="small"><span class="mono">pw.x</span>, <span class="mono">xspectra.x</span> 같은 무거운 계산.</p></div>
+        </div>
+        <p class="subtitle">여러분이 직접 들어가는 곳은 로그인 노드입니다. 계산 노드는 PBS scheduler가 배정합니다.</p>
+      </section>
+
+      <section class="slide" data-title="First checks">
+        <div class="slide-header"><span class="tag">First checks</span><span>after login</span></div>
+        <h2>접속 후 가장 먼저 “내가 어디에 있는지” 확인합니다.</h2>
+        <div class="terminal" style="margin-top:48px"><span class="prompt">server$</span> hostname
+<span class="prompt">server$</span> whoami
+<span class="prompt">server$</span> pwd
+<span class="prompt">server$</span> echo $HOME</div>
+        <div class="grid-3">
+          <div class="card"><h3>hostname</h3><p class="small">어느 서버에 있는지 확인합니다. 예: <span class="mono">login01</span></p></div>
+          <div class="card"><h3>whoami</h3><p class="small">내 누리온 계정 ID를 확인합니다.</p></div>
+          <div class="card strong"><h3>pwd</h3><p class="small">현재 폴더 위치를 확인합니다. 초보자는 자주 확인하는 습관이 중요합니다.</p></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Home and scratch">
+        <div class="slide-header"><span class="tag">Storage model</span><span>home vs scratch</span></div>
+        <h2>누리온에서는 <span class="mono">home</span>과 <span class="mono">scratch</span>를 다르게 사용합니다.</h2>
+        <table class="table">
+          <thead><tr><th>위치</th><th>역할</th><th>초보자 기억법</th></tr></thead>
+          <tbody>
+            <tr><td>/home01/$USER</td><td>입력 파일, PBS script, 중요한 결과를 보관합니다.</td><td>정리해서 오래 보관할 작업 공간.</td></tr>
+            <tr><td>/scratch/$USER</td><td>실제 계산을 실행하고 큰 output/tmp 파일이 생기는 공간입니다.</td><td>계산을 돌리는 작업 공간. 영구 보관 장소가 아닙니다.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout warn">이 클러스터에서는 <span class="mono">/home01</span>에서 <span class="mono">qsub</span>를 하면 실패할 수 있습니다. <strong>job 제출은 <span class="mono">/scratch/$USER</span> 아래에서</strong> 합니다.</div>
+      </section>
+
+      <section class="slide" data-title="Workflow">
+        <div class="slide-header"><span class="tag">Workflow</span><span>prepare · copy · submit · backup</span></div>
+        <h2>기억할 핵심 문장: home에서 준비하고, scratch에서 실행하고, 결과는 다시 home에 보관합니다.</h2>
+        <div class="pipeline pipe-4">
+          <div class="pipe-node strong"><h3>1. home 준비</h3><p class="small mono">~/qe_projects/qe_test</p><p class="small">입력 파일과 PBS script 작성.</p></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-node"><h3>2. scratch 복사</h3><p class="small mono">/scratch/$USER/...</p><p class="small">계산 실행 폴더로 복사.</p></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-node warn"><h3>3. qsub 제출</h3><p class="small mono">qsub run_qe.pbs</p><p class="small">반드시 scratch에서 제출.</p></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-node strong"><h3>4. 결과 백업</h3><p class="small mono">~/qe_projects/.../results</p><p class="small">중요 파일은 home으로 복사.</p></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Scratch warning">
+        <div class="slide-header"><span class="tag">Important warning</span><span>scratch is temporary</span></div>
+        <h2><span class="mono">/scratch</span>에만 중요한 결과를 두지 마세요.</h2>
+        <div class="split wide-left">
+          <div>
+            <div class="terminal"><span class="prompt">server$</span> ls /scratch/$USER
+<span class="comment"># 오래 접근하지 않은 파일은 삭제 대상이 될 수 있습니다.</span></div>
+            <div class="callout danger">누리온 문서에 따르면 scratch 파일은 일정 기간 접근하지 않으면 삭제 대상이 될 수 있습니다. 삭제 대상 파일에는 <span class="mono">ToBeDelete_</span> 같은 접두사가 붙을 수 있습니다.</div>
+          </div>
+          <div class="card success"><h3>초보자용 결론</h3><ul class="clean"><li>계산 중에는 scratch를 사용합니다.</li><li>계산이 끝나면 중요한 파일을 home으로 복사합니다.</li><li>큰 <span class="mono">tmp/</span> 폴더는 필요한지 담당자에게 확인합니다.</li></ul></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Prepare in home">
+        <div class="slide-header"><span class="tag">Step 1</span><span>prepare files in home</span></div>
+        <h2>먼저 home에 원본 계산 폴더를 만듭니다.</h2>
+        <div class="split">
+          <div class="terminal"><span class="prompt">server$</span> mkdir -p ~/qe_projects/qe_test
+<span class="prompt">server$</span> cd ~/qe_projects/qe_test
+<span class="prompt">server$</span> pwd</div>
+          <div class="card strong"><h3>여기에 둘 파일</h3><ul class="clean"><li><span class="mono">scf.in</span> — QE 입력 파일</li><li><span class="mono">run_qe.pbs</span> — PBS 제출 script</li><li><span class="mono">pseudo/</span> — pseudopotential 폴더</li></ul></div>
+        </div>
+        <p class="subtitle">home은 정리된 원본을 두는 장소라고 생각하면 됩니다.</p>
+      </section>
+
+      <section class="slide" data-title="Copy to scratch">
+        <div class="slide-header"><span class="tag">Step 2</span><span>copy files to scratch</span></div>
+        <h2>계산을 실행할 scratch 폴더를 만들고 파일을 복사합니다.</h2>
+        <div class="terminal" style="margin-top:44px"><span class="prompt">server$</span> mkdir -p /scratch/$USER/qe_projects/qe_test
+<span class="prompt">server$</span> cp -r ~/qe_projects/qe_test/* /scratch/$USER/qe_projects/qe_test/
+<span class="prompt">server$</span> ls -lh /scratch/$USER/qe_projects/qe_test</div>
+        <div class="grid-3">
+          <div class="card"><h3><span class="mono">cp</span></h3><p class="small">copy, 파일을 복사합니다.</p></div>
+          <div class="card"><h3><span class="mono">-r</span></h3><p class="small">폴더 안까지 recursive하게 복사합니다.</p></div>
+          <div class="card warn"><h3><span class="mono">*</span></h3><p class="small">현재 폴더 안의 여러 파일을 뜻합니다. 사용 전 위치를 확인하세요.</p></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Check and rename">
+        <div class="slide-header"><span class="tag">Small file skills</span><span>check before submitting</span></div>
+        <h2>제출 전에 파일 목록과 이름을 꼭 확인합니다.</h2>
+        <div class="split wide-right">
+          <div class="card strong"><h3>이름 바꾸기</h3><p class="small"><span class="mono">mv</span>는 move의 줄임말이지만, 같은 폴더 안에서 쓰면 “이름 바꾸기”가 됩니다.</p><div class="terminal compact" style="margin-top:20px"><span class="prompt">server$</span> mv old_name.in new_name.in</div></div>
+          <div class="terminal"><span class="prompt">server$</span> cd /scratch/$USER/qe_projects/qe_test
+<span class="prompt">server$</span> pwd
+/scratch/내ID/qe_projects/qe_test
+<span class="prompt">server$</span> ls -lh
+<span class="comment"># scf.in, run_qe.pbs, pseudo/ 가 보이나요?</span></div>
+        </div>
+        <div class="callout">초보자 습관: <span class="mono">qsub</span> 전에 항상 <span class="mono">pwd</span>와 <span class="mono">ls</span>를 실행합니다.</div>
+      </section>
+
+      <section class="slide" data-title="Submit from scratch">
+        <div class="slide-header"><span class="tag">Step 3</span><span>submit a PBS job</span></div>
+        <h2>job은 반드시 <span class="mono">/scratch</span> 아래에서 제출합니다.</h2>
+        <div class="terminal" style="margin-top:44px"><span class="prompt">server$</span> cd /scratch/$USER/qe_projects/qe_test
+<span class="prompt">server$</span> pwd
+/scratch/내ID/qe_projects/qe_test
+<span class="prompt">server$</span> qsub run_qe.pbs</div>
+        <div class="grid-2">
+          <div class="card strong"><h3>정상 위치</h3><p class="small"><span class="mono">pwd</span> 결과가 <span class="mono">/scratch</span>로 시작합니다.</p></div>
+          <div class="card danger"><h3>자주 보는 에러</h3><p class="small mono">qsub: ERROR: You can't submit job in home01 directory, please try in scratch directory</p></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Monitor jobs">
+        <div class="slide-header"><span class="tag">Step 4</span><span>monitor or cancel jobs</span></div>
+        <h2>제출 후에는 PBS 명령으로 job 상태를 확인합니다.</h2>
+        <div class="grid-2">
+          <div class="terminal"><span class="prompt">server$</span> qstat -u $USER
+<span class="prompt">server$</span> qstat -f JOBID
+<span class="prompt">server$</span> qdel JOBID</div>
+          <div class="terminal"><span class="prompt">server$</span> qstat -q
+<span class="prompt">server$</span> showq
+<span class="prompt">server$</span> pbs_status
+<span class="prompt">server$</span> pbs_queue_check
+<span class="prompt">server$</span> isam</div>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h3><span class="mono">qstat -u</span></h3><p class="small">내 job 목록을 봅니다.</p></div>
+          <div class="card warn"><h3><span class="mono">qdel</span></h3><p class="small">job을 취소합니다. <span class="mono">JOBID</span>를 정확히 넣습니다.</p></div>
+          <div class="card strong"><h3><span class="mono">isam</span></h3><p class="small">SRU time 사용량을 확인합니다.</p></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Copy results back">
+        <div class="slide-header"><span class="tag">Step 5</span><span>backup results to home</span></div>
+        <h2>계산이 끝나면 중요한 결과를 home에 보관합니다.</h2>
+        <div class="terminal" style="margin-top:44px"><span class="prompt">server$</span> mkdir -p ~/qe_projects/qe_test/results
+<span class="prompt">server$</span> cp -r /scratch/$USER/qe_projects/qe_test/* ~/qe_projects/qe_test/results/
+<span class="prompt">server$</span> ls -lh ~/qe_projects/qe_test/results</div>
+        <div class="callout warn">큰 계산에서는 <span class="mono">tmp/</span> 폴더가 매우 클 수 있습니다. restart 계산이 필요하면 <span class="mono">tmp/</span>가 필요할 수 있으므로, 처음에는 담당자에게 “tmp도 복사해야 하나요?”라고 확인하세요.</div>
+      </section>
+
+      <section class="slide" data-title="Queues">
+        <div class="slide-header"><span class="tag">Queue basics</span><span>choose the right queue</span></div>
+        <h2>처음에는 queue 이름과 용도만 구분합니다.</h2>
+        <table class="table">
+          <thead><tr><th>Queue</th><th>언제 쓰나요?</th><th>처음 확인할 명령</th></tr></thead>
+          <tbody>
+            <tr><td>debug</td><td>짧은 테스트, launch 확인.</td><td rowspan="4"><span class="mono">qstat -q</span><br><span class="mono">pbs_queue_check</span></td></tr>
+            <tr><td>normal</td><td>일반 KNL 계산.</td></tr>
+            <tr><td>long</td><td>오래 걸리는 KNL 계산.</td></tr>
+            <tr><td>norm_skl</td><td>SKL 계산.</td></tr>
+          </tbody>
+        </table>
+        <p class="subtitle">사용 가능한 queue는 계정과 시스템 상태에 따라 달라질 수 있습니다. 제출 전 현재 queue 상태를 확인합니다.</p>
+      </section>
+
+      <section class="slide" data-title="QE modules">
+        <div class="slide-header"><span class="tag">QE modules</span><span>architecture matters</span></div>
+        <h2>QE module을 load할 때 queue/architecture에 맞는 module을 사용합니다.</h2>
+        <div class="grid-2">
+          <div class="card strong"><h3>debug 테스트: KNL</h3><div class="terminal compact" style="margin-top:18px">module purge
+module load craype-mic-knl
+module load intel/oneapi_21.2
+module load impi/oneapi_21.2
+module load qe/7.5</div></div>
+          <div class="card"><h3>norm_skl 계산: SKL</h3><div class="terminal compact" style="margin-top:18px">module purge
+module load craype-x86-skylake
+module load intel/oneapi_21.2
+module load impi/oneapi_21.2
+module load qe/7.5</div></div>
+        </div>
+        <div class="callout"><strong>초보자용 구분:</strong> <span class="mono">debug</span> 테스트는 <span class="mono">craype-mic-knl</span>, <span class="mono">norm_skl</span> 계산은 <span class="mono">craype-x86-skylake</span>를 사용합니다.</div>
+      </section>
+
+      <section class="slide" data-title="PBS directives">
+        <div class="slide-header"><span class="tag">PBS script</span><span>directives at the top</span></div>
+        <h2>PBS script 맨 위에는 scheduler에게 줄 요청사항을 씁니다.</h2>
+        <div class="split wide-left">
+          <div class="terminal compact">#!/bin/bash -l
+#PBS -N qe_test
+#PBS -A qe
+#PBS -q debug
+#PBS -l select=1:ncpus=2:mpiprocs=2
+#PBS -l walltime=00:05:00
+#PBS -j oe</div>
+          <div class="step-list" style="margin-top:0">
+            <div class="step"><div class="num">A</div><div><h3><span class="mono">#PBS -A qe</span></h3><p class="small">QE job script에는 이 줄이 필요합니다.</p></div></div>
+            <div class="step"><div class="num">Q</div><div><h3><span class="mono">#PBS -q debug</span></h3><p class="small">queue를 지정합니다. 테스트는 짧게 시작합니다.</p></div></div>
+            <div class="step"><div class="num">T</div><div><h3><span class="mono">walltime</span></h3><p class="small">최대 실행 시간을 지정합니다.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="PBS body">
+        <div class="slide-header"><span class="tag">PBS script</span><span>body that runs QE</span></div>
+        <h2>script 본문에서는 작업 폴더로 이동하고, module을 load하고, MPI로 QE를 실행합니다.</h2>
+        <div class="terminal tiny" style="margin-top:34px">cd "$PBS_O_WORKDIR"
+
+module purge
+module load craype-mic-knl
+module load intel/oneapi_21.2
+module load impi/oneapi_21.2
+module load qe/7.5
+
+NP=$(wc -l &lt; "$PBS_NODEFILE")
+
+echo "host: $(hostname)"
+echo "workdir: $(pwd)"
+echo "PBS_JOBID: $PBS_JOBID"
+echo "NP: $NP"
+
+which mpirun
+which pw.x
+which xspectra.x
+
+mpirun -np "$NP" pw.x -in pw_dummy.in &gt; pw_dummy.out 2&gt;&amp;1
+mpirun -np "$NP" xspectra.x -in xspectra_dummy.in &gt; xspectra_dummy.out 2&gt;&amp;1</div>
+      </section>
+
+      <section class="slide" data-title="Launch test">
+        <div class="slide-header"><span class="tag">Launch test</span><span>small before real</span></div>
+        <h2>가장 작은 launch test부터 제출합니다.</h2>
+        <div class="split">
+          <div class="terminal"><span class="prompt">server$</span> cd /scratch/$USER/qe_launch_test
+<span class="prompt">server$</span> qsub run_qe_test.pbs
+<span class="comment"># 예: 22365267.pbs 같은 JOBID가 출력됩니다.</span></div>
+          <div class="card warn"><h3>왜 작은 테스트부터?</h3><ul class="clean"><li>queue와 module이 맞는지 확인합니다.</li><li><span class="mono">mpirun</span>, <span class="mono">pw.x</span>, <span class="mono">xspectra.x</span> 경로를 확인합니다.</li><li>큰 계산 전에 script 문법 오류를 빨리 찾습니다.</li></ul></div>
+        </div>
+        <p class="subtitle">launch test는 진짜 과학 계산이 아니라 “실행 환경 확인”입니다.</p>
+      </section>
+
+      <section class="slide" data-title="Output files">
+        <div class="slide-header"><span class="tag">Read outputs</span><span>PBS output and QE output</span></div>
+        <h2>계산이 끝나면 PBS output과 QE output을 구분해서 봅니다.</h2>
+        <div class="grid-2">
+          <div class="card strong"><h3>PBS가 만든 파일</h3><p class="small mono">JOBNAME.oJOBID<br>예: qe_test.o22365267</p><div class="terminal compact" style="margin-top:18px"><span class="prompt">server$</span> ls -lh
+<span class="prompt">server$</span> tail -n 80 qe_test.o22365267</div></div>
+          <div class="card"><h3>QE script가 만든 파일</h3><p class="small mono">pw_dummy.out<br>xspectra_dummy.out</p><div class="terminal compact" style="margin-top:18px"><span class="prompt">server$</span> tail -n 80 pw_dummy.out
+<span class="prompt">server$</span> tail -n 80 xspectra_dummy.out</div></div>
+        </div>
+        <div class="callout">초보자는 먼저 마지막 80줄을 봅니다. 에러 메시지는 보통 출력의 마지막 부분에 가까이 있습니다.</div>
+      </section>
+
+      <section class="slide" data-title="Pre-submit checklist">
+        <div class="slide-header"><span class="tag">Checklist</span><span>before qsub</span></div>
+        <h2><span class="mono">qsub</span> 전에는 이 체크리스트를 통과해야 합니다.</h2>
+        <div class="split wide-left">
+          <div class="terminal"><span class="prompt">server$</span> pwd
+<span class="prompt">server$</span> ls
+<span class="prompt">server$</span> qsub run_qe.pbs
+<span class="prompt">server$</span> qstat -u $USER</div>
+          <div class="step-list" style="margin-top:0">
+            <div class="step"><div class="num">1</div><div><h3>위치</h3><p class="small">지금 위치가 <span class="mono">/scratch</span> 아래인가요?</p></div></div>
+            <div class="step"><div class="num">2</div><div><h3>script</h3><p class="small"><span class="mono">.pbs</span> 파일이 있고 <span class="mono">#PBS -A qe</span>가 있나요?</p></div></div>
+            <div class="step"><div class="num">3</div><div><h3>입력 파일</h3><p class="small">QE input과 필요한 pseudo 파일이 있나요?</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Common mistakes">
+        <div class="slide-header"><span class="tag">Common mistakes</span><span>fixes for beginners</span></div>
+        <h2>자주 하는 실수는 대부분 위치 확인과 파일 확인으로 막을 수 있습니다.</h2>
+        <div class="grid-2" style="margin-top:34px">
+          <div class="card danger"><h3>1. home에서 qsub</h3><p class="small">해결: <span class="mono">cd /scratch/$USER/내_계산_폴더</span> 후 제출.</p></div>
+          <div class="card danger"><h3>2. <span class="mono">server$</span>까지 입력</h3><p class="small">해결: prompt label 뒤의 명령어만 입력.</p></div>
+          <div class="card warn"><h3>3. scratch에만 결과 보관</h3><p class="small">해결: 계산 후 중요한 파일을 home으로 복사.</p></div>
+          <div class="card warn"><h3>4. <span class="mono">#PBS -A qe</span> 누락</h3><p class="small">해결: QE PBS script 상단에 application/account 줄 추가.</p></div>
+        </div>
+        <div class="callout danger">큰 계산을 로그인 노드에서 직접 오래 실행하지 마세요. 항상 PBS script로 제출합니다.</div>
+      </section>
+
+      <section class="slide" data-title="Homework self-check">
+        <div class="slide-header"><span class="tag">Self-check</span><span>answer before class</span></div>
+        <h2>다음 질문에 스스로 답할 수 있으면 homework 읽기가 끝난 것입니다.</h2>
+        <div class="step-list">
+          <div class="step"><div class="num">1</div><div><h3>왜 로그인 노드에서 큰 QE 계산을 직접 실행하면 안 되나요?</h3></div></div>
+          <div class="step"><div class="num">2</div><div><h3><span class="mono">/home01/$USER</span>와 <span class="mono">/scratch/$USER</span>는 각각 언제 쓰나요?</h3></div></div>
+          <div class="step"><div class="num">3</div><div><h3><span class="mono">qsub</span> 전에 반드시 확인할 두 명령은 무엇인가요?</h3></div></div>
+          <div class="step"><div class="num">4</div><div><h3>계산이 끝난 뒤 중요한 파일을 어디로 복사해야 하나요?</h3></div></div>
+        </div>
+        <p class="subtitle">원문 Markdown: <span class="mono">lessons/13-this-cluster-qe-pbs.md</span></p>
+      </section>
+
+      <div class="footer">
+        <span id="slideTitle">Title</span>
+        <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+        <span id="slideCount">1 / 22</span>
+      </div>
+    </main>
+  </div>
+  <div class="nav-help">←/→ or Space · F fullscreen · Home/End · Print to PDF supported</div>
+  <div class="controls" aria-label="Slide controls"><button id="prevBtn" aria-label="Previous slide">‹</button><button id="nextBtn" aria-label="Next slide">›</button></div>
+  <script>
+    (() => {
+      const deck = document.getElementById('deck');
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const title = document.getElementById('slideTitle');
+      const count = document.getElementById('slideCount');
+      const progress = document.getElementById('progressBar');
+      const prev = document.getElementById('prevBtn');
+      const next = document.getElementById('nextBtn');
+      const STORAGE_KEY = 'this-cluster-qe-pbs-slide';
+      let current = Number(localStorage.getItem(STORAGE_KEY) || 0);
+      if (!Number.isFinite(current) || current < 0 || current >= slides.length) current = 0;
+      function scaleDeck() {
+        const margin = 40;
+        const scale = Math.min((window.innerWidth - margin) / 1920, (window.innerHeight - margin) / 1080);
+        deck.style.transform = `translate(-50%, -50%) scale(${Math.max(0.1, scale)})`;
+      }
+      function show(index) {
+        current = Math.max(0, Math.min(slides.length - 1, index));
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+        title.textContent = slides[current].dataset.title || `Slide ${current + 1}`;
+        count.textContent = `${current + 1} / ${slides.length}`;
+        progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+        localStorage.setItem(STORAGE_KEY, String(current));
+      }
+      function go(delta) { show(current + delta); }
+      document.addEventListener('keydown', (event) => {
+        const key = event.key;
+        if (['ArrowRight', 'PageDown', ' '].includes(key)) { event.preventDefault(); go(1); }
+        if (['ArrowLeft', 'PageUp'].includes(key)) { event.preventDefault(); go(-1); }
+        if (key === 'Home') { event.preventDefault(); show(0); }
+        if (key === 'End') { event.preventDefault(); show(slides.length - 1); }
+        if (key.toLowerCase() === 'f') {
+          event.preventDefault();
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+          else document.exitFullscreen?.();
+        }
+      });
+      prev.addEventListener('click', () => go(-1));
+      next.addEventListener('click', () => go(1));
+      window.addEventListener('resize', scaleDeck);
+      scaleDeck();
+      show(current);
+    })();
+  </script>
+</body>
+</html>
