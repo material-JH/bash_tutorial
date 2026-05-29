@@ -128,15 +128,15 @@
     .slide-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 36px;
-      margin-bottom: 42px;
-      padding-bottom: 18px;
+      margin-bottom: 40px;
+      padding-bottom: 22px;
       color: var(--dim);
       border-bottom: 1px solid var(--line);
       letter-spacing: .10em;
       text-transform: uppercase;
-      font-size: 21px;
+      font-size: 28px;
       font-weight: 800;
     }
     .slide-header::before {
@@ -144,7 +144,7 @@
       position: absolute;
       left: 0;
       bottom: -1px;
-      width: 260px;
+      width: 320px;
       height: 3px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
@@ -157,12 +157,12 @@
     }
     .section-tag::before {
       content: "";
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 999px;
       background: var(--accent);
-      box-shadow: 18px 0 0 var(--accent-2);
-      margin-right: 18px;
+      box-shadow: 20px 0 0 var(--accent-2);
+      margin-right: 20px;
     }
 
     h1, h2, h3, p { margin: 0; }
@@ -351,7 +351,7 @@
       right: 110px;
       bottom: 34px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       color: rgba(255,255,255,.86);
       background: #202832;
@@ -365,6 +365,7 @@
     }
     .progress { width: 420px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.20); overflow: hidden; }
     .progress > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-2), #ffffff); border-radius: inherit; }
+    #slideCount { position: absolute; right: 18px; }
     .nav-help { position: fixed; left: 18px; bottom: 16px; z-index: 50; color: rgba(21,21,21,.58); font-size: 13px; font-family: var(--mono); letter-spacing: .02em; user-select: none; }
     .controls { position: fixed; right: 18px; bottom: 16px; display: flex; gap: 10px; z-index: 60; }
     .controls button { width: 46px; height: 46px; border-radius: 50%; border: 0; color: #ffffff; background: #202832; cursor: pointer; font-size: 22px; box-shadow: 0 12px 28px rgba(16,25,35,.24); }
@@ -386,7 +387,7 @@
       .viewport { display: block; width: auto; height: auto; padding: 0; }
       .deck { position: relative; left: auto; top: auto; transform: none !important; width: 1920px; height: auto; border: 0; box-shadow: none; border-radius: 0; }
       .slide { display: block !important; position: relative; width: 1920px; height: 1080px; page-break-after: always; background: var(--surface); }
-      .footer, .controls, .nav-help { display: none; }
+      .controls, .nav-help { display: none; }
     }
   </style>
 </head>
@@ -394,11 +395,10 @@
   <div class="viewport">
     <main class="deck" id="deck" aria-live="polite">
       <section class="slide active" data-title="Title">
-        <div class="slide-header"><span class="section-tag">Linux command tutorial</span><span>After Nurion login · Linux terminal basics</span></div>
+        <div class="slide-header"><span class="section-tag">Linux command tutorial</span></div>
         <div class="two-col-title">
           <div>
             <h1>리눅스 터미널을 <span class="accent">연구 도구</span>로 쓰기</h1>
-            <p class="subtitle">누리온 로그인 튜토리얼을 먼저 마친 뒤, 같은 서버 화면에서 파일을 찾고, 읽고, 복사하고, 수정하는 입문 발표 자료입니다.</p>
           </div>
           <div class="card strong">
             <div class="metric">login01에서 pwd → ls → cp → mv</div>
@@ -410,7 +410,7 @@
 
 
       <section class="slide" data-title="Session roadmap">
-        <div class="slide-header"><span class="section-tag">Roadmap</span><span>1-hour hands-on flow</span></div>
+        <div class="slide-header"><span class="section-tag">Roadmap</span></div>
         <h2>누리온에 로그인한 상태에서 바로 손으로 확인하기</h2>
         <div class="timeline">
           <div class="time">0:00–0:10</div><div class="time-item"><h3>누리온 접속 확인</h3><p>이미 로그인한 누리온 화면에서 `hostname`, `whoami`, `pwd`를 확인합니다.</p></div>
@@ -422,23 +422,25 @@
       </section>
 
       <section class="slide" data-title="Local vs server">
-        <div class="slide-header"><span class="section-tag">Mental model</span><span>Two computers, two prompts</span></div>
+        <div class="slide-header"><span class="section-tag">Mental model</span></div>
         <h2>로그인 후 첫 질문: “지금 누리온의 어느 폴더에 있는가?”</h2>
         <div class="grid-2" style="margin-top:54px">
           <div class="card warn"><h3><span class="mono warm">local$</span> 내 컴퓨터</h3><ul class="clean" style="margin-top:24px"><li>로그인 튜토리얼에서 이미 사용한 터미널</li><li>필요하면 다시 SSH를 시작하는 위치</li><li>내 Desktop/Finder/Explorer 파일이 있는 곳</li></ul></div>
           <div class="card strong"><h3><span class="mono accent2">server$</span> 원격 서버</h3><ul class="clean" style="margin-top:24px"><li>지금 수업을 진행하는 누리온 환경</li><li>home, scratch, QE 파일이 있는 곳</li><li>`pwd`, `ls`, `cp`, `mv`, `grep`을 연습하는 곳</li></ul></div>
         </div>
-        <p class="subtitle"><span class="danger">중요:</span> 수업 중에는 대부분 <span class="mono accent2">server$</span>, 즉 누리온 로그인 노드에서 명령을 입력합니다.</p>
       </section>
 
       <section class="slide" data-title="SSH login">
-        <div class="slide-header"><span class="section-tag">SSH</span><span>First connection</span></div>
+        <div class="slide-header"><span class="section-tag">SSH</span></div>
         <h2>SSH 로그인은 별도 자료에서 먼저 끝냅니다. 여기서는 접속 확인만 합니다.</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="comment"># 누리온 로그인 후 확인</span>
 <span class="prompt">server$</span> hostname
+<span class="comment">login01</span>
 <span class="prompt">server$</span> whoami
+<span class="comment">user123</span>
 <span class="prompt">server$</span> pwd
+<span class="comment">/home01/user123</span>
 
 <span class="comment"># 필요할 때 종료</span>
 <span class="prompt">server$</span> exit</div>
@@ -454,7 +456,7 @@
       </section>
 
       <section class="slide" data-title="Command grammar">
-        <div class="slide-header"><span class="section-tag">Grammar</span><span>How to read a command</span></div>
+        <div class="slide-header"><span class="section-tag">Grammar</span></div>
         <h2>명령어는 보통 “명령 + 옵션 + 대상”으로 읽습니다.</h2>
         <div class="terminal" style="margin-top:48px"><span class="prompt">server$</span> ls -la examples/qe
 <span class="comment">        │  │  └─ 대상: 확인할 폴더</span>
@@ -468,14 +470,15 @@
       </section>
 
       <section class="slide" data-title="Practice sandbox">
-        <div class="slide-header"><span class="section-tag">Safe practice</span><span>Use committed examples</span></div>
+        <div class="slide-header"><span class="section-tag">Safe practice</span></div>
         <h2>실습은 항상 안전한 폴더와 실제 예제 파일로 시작합니다.</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="prompt">server$</span> git clone https://github.com/material-JH/bash_tutorial.git ~/bash_tutorial
 <span class="prompt">server$</span> mkdir -p ~/linux-practice
 <span class="prompt">server$</span> cp -r ~/bash_tutorial/examples ~/linux-practice/
 <span class="prompt">server$</span> cd ~/linux-practice/examples
-<span class="prompt">server$</span> pwd</div>
+<span class="prompt">server$</span> pwd
+<span class="comment">/home01/user123/linux-practice/examples</span></div>
           <div class="card strong">
             <h3>왜 예제 파일을 미리 넣었나?</h3>
             <ul class="clean" style="margin-top:24px">
@@ -488,7 +491,7 @@
       </section>
 
       <section class="slide" data-title="Repository layout">
-        <div class="slide-header"><span class="section-tag">Examples</span><span>Practice file map</span></div>
+        <div class="slide-header"><span class="section-tag">Examples</span></div>
         <h2>`examples/` 하나로 대부분의 명령어를 연습합니다.</h2>
         <div class="flow-list">
           <div class="flow-row"><div class="label">navigation/</div><div class="text">`cd`, `ls`, `tree`, `find`로 폴더 구조를 읽는 연습.</div></div>
@@ -500,24 +503,34 @@
       </section>
 
       <section class="slide" data-title="Navigation">
-        <div class="slide-header"><span class="section-tag">Navigation</span><span>Where am I?</span></div>
+        <div class="slide-header"><span class="section-tag">Navigation</span></div>
         <h2>서버 작업의 첫 습관: 이동하기 전에 보고, 실행하기 전에 위치 확인</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="prompt">server$</span> pwd
+<span class="comment">/home01/user123/linux-practice/examples</span>
 <span class="prompt">server$</span> ls
+<span class="comment">files  navigation  qe  scripts  text</span>
 <span class="prompt">server$</span> ls -la
-<span class="prompt">server$</span> cd examples/qe
+<span class="comment">drwxr-xr-x  7 user123 user123 4096 Jan 15 09:00 .</span>
+<span class="comment">drwxr-xr-x  3 user123 user123 4096 Jan 15 08:30 ..</span>
+<span class="comment">drwxr-xr-x  2 user123 user123 4096 Jan 15 09:00 files</span>
+<span class="comment">drwxr-xr-x  2 user123 user123 4096 Jan 15 09:00 navigation</span>
+<span class="comment">drwxr-xr-x  2 user123 user123 4096 Jan 15 09:00 qe</span>
+<span class="comment">drwxr-xr-x  2 user123 user123 4096 Jan 15 09:00 scripts</span>
+<span class="comment">drwxr-xr-x  2 user123 user123 4096 Jan 15 09:00 text</span>
+<span class="prompt">server$</span> cd qe
+<span class="prompt">server$</span> pwd
+<span class="comment">/home01/user123/linux-practice/examples/qe</span>
 <span class="prompt">server$</span> cd ..
 <span class="prompt">server$</span> cd ~</div>
           <div class="terminal"><span class="prompt">server$</span> tree .
 <span class="comment"># tree가 없으면</span>
 <span class="prompt">server$</span> find . -maxdepth 3 -print</div>
         </div>
-        <p class="subtitle">GUI의 주소창을 보는 습관이 터미널에서는 `pwd`입니다.</p>
       </section>
 
       <section class="slide" data-title="Read text files">
-        <div class="slide-header"><span class="section-tag">Text</span><span>Read before editing</span></div>
+        <div class="slide-header"><span class="section-tag">Text</span></div>
         <h2>계산 파일은 먼저 읽고, 필요한 부분만 수정합니다.</h2>
         <div class="grid-4" style="margin-top:58px">
           <div class="card"><div class="metric mono">cat</div><h3 style="margin-top:18px">짧은 파일</h3><p class="metric-label">전체가 한 화면에 들어올 때.</p></div>
@@ -526,11 +539,14 @@
           <div class="card"><div class="metric mono">tail</div><h3 style="margin-top:18px">마지막 부분</h3><p class="metric-label">계산 종료, 에러 확인.</p></div>
         </div>
         <div class="terminal" style="margin-top:42px"><span class="prompt">server$</span> more text/qe-output-snippet.out
-<span class="prompt">server$</span> tail -n 40 qe/si.scf.out</div>
+<span class="comment"># 스페이스로 다음 페이지, q로 종료</span>
+<span class="prompt">server$</span> tail -n 5 qe/si.scf.out
+<span class="comment">     JOB DONE.</span>
+<span class="comment">     End of run</span></div>
       </section>
 
       <section class="slide" data-title="Vim survival">
-        <div class="slide-header"><span class="section-tag">Vim</span><span>Enough to survive</span></div>
+        <div class="slide-header"><span class="section-tag">Vim</span></div>
         <h2>`vim`은 처음에는 “열기, 검색, 저장, 종료”만 익히면 됩니다.</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="prompt">server$</span> vim qe/si.scf.in
@@ -555,14 +571,17 @@
       </section>
 
       <section class="slide" data-title="Copy move delete">
-        <div class="slide-header"><span class="section-tag">Files</span><span>Copy, move, remove safely</span></div>
+        <div class="slide-header"><span class="section-tag">Files</span></div>
         <h2>`rm`은 휴지통이 아닙니다. 삭제 전에는 항상 미리 봅니다.</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="prompt">server$</span> cd ~/linux-practice/examples/files
 <span class="prompt">server$</span> cp a.txt a-copy.txt
 <span class="prompt">server$</span> mv a-copy.txt renamed.txt
 <span class="prompt">server$</span> ls -l
-<span class="prompt">server$</span> rm -i renamed.txt</div>
+<span class="comment">-rw-r--r-- 1 user123 user123  120 Jan 15 09:00 a.txt</span>
+<span class="comment">-rw-r--r-- 1 user123 user123  120 Jan 15 09:05 renamed.txt</span>
+<span class="prompt">server$</span> rm -i renamed.txt
+<span class="comment">rm: remove regular file 'renamed.txt'? y</span></div>
           <div class="card danger">
             <h3>위험 명령 체크리스트</h3>
             <ol class="clean" style="margin-top:24px">
@@ -576,7 +595,7 @@
       </section>
 
       <section class="slide" data-title="Pipes and redirection">
-        <div class="slide-header"><span class="section-tag">Output flow</span><span>Pipes and redirection</span></div>
+        <div class="slide-header"><span class="section-tag">Output flow</span></div>
         <h2>터미널의 강점은 “출력을 다음 작업으로 연결”하는 것입니다.</h2>
         <div class="pipeline">
           <div class="pipe-node"><h3>명령 실행</h3><p class="small mono">grep "ERROR" app.log</p></div>
@@ -586,22 +605,30 @@
           <div class="pipe-node"><h3>파일에 저장</h3><p class="small mono">&gt; error-count.txt</p></div>
         </div>
         <div class="terminal" style="margin-top:48px"><span class="prompt">server$</span> grep "ERROR" text/app.log | wc -l
+<span class="comment">0</span>
 <span class="prompt">server$</span> ./qe/fake-pw.x -in qe/si.scf.in &gt; fake.out 2&gt; fake.err
 <span class="prompt">server$</span> wc -c fake.err     <span class="comment"># 성공하면 보통 0 bytes</span>
+<span class="comment">0 fake.err</span>
 <span class="prompt">server$</span> ./qe/fake-pw.x -in qe/no-file.in &gt; bad.out 2&gt; bad.err
 <span class="prompt">server$</span> cat bad.err
+<span class="comment">Error: could not open input file qe/no-file.in</span>
 <span class="prompt">server$</span> ./qe/fake-pw.x -in qe/no-file.in &gt; bad.log 2&gt;&amp;1</div>
       </section>
 
       <section class="slide" data-title="Search and inspect">
-        <div class="slide-header"><span class="section-tag">Search</span><span>Find the important line</span></div>
+        <div class="slide-header"><span class="section-tag">Search</span></div>
         <h2>계산이 끝났는지는 파일을 열어보는 대신 검색으로 확인합니다.</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="prompt">server$</span> grep -n "JOB DONE" qe/si.scf.out
+<span class="comment">  1245:     JOB DONE.</span>
 <span class="prompt">server$</span> grep -n "total energy" qe/si.scf.out
+<span class="comment">   482:     total energy              =    -153.42 Ry</span>
 <span class="prompt">server$</span> grep -ni "error" qe/si.scf.out
+<span class="comment"># 출력 없음 = 에러 없음</span>
 <span class="prompt">server$</span> find . -name "*.out"
-<span class="prompt">server$</span> find . -name "*.out" -exec grep -H "JOB DONE" {} \;</div>
+<span class="comment">./qe/si.scf.out</span>
+<span class="prompt">server$</span> find . -name "*.out" -exec grep -H "JOB DONE" {} \;
+<span class="comment">./qe/si.scf.out:     JOB DONE.</span></div>
           <div class="card strong">
             <h3>한 줄씩 의미를 붙여서 가르치기</h3>
             <ul class="clean" style="margin-top:24px">
@@ -615,14 +642,19 @@
       </section>
 
       <section class="slide" data-title="Executables">
-        <div class="slide-header"><span class="section-tag">Executables</span><span>Commands are files too</span></div>
+        <div class="slide-header"><span class="section-tag">Executables</span></div>
         <h2>터미널 명령도 결국 서버 어딘가에 있는 실행 파일입니다.</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="prompt">server$</span> command -v python3
+<span class="comment">/usr/bin/python3</span>
 <span class="prompt">server$</span> command -v vim
+<span class="comment">/usr/bin/vim</span>
 <span class="prompt">server$</span> type python3
+<span class="comment">python3 is /usr/bin/python3</span>
 <span class="prompt">server$</span> file scripts/hello.sh
-<span class="prompt">server$</span> file qe/fake-pw.x</div>
+<span class="comment">scripts/hello.sh: Bourne-Again shell script, ASCII text</span>
+<span class="prompt">server$</span> file qe/fake-pw.x
+<span class="comment">qe/fake-pw.x: ELF 64-bit LSB executable, x86-64</span></div>
           <div class="card warn">
             <h3>출력이 없으면?</h3>
             <ul class="clean" style="margin-top:24px">
@@ -635,13 +667,18 @@
       </section>
 
       <section class="slide" data-title="Permissions">
-        <div class="slide-header"><span class="section-tag">Permissions</span><span>Run only what should run</span></div>
+        <div class="slide-header"><span class="section-tag">Permissions</span></div>
         <h2>실행 권한은 파일이 “프로그램처럼 실행될 수 있음”을 뜻합니다.</h2>
         <div class="grid-2" style="margin-top:48px">
           <div class="terminal"><span class="prompt">server$</span> ls -l scripts/hello.sh
+<span class="comment">-rw-r--r-- 1 user123 user123 89 Jan 15 09:00 scripts/hello.sh</span>
 <span class="prompt">server$</span> ./scripts/hello.sh
+<span class="comment">-bash: ./scripts/hello.sh: Permission denied</span>
 <span class="prompt">server$</span> chmod +x scripts/hello.sh
-<span class="prompt">server$</span> ./scripts/hello.sh</div>
+<span class="prompt">server$</span> ls -l scripts/hello.sh
+<span class="comment">-rwxr-xr-x 1 user123 user123 89 Jan 15 09:00 scripts/hello.sh</span>
+<span class="prompt">server$</span> ./scripts/hello.sh
+<span class="comment">Hello, HPC world!</span></div>
           <div class="card danger">
             <h3>`sudo`는 입문 실습 명령이 아닙니다.</h3>
             <p class="small" style="margin-top:20px">공용 서버에서 관리자 권한 명령을 임의로 실행하지 않습니다. 설치나 권한 문제가 있으면 서버 관리자 또는 튜토리얼 담당자에게 정확한 에러 메시지를 전달합니다.</p>
@@ -650,7 +687,7 @@
       </section>
 
                         <section class="slide" data-title="Scientific text files">
-        <div class="slide-header"><span class="section-tag">Scientific files</span><span>Input and output are text</span></div>
+        <div class="slide-header"><span class="section-tag">Scientific files</span></div>
         <h2>계산 과학 파일도 대부분 “읽을 수 있는 텍스트”에서 시작합니다.</h2>
         <div class="pipeline">
           <div class="pipe-node"><h3>입력 파일</h3><p class="small mono">*.in<br>parameters<br>structure</p></div>
@@ -659,17 +696,22 @@
           <div class="pipe-arrow">→</div>
           <div class="pipe-node"><h3>읽고 검색</h3><p class="small mono">tail<br>grep<br>more</p></div>
         </div>
-        <p class="subtitle">오늘은 계산 제출이 아니라, 입력/출력 파일을 안전하게 읽고 찾는 방법까지만 배웁니다.</p>
       </section>
 
             <section class="slide" data-title="Read outputs">
-        <div class="slide-header"><span class="section-tag">Outputs</span><span>Find evidence in text</span></div>
+        <div class="slide-header"><span class="section-tag">Outputs</span></div>
         <h2>출력 파일에서는 필요한 줄을 검색해서 찾습니다.</h2>
         <div class="grid-2" style="margin-top:48px">
-          <div class="terminal"><span class="prompt">server$</span> tail -n 40 si.scf.out
+          <div class="terminal"><span class="prompt">server$</span> tail -n 5 si.scf.out
+<span class="comment">     convergence NOT achieved</span>
+<span class="comment">     JOB DONE.</span>
+<span class="comment">     End of run</span>
 <span class="prompt">server$</span> grep -n "error" si.scf.out
+<span class="comment"># 출력 없음 = 에러 없음</span>
 <span class="prompt">server$</span> grep -n "warning" si.scf.out
+<span class="comment">   245:     Warning: symmetry operation</span>
 <span class="prompt">server$</span> grep -n "total energy" si.scf.out
+<span class="comment">   482:     total energy              =    -15.8423 Ry</span>
 <span class="prompt">server$</span> more si.scf.out</div>
           <div class="card warn">
             <h3>텍스트와 바이너리를 구분</h3>
@@ -684,7 +726,7 @@
       </section>
 
       <section class="slide" data-title="Troubleshooting">
-        <div class="slide-header"><span class="section-tag">Troubleshooting</span><span>Boring checklist</span></div>
+        <div class="slide-header"><span class="section-tag">Troubleshooting</span></div>
         <h2>실패했을 때는 추측하지 말고 체크리스트를 따라갑니다.</h2>
         <div class="grid-3" style="margin-top:54px">
           <div class="card"><h3>1. 위치</h3><p class="small">`pwd`, `ls -la`로 입력 파일이 있는 폴더인지 확인합니다.</p></div>
@@ -697,7 +739,7 @@
       </section>
 
       <section class="slide" data-title="Take-home summary">
-        <div class="slide-header"><span class="section-tag">Summary</span><span>핵심 정리</span></div>
+        <div class="slide-header"><span class="section-tag">Summary</span></div>
         <h2>첫 수업에서 기억할 것은 네 가지면 충분합니다.</h2>
         <div class="grid-4" style="margin-top:58px">
           <div class="card strong"><div class="metric">1</div><h3 style="margin-top:18px">위치</h3><p class="metric-label">항상 `local$`와 `server$`, 그리고 `pwd`를 확인합니다.</p></div>
@@ -705,11 +747,10 @@
           <div class="card"><div class="metric">3</div><h3 style="margin-top:18px">로그</h3><p class="metric-label">계산 성공 여부는 출력 파일과 검색 결과로 판단합니다.</p></div>
           <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">다음 과제</h3><p class="metric-label">누리온 QE 실행 메모는 다음 세션 전 homework로 읽습니다.</p></div>
         </div>
-        <p class="subtitle">먼저 누리온 로그인 튜토리얼을 마치고, 이 발표는 `~/linux-practice/examples`에서 손으로 연습합니다.</p>
       </section>
 
       <section class="slide" data-title="Appendix: install QE">
-        <div class="slide-header"><span class="section-tag">Appendix 1</span><span>Fast install options</span></div>
+        <div class="slide-header"><span class="section-tag">Appendix 1</span></div>
         <h2>QE를 빨리 쓰려면 패키지나 서버 모듈을 먼저 확인합니다.</h2>
         <div class="grid-3" style="margin-top:48px">
           <div class="card strong"><h3>Conda / Mamba</h3><div class="terminal compact" style="margin-top:22px"><span class="prompt">server$</span> conda create -n qe -c conda-forge qe
@@ -722,11 +763,10 @@
 <span class="prompt">server$</span> module load quantum-espresso
 <span class="prompt">server$</span> command -v pw.x</div><p class="small" style="margin-top:18px">연구실 서버에서는 보통 이 방법이 가장 안전합니다.</p></div>
         </div>
-        <p class="subtitle">패키지 설치는 편하지만 버전이나 성능이 제한될 수 있습니다. 그래서 큰 계산용 서버에서는 컴파일 버전을 쓰기도 합니다.</p>
       </section>
 
       <section class="slide" data-title="Appendix: compile QE">
-        <div class="slide-header"><span class="section-tag">Appendix 2</span><span>Linux + Intel compiler build sketch</span></div>
+        <div class="slide-header"><span class="section-tag">Appendix 2</span></div>
         <h2>Intel 컴파일은 “컴파일러 환경 → configure → make → 검증” 순서입니다.</h2>
         <div class="grid-2" style="margin-top:42px">
           <div class="terminal compact"><span class="comment"># Intel oneAPI + MPI wrapper 예시</span>
@@ -749,9 +789,7 @@
           </div>
         </div>
       </section>
-
-                  <div class="footer">
-        <span id="slideTitle">Title</span>
+      <div class="footer">
         <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
         <span id="slideCount">1 / 21</span>
       </div>
@@ -768,7 +806,6 @@
     (() => {
       const deck = document.getElementById('deck');
       const slides = Array.from(document.querySelectorAll('.slide'));
-      const title = document.getElementById('slideTitle');
       const count = document.getElementById('slideCount');
       const progress = document.getElementById('progressBar');
       const prev = document.getElementById('prevBtn');
@@ -786,7 +823,6 @@
       function show(index) {
         current = Math.max(0, Math.min(slides.length - 1, index));
         slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
-        title.textContent = slides[current].dataset.title || `Slide ${current + 1}`;
         count.textContent = `${current + 1} / ${slides.length}`;
         progress.style.width = `${((current + 1) / slides.length) * 100}%`;
         localStorage.setItem(STORAGE_KEY, String(current));
