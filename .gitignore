@@ -7,3 +7,6 @@ Thumbs.db
 # Local scratch files learners may create
 linux-practice/
 *.tmp
+
+# Local workflow notes
+docs/pdf-export-notes.md
