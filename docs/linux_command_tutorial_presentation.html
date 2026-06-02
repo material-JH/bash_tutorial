@@ -210,6 +210,8 @@
     .warm { color: var(--warm); }
     .danger { color: var(--danger); }
     .mono { font-family: var(--mono); }
+    .slide-link { color: var(--accent); font-weight: 900; text-decoration: none; border-bottom: 3px solid var(--accent-2); }
+    .slide-link:hover, .slide-link:focus-visible { color: var(--accent-2); outline: none; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: stretch; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: stretch; }
@@ -802,7 +804,7 @@
           <div class="card strong"><div class="metric">1</div><h3 style="margin-top:18px">위치</h3><p class="metric-label">항상 `local$`와 `server$`, 그리고 `pwd`를 확인한다.</p></div>
           <div class="card"><div class="metric">2</div><h3 style="margin-top:18px">파일</h3><p class="metric-label">읽기 → 복사 → 수정 → 삭제 순서로 안전하게 다룬다.</p></div>
           <div class="card"><div class="metric">3</div><h3 style="margin-top:18px">로그</h3><p class="metric-label">계산 성공 여부는 출력 파일과 검색 결과로 판단한다.</p></div>
-          <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">다음 과제</h3><p class="metric-label">누리온 QE 실행 메모는 다음 세션 전 homework로 읽는다.</p></div>
+          <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">다음 과제</h3><p class="metric-label">다음 세션: <a class="slide-link" href="https://material-jh.github.io/xspectra-tutorial/xspectra_tutorial_presentation.html">XSpectra 튜토리얼 발표 자료</a></p></div>
         </div>
       </section>
 
