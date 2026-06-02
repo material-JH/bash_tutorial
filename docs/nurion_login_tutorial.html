@@ -127,6 +127,8 @@
     .screenshot { width: 100%; max-height: 510px; object-fit: contain; border: 1px solid var(--line); box-shadow: 0 18px 44px rgba(0,64,152,.14); background: #fff; }
     .image-card { background: #fff; border: 1px solid var(--line); padding: 18px; box-shadow: 0 14px 32px rgba(0,64,152,.08); }
     .mono { font-family: var(--mono); }
+    .slide-link { color: var(--accent); font-weight: 900; text-decoration: none; border-bottom: 3px solid var(--accent-2); }
+    .slide-link:hover, .slide-link:focus-visible { color: var(--accent-2); outline: none; }
     .footer { position: absolute; left: 110px; right: 110px; bottom: 34px; display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,.86); background: #202832; border-top: 4px solid var(--accent); padding: 14px 18px; font-size: 20px; letter-spacing: .05em; text-transform: uppercase; z-index: 20; box-shadow: 0 14px 30px rgba(16,25,35,.18); }
     .footer #slideTitle { display: none; }
     .footer #slideCount { position: absolute; right: 18px; }
@@ -232,6 +234,15 @@
         <p class="subtitle">처음 수업에서는 터미널 앱을 여는 것부터 실습입니다. 파일 탐색기가 아니라 글자로 서버에 접속합니다.</p>
       </section>
 
+      <section class="slide" data-title="Prompt rule">
+        <div class="slide-header"><span class="tag">Prompt rule</span><span>do not type local$</span></div>
+        <h2>수업 자료의 <span class="mono">local$</span>와 <span class="mono">server$</span>는 실행 위치를 알려주는 표시입니다.</h2>
+        <div class="grid-2">
+          <div class="card strong"><h3>실제로 입력할 내용</h3><div class="terminal compact" style="margin-top:20px">ssh -l 사용자ID nurion.ksc.re.kr</div><p class="small" style="margin-top:18px"><span class="mono">local$</span> 뒤에 있는 명령어만 입력합니다.</p></div>
+          <div class="card warn"><h3>복사하면 안 되는 내용</h3><div class="terminal compact" style="margin-top:20px"><span class="bad">local$ ssh -l 사용자ID nurion.ksc.re.kr</span></div><p class="small" style="margin-top:18px"><span class="mono">local$</span>까지 복사하면 명령어가 아닙니다.</p></div>
+        </div>
+      </section>
+
       <section class="slide" data-title="SSH command">
         <div class="slide-header"><span class="tag">Step 2</span><span>ssh to Nurion</span></div>
         <h2>누리온 로그인 명령은 이 형태입니다.</h2>
@@ -308,15 +319,6 @@ login01
         <p class="subtitle">여기까지 되면 리눅스 터미널 수업을 시작할 준비가 끝났습니다.</p>
       </section>
 
-      <section class="slide" data-title="Prompt rule">
-        <div class="slide-header"><span class="tag">Prompt rule</span><span>do not type server$</span></div>
-        <h2>수업 자료의 <span class="mono">server$</span>는 “서버에서 입력”이라는 표시입니다.</h2>
-        <div class="grid-2">
-          <div class="card strong"><h3>맞는 입력</h3><div class="terminal compact" style="margin-top:20px"><span class="prompt">server$</span> pwd</div><p class="small" style="margin-top:18px">실제로는 <span class="mono">pwd</span>만 입력합니다.</p></div>
-          <div class="card warn"><h3>틀린 입력</h3><div class="terminal compact" style="margin-top:20px"><span class="bad">server$ pwd</span></div><p class="small" style="margin-top:18px"><span class="mono">server$</span>까지 복사하면 명령어가 아닙니다.</p></div>
-        </div>
-      </section>
-
       <section class="slide" data-title="Home and scratch preview">
         <div class="slide-header"><span class="tag">Preview</span><span>home and scratch</span></div>
         <h2>나중에 큰 작업을 할 때는 home과 scratch를 구분합니다.</h2>
@@ -370,7 +372,7 @@ Connection to nurion.ksc.re.kr closed.
 <span class="prompt">server$</span> ls
 <span class="prompt">server$</span> mkdir -p ~/linux-practice
 <span class="prompt">server$</span> cd ~/linux-practice</div>
-        <p class="subtitle">다음 발표 자료: <span class="mono">linux_command_tutorial_presentation.html</span></p>
+        <p class="subtitle">다음 발표 자료: <a class="slide-link mono" href="https://material-jh.github.io/bash_tutorial/linux_command_tutorial_presentation.html">linux_command_tutorial_presentation.html</a></p>
       </section>
 
       <div class="footer">
