@@ -564,8 +564,8 @@
       <section class="slide" data-title="Navigation">
         <div class="slide-header"><span class="section-tag">Navigation</span></div>
         <h2>서버 작업의 첫 습관: 이동하기 전에 보고, 실행하기 전에 위치 확인</h2>
-        <div class="grid-2" style="margin-top:48px">
-          <div class="terminal"><span class="prompt">server$</span> pwd
+        <div class="grid-2" style="margin-top:36px; align-items:start">
+          <div class="terminal compact"><span class="prompt">server$</span> pwd
 <span class="comment">/home01/user123/linux-practice/examples</span>
 <span class="prompt">server$</span> ls
 <span class="comment">files  navigation  qe  scripts  text</span>
@@ -582,7 +582,7 @@
 <span class="comment">/home01/user123/linux-practice/examples/qe</span>
 <span class="prompt">server$</span> cd ..
 <span class="prompt">server$</span> cd ~</div>
-          <div class="terminal"><span class="prompt">server$</span> tree .
+          <div class="terminal compact"><span class="prompt">server$</span> tree .
 <span class="comment"># tree가 없으면</span>
 <span class="prompt">server$</span> find . -maxdepth 3 -print</div>
         </div>
@@ -663,7 +663,7 @@
           <div class="pipe-arrow">→</div>
           <div class="pipe-node"><h3>파일에 저장</h3><p class="small mono">&gt; error-count.txt</p></div>
         </div>
-        <div class="terminal" style="margin-top:48px"><span class="prompt">server$</span> grep "ERROR" text/app.log | wc -l
+        <div class="terminal compact" style="margin-top:28px"><span class="prompt">server$</span> grep "ERROR" text/app.log | wc -l
 <span class="comment">0</span>
 <span class="prompt">server$</span> ./qe/fake-pw.x -in qe/si.scf.in &gt; fake.out 2&gt; fake.err
 <span class="prompt">server$</span> wc -c fake.err     <span class="comment"># 성공하면 보통 0 bytes</span>
