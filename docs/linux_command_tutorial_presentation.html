@@ -485,45 +485,11 @@
         <div class="slide-header"><span class="section-tag">Roadmap</span></div>
         <h2>누리온에 로그인한 상태에서 바로 손으로 확인한다</h2>
         <div class="timeline">
-          <div class="time">0:00–0:10</div><div class="time-item"><h3>누리온 접속 확인</h3><p>이미 로그인한 누리온 화면에서 `hostname`, `whoami`, `pwd`를 확인한다.</p></div>
+          <div class="time">0:00–0:10</div><div class="time-item"><h3>명령어 읽는 법</h3><p>`server$` 뒤의 명령어만 입력하고 `pwd`, `ls -la`로 현재 위치와 목록을 확인한다.</p></div>
           <div class="time">0:10–0:25</div><div class="time-item"><h3>위치와 파일</h3><p>`pwd`, `ls`, `cd`, `cp`, `mv`로 현재 위치와 파일 이동을 연습한다.</p></div>
           <div class="time">0:25–0:38</div><div class="time-item"><h3>텍스트 읽기와 `vim`</h3><p>`more`, `head`, `tail`, `vim`으로 입력 파일과 출력 로그를 확인한다.</p></div>
           <div class="time">0:38–0:50</div><div class="time-item"><h3>안전한 파일 관리</h3><p>`cp`, `mv`, `rm -i`로 복사, 이름 변경, 삭제를 천천히 연습한다.</p></div>
           <div class="time">0:50–1:00</div><div class="time-item"><h3>출력 읽기와 다음 과제</h3><p>`grep`, `tail`, `file`로 결과 파일을 읽고 다음 세션 전 homework를 확인한다.</p></div>
-        </div>
-      </section>
-
-      <section class="slide" data-title="Local vs server">
-        <div class="slide-header"><span class="section-tag">Mental model</span></div>
-        <h2>로그인 후 첫 질문: “지금 누리온의 어느 폴더에 있는가?”</h2>
-        <div class="grid-2" style="margin-top:54px">
-          <div class="card warn"><h3><span class="mono warm">local$</span> 내 컴퓨터</h3><ul class="clean" style="margin-top:24px"><li>Termius 앱과 Hosts/SFTP 화면이 있는 곳</li><li>필요하면 Termius에서 다시 누리온에 접속하는 위치</li><li>내 Desktop/Finder/Explorer 파일이 있는 곳</li></ul></div>
-          <div class="card strong"><h3><span class="mono accent2">server$</span> 원격 서버</h3><ul class="clean" style="margin-top:24px"><li>지금 수업을 진행하는 누리온 환경</li><li>home, scratch, QE 파일이 있는 곳</li><li>`pwd`, `ls`, `cp`, `mv`, `grep`을 연습하는 곳</li></ul></div>
-        </div>
-      </section>
-
-      <section class="slide" data-title="SSH login">
-        <div class="slide-header"><span class="section-tag">SSH</span></div>
-        <h2>SSH 로그인은 별도 자료에서 먼저 끝낸다. 여기서는 접속 확인만 한다.</h2>
-        <div class="grid-2" style="margin-top:48px">
-          <div class="terminal"><span class="comment"># 누리온 로그인 후 확인</span>
-<span class="prompt">server$</span> hostname
-<span class="comment">login01</span>
-<span class="prompt">server$</span> whoami
-<span class="comment">user123</span>
-<span class="prompt">server$</span> pwd
-<span class="comment">/home01/user123</span>
-
-<span class="comment"># 필요할 때 종료</span>
-<span class="prompt">server$</span> exit</div>
-          <div class="card">
-            <h3>로그인 후 자주 당황하는 것</h3>
-            <ul class="clean" style="margin-top:24px">
-              <li>프롬프트 모양은 계정/터미널마다 다를 수 있다.</li>
-              <li>hostname이 login01처럼 보이면 누리온 로그인 노드이다.</li>
-              <li>`pwd` 결과가 /home01/... 이면 누리온 home에 있는 것이다.</li>
-            </ul>
-          </div>
         </div>
       </section>
 
@@ -814,7 +780,7 @@
         <div class="slide-header"><span class="section-tag">Summary</span></div>
         <h2>첫 수업에서 기억할 것은 네 가지면 충분하다.</h2>
         <div class="grid-4" style="margin-top:58px">
-          <div class="card strong"><div class="metric">1</div><h3 style="margin-top:18px">위치</h3><p class="metric-label">항상 `local$`와 `server$`, 그리고 `pwd`를 확인한다.</p></div>
+          <div class="card strong"><div class="metric">1</div><h3 style="margin-top:18px">위치</h3><p class="metric-label">Termius의 `server$` 프롬프트에서 `pwd`로 현재 폴더를 확인한다.</p></div>
           <div class="card"><div class="metric">2</div><h3 style="margin-top:18px">파일</h3><p class="metric-label">읽기 → 복사 → 수정 → 삭제 순서로 안전하게 다룬다.</p></div>
           <div class="card"><div class="metric">3</div><h3 style="margin-top:18px">로그</h3><p class="metric-label">계산 성공 여부는 출력 파일과 검색 결과로 판단한다.</p></div>
           <div class="card"><div class="metric">4</div><h3 style="margin-top:18px">다음 과제</h3><p class="metric-label">누리온 QE 실행 메모는 다음 세션 전 homework로 읽는다.</p></div>
