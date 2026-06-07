@@ -230,13 +230,7 @@
       <section class="slide" data-title="Open Termius">
         <div class="slide-header"><span class="tag">Step 1</span><span>open Termius</span></div>
         <h2>먼저 Termius를 열고 Hosts 화면에서 누리온 host를 준비합니다.</h2>
-        <div class="grid-2" style="grid-template-columns: 1.15fr .85fr; margin-top:30px">
-          <div class="image-card dark"><img class="screenshot wide" src="termius-hosts.png" alt="Termius Hosts screen with New host panel and Nurion host cards" /></div>
-          <div>
-            <div class="card strong" style="min-height:0"><h3>수업에서 쓸 화면</h3><ul class="clean"><li>왼쪽 메뉴에서 <span class="mono">Hosts</span>를 선택합니다.</li><li>새로 만들 때는 <span class="mono">New host</span>를 누릅니다.</li><li>이미 저장된 <span class="mono">nurion.ksc.re.kr</span> host가 있으면 그것을 선택합니다.</li></ul></div>
-            <div class="card warn" style="min-height:0; margin-top:28px"><h3>오늘은 local terminal이 아닙니다</h3><p class="small">PowerShell이나 Windows Terminal에서 <span class="mono">ssh</span> 명령을 직접 입력하지 않고, Termius에서 접속합니다.</p></div>
-          </div>
-        </div>
+        <div class="image-card dark" style="margin-top:34px"><img class="screenshot wide" src="termius-hosts-annotated.png" alt="Annotated Termius Hosts screen showing Hosts, New host, Address, and saved Nurion host card" /></div>
       </section>
 
       <section class="slide" data-title="Prompt rule">
@@ -269,31 +263,22 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])?</div>
         <p class="subtitle">Termius 화면에서는 <span class="mono">Accept</span>, <span class="mono">Continue</span>, 또는 <span class="mono">Yes</span> 같은 버튼으로 보일 수 있습니다. 주소가 <span class="mono">nurion.ksc.re.kr</span>인지 확인하고 진행합니다.</p>
       </section>
 
-      <section class="slide" data-title="Termius login prompts">
-        <div class="slide-header"><span class="tag">Real example</span><span>Termius login screen</span></div>
-        <h2>Termius에서는 OTP와 비밀번호 입력 창이 차례로 나타납니다.</h2>
-        <div class="grid-2" style="grid-template-columns: 1fr 1fr; margin-top:38px">
-          <div class="image-card dark"><img class="screenshot short" src="termius-otp-prompt.png" alt="Termius Password OTP prompt for nurion.ksc.re.kr" /></div>
-          <div class="image-card dark"><img class="screenshot short" src="termius-password-prompt.png" alt="Termius password prompt for nurion.ksc.re.kr" /></div>
-        </div>
-        <div class="grid-3" style="margin-top:34px">
-          <div class="card strong"><h3>Password(OTP)</h3><p class="small">OTP 또는 1차 인증 값을 입력하는 단계입니다.</p></div>
-          <div class="card"><h3>Password</h3><p class="small">계정 비밀번호를 입력합니다. 입력한 글자는 보이지 않을 수 있습니다.</p></div>
-          <div class="card warn"><h3>Continue &amp; Save</h3><p class="small">개인 PC가 아니면 저장 옵션을 신중하게 선택합니다.</p></div>
-        </div>
+      <section class="slide" data-title="Termius OTP prompt">
+        <div class="slide-header"><span class="tag">Real example</span><span>OTP screen</span></div>
+        <h2>첫 번째 입력 창에는 OTP 또는 1차 인증 값을 넣습니다.</h2>
+        <div class="image-card dark" style="margin-top:34px"><img class="screenshot wide" src="termius-otp-prompt-annotated.png" alt="Annotated Termius OTP prompt showing where to type the OTP and continue" /></div>
+      </section>
+
+      <section class="slide" data-title="Termius password prompt">
+        <div class="slide-header"><span class="tag">Real example</span><span>password screen</span></div>
+        <h2>두 번째 입력 창에는 누리온 계정 비밀번호를 넣습니다.</h2>
+        <div class="image-card dark" style="margin-top:34px"><img class="screenshot wide" src="termius-password-prompt-annotated.png" alt="Annotated Termius password prompt showing password input and save option warning" /></div>
       </section>
 
       <section class="slide" data-title="Login banner">
         <div class="slide-header"><span class="tag">Login banner</span><span>do not read everything now</span></div>
         <h2>로그인에 성공하면 Termius 터미널에 긴 누리온 안내문이 보입니다.</h2>
-        <div class="grid-2" style="grid-template-columns: 1.15fr .85fr; margin-top:38px">
-          <div class="image-card dark"><img class="screenshot wide" src="termius-login-banner.png" alt="Termius terminal after successful Nurion login showing KISTI notices and prompt" /></div>
-          <div>
-            <div class="card strong" style="min-height:0"><h3>1. 당황하지 않기</h3><p class="small">KISTI/NURION 공지, queue 정책, 계정 정보가 한 번에 출력됩니다. 정상 화면입니다.</p></div>
-            <div class="card warn" style="min-height:0; margin-top:18px"><h3>2. /scratch 경고</h3><p class="small"><span class="mono">/scratch</span>의 오래 사용하지 않은 파일은 삭제될 수 있습니다.</p></div>
-            <div class="card" style="min-height:0; margin-top:18px"><h3>3. 프롬프트 찾기</h3><p class="small">공지문이 끝난 뒤 명령어를 입력할 수 있는 줄이 보이면 접속 성공입니다.</p></div>
-          </div>
-        </div>
+        <div class="image-card dark" style="margin-top:34px"><img class="screenshot wide" src="termius-login-banner-annotated.png" alt="Annotated Termius login banner highlighting scratch warning and prompt line" /></div>
       </section>
 
       <section class="slide" data-title="After login">
@@ -334,16 +319,7 @@ login01
       <section class="slide" data-title="File transfer with Termius">
         <div class="slide-header"><span class="tag">File transfer</span><span>Termius SFTP + data mover node</span></div>
         <h2>파일 전송은 Termius의 SFTP 탭에서 <span class="mono">nurion-dm.ksc.re.kr</span>로 접속합니다.</h2>
-        <div class="grid-2" style="grid-template-columns: 1.12fr .88fr; margin-top:30px">
-          <div class="image-card dark"><img class="screenshot" src="termius-sftp-browser.png" alt="Termius SFTP browser showing local files on the left and host selection on the right" /></div>
-          <div>
-            <div class="card strong" style="min-height:0"><h3>초보자용 기억법</h3><ul class="clean"><li><span class="mono">nurion.ksc.re.kr</span>: 명령어를 입력하는 SSH 로그인</li><li><span class="mono">nurion-dm.ksc.re.kr</span>: 파일을 올리고 내려받는 SFTP 접속</li><li>Termius의 SFTP 화면에서 local과 remote를 나눠 봅니다.</li></ul></div>
-            <div class="terminal compact" style="margin-top:28px">Remote host: nurion-dm.ksc.re.kr
-Username: 본인 누리온 ID
-Protocol: SFTP
-Remote folder: /home01/본인ID</div>
-          </div>
-        </div>
+        <div class="image-card dark" style="margin-top:34px"><img class="screenshot wide" src="termius-sftp-browser-annotated.png" alt="Annotated Termius SFTP browser showing SFTP tab, local files, and Select host for Nurion data mover" /></div>
       </section>
 
       <section class="slide" data-title="If login fails">
@@ -378,7 +354,7 @@ Connection to nurion.ksc.re.kr closed.</div>
       <div class="footer">
         <span id="slideTitle">Title</span>
         <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-        <span id="slideCount">1 / 15</span>
+        <span id="slideCount">1 / 16</span>
       </div>
     </main>
   </div>
