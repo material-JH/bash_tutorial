@@ -58,7 +58,7 @@ Label:    Nurion login
 
 ![Termius OTP 입력 위치와 Continue 버튼이 표시된 예](../docs/termius-otp-prompt-annotated.png)
 
-![Termius 비밀번호 입력 위치와 저장 옵션 주의 표시](../docs/termius-password-prompt-annotated.png)
+![Termius 비밀번호 입력 위치와 개인 노트북 저장 선택 표시](../docs/termius-password-prompt-annotated.png)
 
 ![Termius 로그인 성공 후 프롬프트와 scratch 경고 위치가 표시된 예](../docs/termius-login-banner-annotated.png)
 
