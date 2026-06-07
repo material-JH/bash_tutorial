@@ -32,9 +32,11 @@ SSH는 Secure Shell의 약자입니다. 네트워크를 통해 다른 컴퓨터,
 
 Termius에서 `Hosts` 화면을 엽니다.
 
-![Termius Hosts 화면에서 Hosts, New host, Address, 저장된 누리온 host가 표시된 예](../docs/termius-hosts-annotated.png)
+![Termius Hosts 화면에서 Hosts와 New host 위치가 표시된 예](../docs/termius-hosts-annotated.png)
 
 새 host를 만들 때는 아래처럼 입력합니다.
+
+![Termius host 설정 화면에서 Address, Port, Username 위치가 표시된 예](../docs/termius-host-settings-annotated.png)
 
 ```text
 Address:  nurion.ksc.re.kr
@@ -43,11 +45,11 @@ Username: 본인 누리온 ID
 Label:    Nurion login
 ```
 
-이미 `nurion.ksc.re.kr` host가 저장되어 있다면 새로 만들지 말고 저장된 host를 선택합니다.
+위 값을 입력한 뒤 누리온 접속을 시작합니다.
 
 ## 로그인 순서
 
-저장된 누리온 host를 선택하면 Termius가 인증 정보를 물어봅니다.
+누리온 접속을 시작하면 Termius가 인증 정보를 물어봅니다.
 
 1. `Password(OTP)` 창에 OTP 또는 1차 인증 값을 입력합니다.
 2. `Password` 창에 누리온 계정 비밀번호를 입력합니다.

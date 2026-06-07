@@ -4,7 +4,7 @@
 
 ## 0단계: 서버 접속
 
-Termius에서 저장된 누리온 host를 선택해 로그인합니다.
+Termius에서 누리온 host를 만들고 로그인합니다.
 
 ```text
 Address:  nurion.ksc.re.kr
