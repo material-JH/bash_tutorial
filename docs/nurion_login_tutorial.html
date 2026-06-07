@@ -125,7 +125,10 @@
     .pipe-node { min-height: 250px; display: grid; align-content: center; gap: 16px; background: #fff; border: 1px solid var(--line); border-top: 5px solid var(--accent); padding: 34px; }
     .pipe-arrow { color: var(--accent); font-size: 64px; text-align: center; }
     .screenshot { width: 100%; max-height: 510px; object-fit: contain; border: 1px solid var(--line); box-shadow: 0 18px 44px rgba(0,64,152,.14); background: #fff; }
+    .screenshot.wide { max-height: 570px; background: #111525; }
+    .screenshot.short { max-height: 360px; background: #111525; }
     .image-card { background: #fff; border: 1px solid var(--line); padding: 18px; box-shadow: 0 14px 32px rgba(0,64,152,.08); }
+    .image-card.dark { background: #111525; border-color: #263044; }
     .mono { font-family: var(--mono); }
     .slide-link { color: var(--accent); font-weight: 900; text-decoration: none; border-bottom: 3px solid var(--accent-2); }
     .slide-link:hover, .slide-link:focus-visible { color: var(--accent-2); outline: none; }
@@ -202,96 +205,95 @@
     <main class="deck" id="deck" aria-live="polite">
       <section class="slide active" data-title="Title">
         <div class="slide-header"><span class="tag">Nurion login tutorial</span><span>before Linux terminal class</span></div>
-        <h1>누리온에 먼저 로그인하고, 그 안에서 리눅스 터미널을 배웁니다.</h1>
-        <p class="subtitle">이 자료의 목표는 계산이 아니라 “모든 학생이 같은 서버 화면에 들어오는 것”입니다. 로그인 후에는 <span class="mono">pwd</span>, <span class="mono">ls</span>, <span class="mono">cd</span>부터 시작합니다.</p>
+        <h1>Termius로 누리온에 먼저 로그인하고, 그 안에서 리눅스 터미널을 배웁니다.</h1>
+        <p class="subtitle">이 자료의 목표는 계산이 아니라 “모든 학생이 같은 Termius 화면에서 누리온 서버에 들어오는 것”입니다. 로그인 후에는 <span class="mono">pwd</span>, <span class="mono">ls</span>, <span class="mono">cd</span>부터 시작합니다.</p>
         <div class="grid-3">
-          <div class="card strong"><h3>1. 내 컴퓨터</h3><p class="small">Terminal, PowerShell, Windows Terminal을 엽니다.</p></div>
-          <div class="card"><h3>2. SSH 로그인</h3><p class="small">누리온 주소와 사용자 ID로 접속합니다.</p></div>
+          <div class="card strong"><h3>1. Termius 실행</h3><p class="small">내 컴퓨터에서 Termius 앱을 열고 Hosts 화면으로 갑니다.</p></div>
+          <div class="card"><h3>2. SSH 로그인</h3><p class="small">누리온 host를 선택하고 OTP와 비밀번호를 입력합니다.</p></div>
           <div class="card warn"><h3>3. 서버 확인</h3><p class="small">접속 후 <span class="mono">hostname</span>, <span class="mono">pwd</span>로 위치를 확인합니다.</p></div>
         </div>
       </section>
 
       <section class="slide" data-title="Mental model">
         <div class="slide-header"><span class="tag">Mental model</span><span>two computers</span></div>
-        <h2>지금 명령어가 내 노트북에서 실행되는지, 누리온에서 실행되는지 구분합니다.</h2>
+        <h2>Termius는 내 컴퓨터 앱이고, 로그인 후 명령어는 누리온 서버에서 실행됩니다.</h2>
         <div class="pipeline">
-          <div class="pipe-node"><h3>내 노트북</h3><p class="small mono">local$</p><p class="small">SSH 접속을 시작하는 곳</p></div>
+          <div class="pipe-node"><h3>내 노트북</h3><p class="small mono">Termius</p><p class="small">SSH/SFTP 연결을 시작하는 앱</p></div>
           <div class="pipe-arrow">→</div>
           <div class="pipe-node"><h3>누리온 로그인 노드</h3><p class="small mono">server$</p><p class="small">리눅스 명령어를 배울 곳</p></div>
           <div class="pipe-arrow">→</div>
-          <div class="pipe-node"><h3>다음 세션</h3><p class="small mono">home<br>scratch</p><p class="small">계산 작업 위치는 다음 발표자가 설명합니다.</p></div>
+          <div class="pipe-node"><h3>파일 전송</h3><p class="small mono">SFTP</p><p class="small">Termius의 SFTP 탭에서 다룹니다.</p></div>
         </div>
-        <p class="subtitle"><span class="danger">주의:</span> <span class="mono">local$</span>, <span class="mono">server$</span> 글자는 설명용입니다. 실제로 입력하지 않습니다.</p>
+        <p class="subtitle"><span class="danger">주의:</span> Termius 창 안에 있어도 로그인 전 화면과 로그인 후 서버 터미널은 다릅니다. 명령어 실습은 누리온 접속 후에 시작합니다.</p>
       </section>
 
-      <section class="slide" data-title="Open terminal">
-        <div class="slide-header"><span class="tag">Step 1</span><span>open a terminal</span></div>
-        <h2>먼저 내 컴퓨터에서 터미널을 엽니다.</h2>
-        <div class="grid-2">
-          <div class="card"><h3>Windows</h3><ul class="clean"><li>Windows Terminal 권장</li><li>또는 PowerShell 사용</li><li>검색창에서 “Terminal” 입력</li></ul></div>
-          <div class="card strong"><h3>macOS</h3><ul class="clean"><li>Terminal 앱 실행</li><li>Spotlight에서 “Terminal” 검색</li><li>또는 iTerm2 사용 가능</li></ul></div>
+      <section class="slide" data-title="Open Termius">
+        <div class="slide-header"><span class="tag">Step 1</span><span>open Termius</span></div>
+        <h2>먼저 Termius를 열고 Hosts 화면에서 누리온 host를 준비합니다.</h2>
+        <div class="grid-2" style="grid-template-columns: 1.15fr .85fr; margin-top:30px">
+          <div class="image-card dark"><img class="screenshot wide" src="termius-hosts.png" alt="Termius Hosts screen with New host panel and Nurion host cards" /></div>
+          <div>
+            <div class="card strong" style="min-height:0"><h3>수업에서 쓸 화면</h3><ul class="clean"><li>왼쪽 메뉴에서 <span class="mono">Hosts</span>를 선택합니다.</li><li>새로 만들 때는 <span class="mono">New host</span>를 누릅니다.</li><li>이미 저장된 <span class="mono">nurion.ksc.re.kr</span> host가 있으면 그것을 선택합니다.</li></ul></div>
+            <div class="card warn" style="min-height:0; margin-top:28px"><h3>오늘은 local terminal이 아닙니다</h3><p class="small">PowerShell이나 Windows Terminal에서 <span class="mono">ssh</span> 명령을 직접 입력하지 않고, Termius에서 접속합니다.</p></div>
+          </div>
         </div>
-        <p class="subtitle">처음 수업에서는 터미널 앱을 여는 것부터 실습입니다. 파일 탐색기가 아니라 글자로 서버에 접속합니다.</p>
       </section>
 
       <section class="slide" data-title="Prompt rule">
-        <div class="slide-header"><span class="tag">Prompt rule</span><span>do not type local$</span></div>
-        <h2>수업 자료의 <span class="mono">local$</span>와 <span class="mono">server$</span>는 실행 위치를 알려주는 표시입니다.</h2>
+        <div class="slide-header"><span class="tag">Prompt rule</span><span>do not type server$</span></div>
+        <h2>Termius 터미널에서 <span class="mono">server$</span>는 실행 위치를 알려주는 표시입니다.</h2>
         <div class="grid-2">
-          <div class="card strong"><h3>실제로 입력할 내용</h3><div class="terminal compact" style="margin-top:20px">ssh -l 사용자ID nurion.ksc.re.kr</div><p class="small" style="margin-top:18px"><span class="mono">local$</span> 뒤에 있는 명령어만 입력합니다.</p></div>
-          <div class="card warn"><h3>복사하면 안 되는 내용</h3><div class="terminal compact" style="margin-top:20px"><span class="bad">local$ ssh -l 사용자ID nurion.ksc.re.kr</span></div><p class="small" style="margin-top:18px"><span class="mono">local$</span>까지 복사하면 명령어가 아닙니다.</p></div>
+          <div class="card strong"><h3>실제로 입력할 내용</h3><div class="terminal compact" style="margin-top:20px">hostname</div><p class="small" style="margin-top:18px"><span class="mono">server$</span> 뒤에 있는 명령어만 입력합니다.</p></div>
+          <div class="card warn"><h3>복사하면 안 되는 내용</h3><div class="terminal compact" style="margin-top:20px"><span class="bad">server$ hostname</span></div><p class="small" style="margin-top:18px"><span class="mono">server$</span>까지 복사하면 명령어가 아닙니다.</p></div>
         </div>
       </section>
 
-      <section class="slide" data-title="SSH command">
-        <div class="slide-header"><span class="tag">Step 2</span><span>ssh to Nurion</span></div>
-        <h2>누리온 로그인 명령은 이 형태입니다.</h2>
-        <div class="terminal" style="margin-top:54px"><span class="prompt local">local$</span> ssh -l 사용자ID nurion.ksc.re.kr</div>
+      <section class="slide" data-title="Termius host settings">
+        <div class="slide-header"><span class="tag">Step 2</span><span>host settings</span></div>
+        <h2>Termius host에는 누리온 주소와 본인 계정 정보를 넣습니다.</h2>
+        <div class="terminal compact" style="margin-top:46px">Address:  nurion.ksc.re.kr
+Port:     22
+Username: 본인 누리온 ID
+Label:    Nurion login</div>
         <div class="grid-2">
-          <div class="card strong"><h3>예시</h3><div class="terminal compact" style="margin-top:20px"><span class="prompt local">local$</span> ssh -l a2114a01 nurion.ksc.re.kr</div><p class="small" style="margin-top:18px">실제 수업에서는 본인 계정 ID를 넣습니다.</p></div>
-          <div class="card warn"><h3>비밀번호 입력</h3><ul class="clean"><li>입력해도 화면에 글자가 보이지 않을 수 있습니다.</li><li>정상입니다. 입력 후 Enter를 누릅니다.</li><li>틀리면 다시 천천히 입력합니다.</li></ul></div>
+          <div class="card strong"><h3>SSH 로그인 host</h3><p class="small"><span class="mono">nurion.ksc.re.kr</span>에 접속하면 리눅스 명령어를 입력하는 서버 터미널이 열립니다.</p></div>
+          <div class="card warn"><h3>비밀번호 저장</h3><p class="small">공용 PC나 수업장 PC에서는 비밀번호를 저장하지 않습니다. 접속할 때마다 OTP와 비밀번호를 직접 입력합니다.</p></div>
         </div>
       </section>
 
       <section class="slide" data-title="First connection">
         <div class="slide-header"><span class="tag">First connection</span><span>fingerprint question</span></div>
-        <h2>처음 접속하면 fingerprint 질문이 나올 수 있습니다.</h2>
+        <h2>처음 접속하면 Termius가 서버 연결 확인을 물을 수 있습니다.</h2>
         <div class="terminal compact" style="margin-top:54px">The authenticity of host 'nurion.ksc.re.kr (...)' can't be established.
 Are you sure you want to continue connecting (yes/no/[fingerprint])?</div>
-        <p class="subtitle">이 질문이 나오면 <span class="mono">yes</span>를 입력하고 Enter를 누릅니다.</p>
-        <div class="terminal" style="margin-top:36px"><span class="prompt local">local$</span> yes</div>
+        <p class="subtitle">Termius 화면에서는 <span class="mono">Accept</span>, <span class="mono">Continue</span>, 또는 <span class="mono">Yes</span> 같은 버튼으로 보일 수 있습니다. 주소가 <span class="mono">nurion.ksc.re.kr</span>인지 확인하고 진행합니다.</p>
       </section>
 
-      <section class="slide" data-title="Real login example">
-        <div class="slide-header"><span class="tag">Real example</span><span>PowerShell login screen</span></div>
-        <h2>Windows PowerShell에서는 실제로 이런 순서로 보일 수 있습니다.</h2>
-        <div class="terminal compact" style="margin-top:44px"><span class="prompt local">PS C:\Users\USER&gt;</span> ssh a2114a01@nurion.ksc.re.kr
-(a2114a01@nurion.ksc.re.kr) Password(OTP):
-(a2114a01@nurion.ksc.re.kr) Password:
-Last login: Thu May 21 13:48:08 2026 from 220.67.148.1</div>
+      <section class="slide" data-title="Termius login prompts">
+        <div class="slide-header"><span class="tag">Real example</span><span>Termius login screen</span></div>
+        <h2>Termius에서는 OTP와 비밀번호 입력 창이 차례로 나타납니다.</h2>
+        <div class="grid-2" style="grid-template-columns: 1fr 1fr; margin-top:38px">
+          <div class="image-card dark"><img class="screenshot short" src="termius-otp-prompt.png" alt="Termius Password OTP prompt for nurion.ksc.re.kr" /></div>
+          <div class="image-card dark"><img class="screenshot short" src="termius-password-prompt.png" alt="Termius password prompt for nurion.ksc.re.kr" /></div>
+        </div>
         <div class="grid-3" style="margin-top:34px">
-          <div class="card strong"><h3>Password(OTP)</h3><p class="small">OTP 또는 1차 인증 값을 입력하는 단계입니다. 화면에는 입력한 글자가 보이지 않을 수 있습니다.</p></div>
-          <div class="card"><h3>Password</h3><p class="small">계정 비밀번호를 입력합니다. 틀리면 천천히 다시 입력합니다.</p></div>
-          <div class="card warn"><h3>Last login</h3><p class="small">로그인 성공 후 이전 접속 시간이 보이면 서버에 들어온 것입니다.</p></div>
+          <div class="card strong"><h3>Password(OTP)</h3><p class="small">OTP 또는 1차 인증 값을 입력하는 단계입니다.</p></div>
+          <div class="card"><h3>Password</h3><p class="small">계정 비밀번호를 입력합니다. 입력한 글자는 보이지 않을 수 있습니다.</p></div>
+          <div class="card warn"><h3>Continue &amp; Save</h3><p class="small">개인 PC가 아니면 저장 옵션을 신중하게 선택합니다.</p></div>
         </div>
       </section>
 
       <section class="slide" data-title="Login banner">
         <div class="slide-header"><span class="tag">Login banner</span><span>do not read everything now</span></div>
-        <h2>로그인 후 긴 안내문이 나오면, 지금은 세 가지만 보면 됩니다.</h2>
-        <div class="grid-3">
-          <div class="card strong"><h3>1. 당황하지 않기</h3><p class="small">KISTI/NURION 공지, queue 정책, 계정 정보가 한 번에 출력됩니다. 정상 화면입니다.</p></div>
-          <div class="card warn"><h3>2. /scratch 경고</h3><p class="small"><span class="mono">/scratch</span>의 오래 사용하지 않은 파일은 삭제될 수 있습니다. 중요한 파일은 보관 위치에 백업합니다.</p></div>
-          <div class="card"><h3>3. 프롬프트 찾기</h3><p class="small">공지문이 끝난 뒤 명령어를 입력할 수 있는 <span class="mono">server$</span> 상태가 되었는지 확인합니다.</p></div>
+        <h2>로그인에 성공하면 Termius 터미널에 긴 누리온 안내문이 보입니다.</h2>
+        <div class="grid-2" style="grid-template-columns: 1.15fr .85fr; margin-top:38px">
+          <div class="image-card dark"><img class="screenshot wide" src="termius-login-banner.png" alt="Termius terminal after successful Nurion login showing KISTI notices and prompt" /></div>
+          <div>
+            <div class="card strong" style="min-height:0"><h3>1. 당황하지 않기</h3><p class="small">KISTI/NURION 공지, queue 정책, 계정 정보가 한 번에 출력됩니다. 정상 화면입니다.</p></div>
+            <div class="card warn" style="min-height:0; margin-top:18px"><h3>2. /scratch 경고</h3><p class="small"><span class="mono">/scratch</span>의 오래 사용하지 않은 파일은 삭제될 수 있습니다.</p></div>
+            <div class="card" style="min-height:0; margin-top:18px"><h3>3. 프롬프트 찾기</h3><p class="small">공지문이 끝난 뒤 명령어를 입력할 수 있는 줄이 보이면 접속 성공입니다.</p></div>
+          </div>
         </div>
-        <div class="terminal compact" style="margin-top:38px">================ KISTI 5th NURION System ====================
- * Queue Policies ...
- * Mandatory PBS Application Name option (#PBS -A App_Name) ...
- +---------------------------------------------------------------+
- |[WARNING] Files in /scratch unused for 15 days will be deleted |
- +---------------------------------------------------------------+
-=================== Account Information ====================
-* a2114a01 Lustre Filesystem Quota Status ...</div>
       </section>
 
       <section class="slide" data-title="After login">
@@ -329,20 +331,19 @@ login01
         <p class="subtitle">오늘 첫 단계는 로그인입니다. 파일 이동은 리눅스 기본 명령을 배운 뒤 다시 다룹니다.</p>
       </section>
 
-      <section class="slide" data-title="File transfer with MobaXterm">
-        <div class="slide-header"><span class="tag">File transfer</span><span>MobaXterm + data mover node</span></div>
-        <h2>파일 전송은 MobaXterm에서 <span class="mono">nurion-dm.ksc.re.kr</span>로 접속합니다.</h2>
-        <div class="grid-2" style="grid-template-columns: 1.12fr .88fr; margin-top:38px">
-          <div class="image-card"><img class="screenshot" src="mobaxterm_sftp_annotated.png" alt="Annotated MobaXterm SFTP settings showing Nurion data mover host, username, port, and OK button" /></div>
+      <section class="slide" data-title="File transfer with Termius">
+        <div class="slide-header"><span class="tag">File transfer</span><span>Termius SFTP + data mover node</span></div>
+        <h2>파일 전송은 Termius의 SFTP 탭에서 <span class="mono">nurion-dm.ksc.re.kr</span>로 접속합니다.</h2>
+        <div class="grid-2" style="grid-template-columns: 1.12fr .88fr; margin-top:30px">
+          <div class="image-card dark"><img class="screenshot" src="termius-sftp-browser.png" alt="Termius SFTP browser showing local files on the left and host selection on the right" /></div>
           <div>
-            <div class="card strong" style="min-height:0"><h3>초보자용 기억법</h3><ul class="clean"><li><span class="mono">nurion.ksc.re.kr</span>: 명령어를 입력하는 SSH 로그인</li><li><span class="mono">nurion-dm.ksc.re.kr</span>: 파일을 올리고 내려받는 SFTP 접속</li><li>MobaXterm의 파일 창에서 drag &amp; drop으로 전송합니다.</li></ul></div>
+            <div class="card strong" style="min-height:0"><h3>초보자용 기억법</h3><ul class="clean"><li><span class="mono">nurion.ksc.re.kr</span>: 명령어를 입력하는 SSH 로그인</li><li><span class="mono">nurion-dm.ksc.re.kr</span>: 파일을 올리고 내려받는 SFTP 접속</li><li>Termius의 SFTP 화면에서 local과 remote를 나눠 봅니다.</li></ul></div>
             <div class="terminal compact" style="margin-top:28px">Remote host: nurion-dm.ksc.re.kr
 Username: 본인 누리온 ID
 Protocol: SFTP
 Remote folder: /home01/본인ID</div>
           </div>
         </div>
-        <p class="subtitle">로그인 노드에서는 SFTP/FTP를 쓰지 않고, 파일 전송용 DM node를 사용합니다.</p>
       </section>
 
       <section class="slide" data-title="If login fails">
@@ -360,9 +361,8 @@ Remote folder: /home01/본인ID</div>
         <div class="slide-header"><span class="tag">Logout</span><span>end the session safely</span></div>
         <h2>수업이 끝나면 <span class="mono">exit</span>로 누리온 접속을 종료합니다.</h2>
         <div class="terminal" style="margin-top:54px"><span class="prompt">server$</span> exit
-Connection to nurion.ksc.re.kr closed.
-<span class="prompt local">local$</span></div>
-        <p class="subtitle">프롬프트가 다시 내 컴퓨터 쪽으로 돌아오면 로그아웃된 것입니다.</p>
+Connection to nurion.ksc.re.kr closed.</div>
+        <p class="subtitle">Termius 세션이 닫히거나 host 화면으로 돌아오면 로그아웃된 것입니다.</p>
       </section>
 
       <section class="slide" data-title="Ready">

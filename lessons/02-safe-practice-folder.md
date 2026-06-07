@@ -1,83 +1,73 @@
-# 2. SSH로 원격 리눅스 서버 접속하기
+# 2. Termius로 원격 리눅스 서버 접속하기
 
-이 장에서는 내 컴퓨터에서 원격 리눅스 서버에 접속하고, 안전한 연습 폴더를 만듭니다.
+이 장에서는 Termius로 누리온에 접속하고, 서버 안에서 안전한 연습 폴더를 만듭니다.
 
 ## SSH란?
 
-SSH는 Secure Shell의 약자입니다. 네트워크를 통해 다른 컴퓨터, 보통 리눅스 서버에 안전하게 접속하기 위한 도구입니다.
+SSH는 Secure Shell의 약자입니다. 네트워크를 통해 다른 컴퓨터, 보통 리눅스 서버에 안전하게 접속하기 위한 방식입니다.
+
+이번 워크숍에서는 SSH 명령어를 직접 입력하지 않고 Termius 앱이 SSH 접속을 대신 시작합니다.
 
 쉽게 말하면:
 
 ```text
-내 노트북의 터미널  ──ssh──>  원격 리눅스 서버의 터미널
+내 컴퓨터의 Termius  --SSH-->  누리온 원격 리눅스 서버의 터미널
 ```
 
 ## 접속에 필요한 정보
 
 보통 아래 정보가 필요합니다.
 
-| 항목 | 예시 |
+| Termius 항목 | 누리온 예시 |
 |---|---|
-| 사용자명 | `student01` |
-| 서버 주소 | `linux.example.edu` 또는 `123.45.67.89` |
-| 비밀번호 | 서버 계정 비밀번호 |
-| 포트 | 보통 `22` |
-| SSH key | 사용하는 경우 `~/.ssh/id_ed25519` 같은 파일 |
+| Address | `nurion.ksc.re.kr` |
+| Username | 본인 누리온 ID |
+| Port | `22` |
+| Password(OTP) | OTP 또는 1차 인증 값 |
+| Password | 누리온 계정 비밀번호 |
 
-서버 주소와 사용자명은 서버 관리자에게 받아야 합니다.
+서버 주소와 사용자명은 수업 안내 또는 서버 관리자에게 받은 값을 사용합니다.
 
-## 기본 접속 명령
+## Termius host 만들기
 
-내 컴퓨터 터미널에서 실행합니다.
+Termius에서 `Hosts` 화면을 엽니다.
 
-```bash
-local$ ssh student01@linux.example.edu
-```
+![Termius Hosts 화면](../docs/termius-hosts.png)
 
-형식은 다음과 같습니다.
-
-```bash
-ssh 사용자명@서버주소
-```
-
-예:
-
-```bash
-local$ ssh jinho@123.45.67.89
-```
-
-## 포트 번호가 다를 때
-
-기본 SSH 포트는 22입니다. 서버 관리자가 2222 같은 다른 포트를 알려줬다면 `-p` 옵션을 씁니다.
-
-```bash
-local$ ssh -p 2222 student01@linux.example.edu
-```
-
-## 처음 접속할 때 나오는 질문
-
-처음 접속하면 이런 메시지가 나올 수 있습니다.
+새 host를 만들 때는 아래처럼 입력합니다.
 
 ```text
-The authenticity of host 'linux.example.edu' can't be established.
-Are you sure you want to continue connecting (yes/no/[fingerprint])?
+Address:  nurion.ksc.re.kr
+Port:     22
+Username: 본인 누리온 ID
+Label:    Nurion login
 ```
 
-서버 주소가 정확하고 서버 관리자가 알려준 서버가 맞다면:
+이미 `nurion.ksc.re.kr` host가 저장되어 있다면 새로 만들지 말고 저장된 host를 선택합니다.
+
+## 로그인 순서
+
+저장된 누리온 host를 선택하면 Termius가 인증 정보를 물어봅니다.
+
+1. `Password(OTP)` 창에 OTP 또는 1차 인증 값을 입력합니다.
+2. `Password` 창에 누리온 계정 비밀번호를 입력합니다.
+3. 입력한 글자가 화면에 보이지 않아도 정상입니다.
+4. 접속에 성공하면 긴 누리온 안내문과 프롬프트가 보입니다.
+
+![Termius OTP 입력 화면](../docs/termius-otp-prompt.png)
+
+![Termius 로그인 성공 화면](../docs/termius-login-banner.png)
+
+## 처음 접속할 때 나오는 확인
+
+처음 접속하면 Termius가 서버 연결 확인을 물을 수 있습니다.
 
 ```text
-yes
+The authenticity of host 'nurion.ksc.re.kr (...)' can't be established.
+Are you sure you want to continue connecting?
 ```
 
-를 입력합니다.
-
-주의: 공용 Wi-Fi나 낯선 네트워크에서 처음 접속할 때는 서버 주소를 다시 확인하는 습관이 좋습니다.
-
-## 비밀번호 입력
-
-비밀번호를 입력할 때 화면에 아무 글자도 보이지 않을 수 있습니다.
-
-정상입니다. 보안 때문에 `*`도 표시하지 않는 경우가 많습니다. 비밀번호를 입력하고 Enter를 누르세요.
+Termius 화면에서는 `Accept`, `Continue`, 또는 `Yes` 같은 버튼으로 보일 수 있습니다. 주소가 `nurion.ksc.re.kr`인지 확인하고 진행합니다.
 
 ## 접속 성공 확인
 
@@ -101,25 +91,29 @@ server$ pwd
 server$ exit
 ```
 
-그러면 다시 내 컴퓨터 터미널로 돌아옵니다.
+Termius 세션이 닫히거나 host 화면으로 돌아오면 로그아웃된 것입니다.
 
-## SSH key를 쓰는 경우
+## 파일 전송은 Termius SFTP 탭에서 하기
 
-서버가 비밀번호 대신 key 파일을 요구할 수 있습니다.
+파일을 올리고 내려받을 때는 Termius의 `SFTP` 탭을 사용합니다.
 
-예:
+![Termius SFTP 화면](../docs/termius-sftp-browser.png)
 
-```bash
-local$ ssh -i ~/.ssh/my_server_key student01@linux.example.edu
+누리온에서는 명령어 로그인 host와 파일 전송 host를 구분합니다.
+
+| 용도 | Host |
+|---|---|
+| 명령어 입력용 SSH 로그인 | `nurion.ksc.re.kr` |
+| 파일 전송용 SFTP | `nurion-dm.ksc.re.kr` |
+
+SFTP host를 만들 때는 아래처럼 입력합니다.
+
+```text
+Remote host: nurion-dm.ksc.re.kr
+Username: 본인 누리온 ID
+Protocol: SFTP
+Remote folder: /home01/본인ID
 ```
-
-key 파일 권한 문제로 접속이 거부되면 보통 이렇게 고칩니다.
-
-```bash
-local$ chmod 600 ~/.ssh/my_server_key
-```
-
-Windows PowerShell에서는 권한 처리 방식이 다를 수 있으므로, 처음에는 WSL 또는 서버 관리자 안내를 따르는 것이 좋습니다.
 
 ## 안전한 연습 폴더 만들기
 
@@ -161,22 +155,13 @@ server$ cd ~/linux-practice
 
 매우 중요합니다.
 
-```bash
-local$ pwd
-```
-
-이 명령은 내 컴퓨터의 현재 위치를 보여줍니다.
-
-```bash
-server$ pwd
-```
-
-이 명령은 원격 서버의 현재 위치를 보여줍니다.
-
-SSH 접속 후에는 서버 파일을 보고 있는 것입니다. 내 Windows 바탕화면이나 macOS Desktop을 보고 있는 것이 아닙니다.
+- Termius 앱, Hosts 화면, SFTP의 local 쪽은 내 컴퓨터입니다.
+- Termius로 로그인한 뒤 명령어를 입력하는 터미널은 누리온 서버입니다.
+- SSH 접속 후에는 서버 파일을 보고 있는 것입니다. 내 Windows 바탕화면이나 macOS Desktop을 보고 있는 것이 아닙니다.
 
 ## 체크포인트
 
-1. SSH 접속 명령어의 기본 형식은 무엇인가요?
-2. 서버 접속을 종료하려면 어떤 명령어를 쓰나요?
-3. 왜 `~/linux-practice` 같은 연습 폴더를 만들어야 하나요?
+1. Termius에서 누리온 SSH 로그인에 사용하는 주소는 무엇인가요?
+2. 파일 전송용 host 주소는 SSH 로그인 주소와 어떻게 다른가요?
+3. 서버 접속을 종료하려면 어떤 명령어를 쓰나요?
+4. 왜 `~/linux-practice` 같은 연습 폴더를 만들어야 하나요?

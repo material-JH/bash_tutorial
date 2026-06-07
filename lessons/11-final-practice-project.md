@@ -4,13 +4,13 @@
 
 ## 0단계: 서버 접속
 
-내 컴퓨터에서:
+Termius에서 저장된 누리온 host를 선택해 로그인합니다.
 
-```bash
-local$ ssh student01@linux.example.edu
+```text
+Address:  nurion.ksc.re.kr
+Username: 본인 누리온 ID
+Port:     22
 ```
-
-자신의 사용자명과 서버 주소로 바꿔서 실행하세요.
 
 서버에서 확인:
 

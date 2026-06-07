@@ -6,18 +6,23 @@
 
 | 표시 | 의미 |
 |---|---|
-| `local$` | 내 Windows/macOS/Linux 컴퓨터에서 실행 |
+| `local$` | 내 컴퓨터에서 실행하는 참고용 명령 |
 | `server$` | SSH 접속 후 원격 리눅스 서버에서 실행 |
 
 `local$`, `server$`는 설명용 표시입니다. 실제로 입력하지 않습니다.
 
-## SSH 접속
+이번 워크숍의 누리온 로그인은 local terminal 명령이 아니라 Termius 앱으로 합니다.
 
-| 작업 | 명령어 |
+## Termius SSH 접속
+
+| 작업 | Termius에서 입력/확인할 값 |
 |---|---|
-| 기본 접속 | `ssh username@server-address` |
-| 포트가 다를 때 | `ssh -p 2222 username@server-address` |
-| SSH key로 접속 | `ssh -i ~/.ssh/my_key username@server-address` |
+| SSH 로그인 host | `nurion.ksc.re.kr` |
+| Port | `22` |
+| Username | 본인 누리온 ID |
+| OTP 입력 | `Password(OTP)` 창 |
+| 비밀번호 입력 | `Password` 창 |
+| 파일 전송 host | `nurion-dm.ksc.re.kr` |
 | 접속 종료 | `exit` |
 | 현재 사용자 확인 | `whoami` |
 | 서버 이름 확인 | `hostname` |
