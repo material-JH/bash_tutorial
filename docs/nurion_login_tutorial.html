@@ -95,7 +95,7 @@
       pointer-events: none;
       z-index: 0;
     }
-    .slide > * { position: relative; z-index: 2; }
+    .slide > :not(.hero-band) { position: relative; z-index: 2; }
     .slide-header { display: flex; justify-content: flex-start; align-items: center; gap: 36px; color: var(--dim); font-size: 28px; margin-bottom: 40px; letter-spacing: .10em; text-transform: uppercase; font-weight: 800; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
     .slide-header::before { content: ""; position: absolute; left: 0; bottom: -1px; width: 320px; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
     .slide-header > span:not(.tag) { display: none; }
@@ -113,6 +113,24 @@
     .card { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--accent); padding: 34px; min-height: 235px; box-shadow: 0 14px 32px rgba(0,64,152,.08); }
     .card.warn { border-top-color: var(--warn); background: #fffaf2; }
     .card.strong { background: #f4faff; border-top-color: var(--accent-2); }
+    .hero-band {
+      position: absolute;
+      right: -220px;
+      bottom: -160px;
+      width: 820px;
+      height: 820px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.70), transparent 0 22%, rgba(0,174,239,.14) 22% 23%, transparent 24%),
+        conic-gradient(from 210deg, rgba(0,64,152,.18), rgba(0,174,239,.16), rgba(0,64,152,.06), rgba(0,64,152,.18));
+      opacity: .78;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .two-col-title { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; height: 760px; }
+    .two-col-title h1 { font-size: 104px; line-height: .98; letter-spacing: -.055em; max-width: 1320px; font-weight: 900; word-break: keep-all; }
+    .metric { font-size: 64px; line-height: .95; letter-spacing: -.055em; color: var(--accent); font-weight: 900; word-break: keep-all; }
+    .metric-label { margin-top: 12px; font-size: 26px; line-height: 1.35; color: var(--muted); word-break: keep-all; }
     .small { font-size: 28px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
     ul.clean, ol.clean { margin: 22px 0 0; padding-left: 30px; font-size: 29px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
     .terminal { background: linear-gradient(180deg, var(--terminal), var(--terminal-2)); color: var(--terminal-ink); border-left: 6px solid var(--accent-2); padding: 30px 34px; font-family: var(--mono); font-size: 30px; line-height: 1.45; white-space: pre-wrap; box-shadow: 0 18px 44px rgba(16,25,35,.20); }
@@ -205,13 +223,16 @@
     <main class="deck" id="deck" aria-live="polite">
       <section class="slide active" data-title="Title">
         <div class="slide-header"><span class="tag">Nurion login tutorial</span><span>before Linux terminal class</span></div>
-        <h1>Termius로 누리온에 먼저 로그인하고, 그 안에서 리눅스 터미널을 배운다</h1>
-        <p class="subtitle">이 자료의 목표는 계산이 아니라 “모든 학생이 같은 Termius 화면에서 누리온 서버에 들어오는 것”이다. 로그인 후에는 <span class="mono">pwd</span>, <span class="mono">ls</span>, <span class="mono">cd</span>부터 시작한다.</p>
-        <div class="grid-3">
-          <div class="card strong"><h3>1. Termius 실행</h3><p class="small">내 컴퓨터에서 Termius 앱을 열고 Hosts 화면으로 이동한다.</p></div>
-          <div class="card"><h3>2. SSH 로그인</h3><p class="small">누리온 host를 선택하고 OTP와 비밀번호를 입력한다.</p></div>
-          <div class="card warn"><h3>3. 서버 확인</h3><p class="small">접속 후 <span class="mono">hostname</span>, <span class="mono">pwd</span>로 위치를 확인한다.</p></div>
+        <div class="two-col-title">
+          <div>
+            <h1>Termius로 누리온에 <span class="accent">먼저 로그인</span>하기</h1>
+          </div>
+          <div class="card strong">
+            <div class="metric">OTP → password → server$</div>
+            <p class="metric-label">오늘의 목표는 “SSH 이론”이 아니라 Termius에서 누리온에 들어가고, <span class="mono">server$</span> 프롬프트와 현재 위치를 확인하는 흐름을 익히는 것이다.</p>
+          </div>
         </div>
+        <div class="hero-band"></div>
       </section>
 
       <section class="slide" data-title="Mental model">
