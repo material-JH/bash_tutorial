@@ -131,6 +131,15 @@
     .two-col-title h1 { font-size: 104px; line-height: .98; letter-spacing: -.055em; max-width: 1320px; font-weight: 900; word-break: keep-all; }
     .metric { font-size: 64px; line-height: .95; letter-spacing: -.055em; color: var(--accent); font-weight: 900; word-break: keep-all; }
     .metric-label { margin-top: 12px; font-size: 26px; line-height: 1.35; color: var(--muted); word-break: keep-all; }
+    .title-card { padding: 42px; }
+    .qr-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 34px; padding-top: 30px; border-top: 1px solid var(--line); }
+    .qr-tile { display: grid; justify-items: center; gap: 12px; min-width: 0; color: inherit; text-align: center; text-decoration: none; }
+    .qr-frame { flex: 0 0 auto; display: block; padding: 10px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px rgba(0,64,152,.10); }
+    .qr-code { display: block; width: 150px; height: 150px; image-rendering: pixelated; }
+    .qr-copy { min-width: 0; }
+    .qr-label { display: block; font-size: 28px; line-height: 1.1; color: var(--accent); font-weight: 900; word-break: keep-all; }
+    .qr-url { display: block; margin-top: 6px; color: var(--muted); font-size: 19px; line-height: 1.2; font-weight: 800; word-break: keep-all; }
+    .qr-tile:hover .qr-url, .qr-tile:focus-visible .qr-url { color: var(--accent); outline: none; }
     .small { font-size: 28px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
     ul.clean, ol.clean { margin: 22px 0 0; padding-left: 30px; font-size: 29px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
     .terminal { background: linear-gradient(180deg, var(--terminal), var(--terminal-2)); color: var(--terminal-ink); border-left: 6px solid var(--accent-2); padding: 30px 34px; font-family: var(--mono); font-size: 30px; line-height: 1.45; white-space: pre-wrap; box-shadow: 0 18px 44px rgba(16,25,35,.20); }
@@ -227,9 +236,25 @@
           <div>
             <h1>Termius로 누리온에 <span class="accent">먼저 로그인</span>하기</h1>
           </div>
-          <div class="card strong">
+          <div class="card strong title-card">
             <div class="metric">OTP → password → server$</div>
             <p class="metric-label">오늘의 목표는 Termius에서 누리온에 들어가고, <span class="mono">server$</span> 프롬프트와 현재 위치를 확인하는 흐름을 익히는 것이다.</p>
+            <div class="qr-grid" aria-label="Termius 설치 링크">
+              <a class="qr-tile" href="https://termius.com/free-ssh-client-for-mac-os" target="_blank" rel="noopener noreferrer" aria-label="Termius macOS 설치 페이지 열기">
+                <span class="qr-frame"><img class="qr-code" src="termius-macos-qr.png" alt="Termius macOS 설치 페이지 QR 코드" /></span>
+                <span class="qr-copy">
+                  <span class="qr-label">macOS</span>
+                  <span class="qr-url">설치 페이지 열기</span>
+                </span>
+              </a>
+              <a class="qr-tile" href="https://termius.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Termius Windows 설치 페이지 열기">
+                <span class="qr-frame"><img class="qr-code" src="termius-windows-qr.png" alt="Termius Windows 설치 페이지 QR 코드" /></span>
+                <span class="qr-copy">
+                  <span class="qr-label">Windows</span>
+                  <span class="qr-url">설치 페이지 열기</span>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
         <div class="hero-band"></div>
