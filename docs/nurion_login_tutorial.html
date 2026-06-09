@@ -129,16 +129,20 @@
     }
     .two-col-title { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; height: 760px; }
     .two-col-title h1 { font-size: 104px; line-height: .98; letter-spacing: -.055em; max-width: 1320px; font-weight: 900; word-break: keep-all; }
+    .repo-link { display: inline-flex; flex-direction: column; gap: 6px; margin-top: 44px; padding: 18px 24px; max-width: 760px; color: inherit; text-decoration: none; background: rgba(255,255,255,.76); border-left: 6px solid var(--accent-2); box-shadow: 0 12px 28px rgba(0,64,152,.08); }
+    .repo-label { color: var(--muted); font-size: 24px; line-height: 1.1; font-weight: 800; word-break: keep-all; }
+    .repo-url { color: var(--accent); font-family: var(--mono); font-size: 28px; line-height: 1.12; font-weight: 900; letter-spacing: -.01em; word-break: break-all; }
+    .repo-link:hover .repo-url, .repo-link:focus-visible .repo-url { color: var(--accent-2); outline: none; }
     .metric { font-size: 64px; line-height: .95; letter-spacing: -.055em; color: var(--accent); font-weight: 900; word-break: keep-all; }
     .metric-label { margin-top: 12px; font-size: 26px; line-height: 1.35; color: var(--muted); word-break: keep-all; }
     .title-card { padding: 42px; }
     .qr-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 34px; padding-top: 30px; border-top: 1px solid var(--line); }
     .qr-tile { display: grid; justify-items: center; gap: 12px; min-width: 0; color: inherit; text-align: center; text-decoration: none; }
     .qr-frame { flex: 0 0 auto; display: block; padding: 10px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px rgba(0,64,152,.10); }
-    .qr-code { display: block; width: 150px; height: 150px; image-rendering: pixelated; }
+    .qr-code { display: block; width: 136px; height: 136px; image-rendering: pixelated; }
     .qr-copy { min-width: 0; }
     .qr-label { display: block; font-size: 28px; line-height: 1.1; color: var(--accent); font-weight: 900; word-break: keep-all; }
-    .qr-url { display: block; margin-top: 6px; color: var(--muted); font-size: 19px; line-height: 1.2; font-weight: 800; word-break: keep-all; }
+    .qr-url { display: block; margin-top: 6px; color: var(--muted); font-size: 17px; line-height: 1.14; font-weight: 800; word-break: break-all; }
     .qr-tile:hover .qr-url, .qr-tile:focus-visible .qr-url { color: var(--accent); outline: none; }
     .small { font-size: 28px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
     ul.clean, ol.clean { margin: 22px 0 0; padding-left: 30px; font-size: 29px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
@@ -235,6 +239,10 @@
         <div class="two-col-title">
           <div>
             <h1>Termius로 누리온에 <span class="accent">먼저 로그인</span>하기</h1>
+            <a class="repo-link" href="https://github.com/material-JH/bash_tutorial" target="_blank" rel="noopener noreferrer" aria-label="bash tutorial GitHub 저장소 열기">
+              <span class="repo-label">실습 자료 저장소</span>
+              <span class="repo-url">github.com/material-JH/bash_tutorial</span>
+            </a>
           </div>
           <div class="card strong title-card">
             <div class="metric">OTP → password → server$</div>
@@ -244,14 +252,14 @@
                 <span class="qr-frame"><img class="qr-code" src="termius-macos-qr.png" alt="Termius macOS 설치 페이지 QR 코드" /></span>
                 <span class="qr-copy">
                   <span class="qr-label">macOS</span>
-                  <span class="qr-url">설치 페이지 열기</span>
+                  <span class="qr-url">termius.com/free-ssh-client-for-mac-os</span>
                 </span>
               </a>
               <a class="qr-tile" href="https://termius.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Termius Windows 설치 페이지 열기">
                 <span class="qr-frame"><img class="qr-code" src="termius-windows-qr.png" alt="Termius Windows 설치 페이지 QR 코드" /></span>
                 <span class="qr-copy">
                   <span class="qr-label">Windows</span>
-                  <span class="qr-url">설치 페이지 열기</span>
+                  <span class="qr-url">termius.com/download/windows</span>
                 </span>
               </a>
             </div>
