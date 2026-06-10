@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>누리온 로그인 튜토리얼 — 처음 접속부터 확인까지</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=Roboto:wght@400;500;700;900&display=swap');
     :root {
       --bg: #eef4fa;
       --bg-2: #f8fbfe;
@@ -26,7 +25,7 @@
       --terminal-ink: #e7f6ff;
       --shadow: 0 26px 70px rgba(0, 45, 90, .16);
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: Roboto, "Noto Sans KR", NanumSquare, Arial, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --sans: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Noto Sans KR", NanumSquare, Arial, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -181,55 +180,55 @@
       body {
         width: 16in;
         min-height: 9in;
-        margin: 0 !important;
-        overflow: visible !important;
-        background: #ffffff !important;
+        margin: 0;
+        overflow: visible;
+        background: #ffffff;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
-      .viewport {
+      body .viewport {
         display: block;
-        width: 16in !important;
-        height: auto !important;
-        padding: 0 !important;
-        overflow: visible !important;
+        width: 16in;
+        height: auto;
+        padding: 0;
+        overflow: visible;
       }
 
-      .deck {
-        position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 1920px !important;
-        height: auto !important;
-        transform: none !important;
-        transform-origin: top left !important;
+      .viewport .deck {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: auto;
+        transform: none;
+        transform-origin: top left;
         zoom: .8;
-        border: 0 !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        overflow: visible !important;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        overflow: visible;
       }
 
-      .slide {
-        display: block !important;
-        position: relative !important;
-        width: 1920px !important;
-        height: 1080px !important;
-        overflow: hidden !important;
+      .deck .slide {
+        display: block;
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
         break-after: page;
         page-break-after: always;
       }
 
-      .slide:last-of-type {
+      .deck .slide:last-of-type {
         break-after: auto;
         page-break-after: auto;
       }
 
-      .footer,
-      .controls,
-      .nav-help {
-        display: none !important;
+      body .footer,
+      body .controls,
+      body .nav-help {
+        display: none;
       }
     }
   </style>
@@ -242,32 +241,32 @@
         <div class="two-col-title">
           <div>
             <h1>Termius로 누리온에 <span class="accent">먼저 로그인</span>하기</h1>
-            <a class="repo-link" href="https://github.com/material-JH/bash_tutorial" target="_blank" rel="noopener noreferrer" aria-label="bash tutorial GitHub 저장소 열기">
+            <span class="repo-link" aria-label="bash tutorial GitHub 저장소">
               <span class="repo-qr-frame"><img class="repo-qr-code" src="bash-tutorial-github-qr.png" alt="bash tutorial GitHub 저장소 QR 코드" /></span>
               <span class="repo-copy">
                 <span class="repo-label">실습 자료 저장소</span>
                 <span class="repo-url">github.com/material-JH/bash_tutorial</span>
               </span>
-            </a>
+            </span>
           </div>
           <div class="card strong title-card">
             <div class="metric">OTP → password → server$</div>
             <p class="metric-label">오늘의 목표는 Termius에서 누리온에 들어가고, <span class="mono">server$</span> 프롬프트와 현재 위치를 확인하는 흐름을 익히는 것이다.</p>
             <div class="qr-grid" aria-label="Termius 설치 링크">
-              <a class="qr-tile" href="https://termius.com/free-ssh-client-for-mac-os" target="_blank" rel="noopener noreferrer" aria-label="Termius macOS 설치 페이지 열기">
+              <span class="qr-tile" aria-label="Termius macOS 설치 페이지">
                 <span class="qr-frame"><img class="qr-code" src="termius-macos-qr.png" alt="Termius macOS 설치 페이지 QR 코드" /></span>
                 <span class="qr-copy">
                   <span class="qr-label">macOS</span>
                   <span class="qr-url">termius.com/free-ssh-client-for-mac-os</span>
                 </span>
-              </a>
-              <a class="qr-tile" href="https://termius.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Termius Windows 설치 페이지 열기">
+              </span>
+              <span class="qr-tile" aria-label="Termius Windows 설치 페이지">
                 <span class="qr-frame"><img class="qr-code" src="termius-windows-qr.png" alt="Termius Windows 설치 페이지 QR 코드" /></span>
                 <span class="qr-copy">
                   <span class="qr-label">Windows</span>
                   <span class="qr-url">termius.com/download/windows</span>
                 </span>
-              </a>
+              </span>
             </div>
           </div>
         </div>
@@ -401,7 +400,7 @@ Connection to nurion.ksc.re.kr closed.</div>
 <span class="prompt">server$</span> ls
 <span class="prompt">server$</span> mkdir -p ~/linux-practice
 <span class="prompt">server$</span> cd ~/linux-practice</div>
-        <p class="subtitle">다음 발표 자료: <a class="slide-link mono" href="https://material-jh.github.io/bash_tutorial/linux_command_tutorial_presentation.html">linux_command_tutorial_presentation.html</a></p>
+        <p class="subtitle">다음 발표 자료: <span class="slide-link mono">linux_command_tutorial_presentation.html</span></p>
       </section>
 
       <div class="footer">
@@ -412,7 +411,7 @@ Connection to nurion.ksc.re.kr closed.</div>
     </main>
   </div>
   <div class="nav-help">←/→ or Space · F fullscreen · Home/End · Print to PDF supported</div>
-  <div class="controls" aria-label="Slide controls"><button id="prevBtn" aria-label="Previous slide">‹</button><button id="nextBtn" aria-label="Next slide">›</button></div>
+  <div class="controls" aria-label="Slide controls"><button id="prevBtn" type="button" aria-label="Previous slide">‹</button><button id="nextBtn" type="button" aria-label="Next slide">›</button></div>
   <script>
     (() => {
       const deck = document.getElementById('deck');
@@ -423,16 +422,28 @@ Connection to nurion.ksc.re.kr closed.</div>
       const prev = document.getElementById('prevBtn');
       const next = document.getElementById('nextBtn');
       const STORAGE_KEY = 'nurion-login-tutorial-slide';
+      let isPrinting = false;
       let current = Number(localStorage.getItem(STORAGE_KEY) || 0);
       if (!Number.isFinite(current) || current < 0 || current >= slides.length) current = 0;
       function scaleDeck() {
+        if (isPrinting) return;
         const margin = 40;
         const scale = Math.min((window.innerWidth - margin) / 1920, (window.innerHeight - margin) / 1080);
         deck.style.transform = `translate(-50%, -50%) scale(${Math.max(0.1, scale)})`;
       }
+      function preparePrint() {
+        isPrinting = true;
+        deck.style.transform = 'none';
+      }
+      function restoreScreen() {
+        isPrinting = false;
+        scaleDeck();
+      }
       function show(index) {
         current = Math.max(0, Math.min(slides.length - 1, index));
-        slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === current);
+        });
         title.textContent = slides[current].dataset.title || `Slide ${current + 1}`;
         count.textContent = `${current + 1} / ${slides.length}`;
         progress.style.width = `${((current + 1) / slides.length) * 100}%`;
@@ -454,6 +465,8 @@ Connection to nurion.ksc.re.kr closed.</div>
       prev.addEventListener('click', () => go(-1));
       next.addEventListener('click', () => go(1));
       window.addEventListener('resize', scaleDeck);
+      window.addEventListener('beforeprint', preparePrint);
+      window.addEventListener('afterprint', restoreScreen);
       scaleDeck();
       show(current);
     })();
