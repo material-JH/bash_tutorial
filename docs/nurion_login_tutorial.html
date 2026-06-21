@@ -173,6 +173,25 @@
     .nav-help { position: fixed; left: 18px; bottom: 16px; z-index: 50; color: rgba(21,21,21,.58); font-size: 13px; font-family: var(--mono); }
     .controls { position: fixed; right: 18px; bottom: 16px; display: flex; gap: 10px; z-index: 60; }
     .controls button { width: 46px; height: 46px; border-radius: 50%; border: 0; color: #fff; background: #202832; cursor: pointer; font-size: 22px; }
+    .deck.pointer-dot-active,
+    .deck.pointer-dot-active * { cursor: none; }
+    .pointer-dot {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #ff2b2b;
+      box-shadow: 0 0 0 4px rgba(255,43,43,.18), 0 0 18px rgba(255,43,43,.78);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity .08s ease;
+    }
+    .pointer-dot.visible { opacity: 1; }
+    .pointer-dot[hidden] { display: none; }
     @media print {
       @page { size: 16in 9in; margin: 0; }
 
@@ -227,7 +246,8 @@
 
       body .footer,
       body .controls,
-      body .nav-help {
+      body .nav-help,
+      body .pointer-dot {
         display: none;
       }
     }
@@ -412,6 +432,7 @@ Connection to nurion.ksc.re.kr closed.</div>
   </div>
   <div class="nav-help">←/→ or Space · F fullscreen · Home/End · Print to PDF supported</div>
   <div class="controls" aria-label="Slide controls"><button id="prevBtn" type="button" aria-label="Previous slide">‹</button><button id="nextBtn" type="button" aria-label="Next slide">›</button></div>
+  <div class="pointer-dot" id="pointerDot" aria-hidden="true" hidden></div>
   <script>
     (() => {
       const deck = document.getElementById('deck');
@@ -421,6 +442,7 @@ Connection to nurion.ksc.re.kr closed.</div>
       const progress = document.getElementById('progressBar');
       const prev = document.getElementById('prevBtn');
       const next = document.getElementById('nextBtn');
+      const pointerDot = document.getElementById('pointerDot');
       const STORAGE_KEY = 'nurion-login-tutorial-slide';
       let isPrinting = false;
       let current = Number(localStorage.getItem(STORAGE_KEY) || 0);
@@ -449,6 +471,22 @@ Connection to nurion.ksc.re.kr closed.</div>
         progress.style.width = `${((current + 1) / slides.length) * 100}%`;
         localStorage.setItem(STORAGE_KEY, String(current));
       }
+      function showPointerDot(event) {
+        if (!window.matchMedia('(pointer: fine)').matches) return;
+        deck.classList.add('pointer-dot-active');
+        pointerDot.hidden = false;
+        movePointerDot(event);
+        pointerDot.classList.add('visible');
+      }
+      function hidePointerDot() {
+        deck.classList.remove('pointer-dot-active');
+        pointerDot.classList.remove('visible');
+        pointerDot.hidden = true;
+      }
+      function movePointerDot(event) {
+        pointerDot.style.left = `${event.clientX}px`;
+        pointerDot.style.top = `${event.clientY}px`;
+      }
       function go(delta) { show(current + delta); }
       document.addEventListener('keydown', (event) => {
         const key = event.key;
@@ -464,6 +502,13 @@ Connection to nurion.ksc.re.kr closed.</div>
       });
       prev.addEventListener('click', () => go(-1));
       next.addEventListener('click', () => go(1));
+      deck.addEventListener('pointerenter', showPointerDot);
+      deck.addEventListener('pointermove', movePointerDot);
+      deck.addEventListener('pointerleave', hidePointerDot);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) hidePointerDot();
+      });
+      window.addEventListener('blur', hidePointerDot);
       window.addEventListener('resize', scaleDeck);
       window.addEventListener('beforeprint', preparePrint);
       window.addEventListener('afterprint', restoreScreen);
