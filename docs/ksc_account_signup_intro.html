@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KSC 계정 만들기 — 첫 회원가입 안내</title>
+  <style>
+    :root {
+      --bg: #eef4fa;
+      --surface: #fff;
+      --ink: #151515;
+      --muted: #52606d;
+      --dim: #7a8793;
+      --accent: #004098;
+      --accent-2: #00aeef;
+      --line: #d8e2ec;
+      --line-strong: #b8c9d9;
+      --warn: #b76a00;
+      --terminal: #101923;
+      --terminal-ink: #e7f6ff;
+      --shadow: 0 26px 70px rgba(0, 45, 90, .16);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Noto Sans KR", NanumSquare, Arial, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(0,64,152,.05) 1px, transparent 1px),
+        linear-gradient(rgba(0,64,152,.045) 1px, transparent 1px),
+        radial-gradient(circle at 8% 12%, rgba(0,174,239,.20), transparent 29%),
+        radial-gradient(circle at 88% 10%, rgba(0,64,152,.16), transparent 32%),
+        linear-gradient(135deg, #f7fbff 0%, var(--bg) 100%);
+      background-size: 42px 42px, 42px 42px, auto, auto, auto;
+      overflow: hidden;
+    }
+    .viewport { width: 100vw; height: 100vh; padding: 20px; position: relative; }
+    .deck {
+      position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+      transform-origin: center center; background: var(--surface); border: 1px solid var(--line-strong);
+      border-radius: 10px; box-shadow: var(--shadow); overflow: hidden;
+    }
+    .deck::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, var(--accent) 0 16%, var(--accent-2) 16% 23%, transparent 23%),
+        linear-gradient(180deg, rgba(0,64,152,.075), transparent 250px),
+        radial-gradient(circle at 8% 13%, rgba(0,174,239,.14) 0 2px, transparent 3px),
+        radial-gradient(circle at 8.9% 13%, rgba(0,64,152,.24) 0 2px, transparent 3px);
+      background-size: 100% 8px, 100% 100%, 100% 100%, 100% 100%;
+      opacity: .95;
+      z-index: 0;
+    }
+    .deck::after {
+      content: "";
+      position: absolute;
+      right: 88px;
+      top: 72px;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--accent);
+      box-shadow:
+        18px 0 0 var(--accent), 36px 0 0 var(--accent-2),
+        0 18px 0 var(--accent), 18px 18px 0 var(--accent-2), 36px 18px 0 var(--accent),
+        0 36px 0 var(--accent-2), 18px 36px 0 var(--accent), 36px 36px 0 var(--accent-2);
+      opacity: .24;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .slide { position: absolute; inset: 0; display: none; padding: 86px 110px 86px; isolation: isolate; background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,250,254,.96)); }
+    .slide.active { display: block; }
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 8px 0 0;
+      background:
+        linear-gradient(180deg, rgba(0,64,152,.035), transparent 32%),
+        linear-gradient(90deg, rgba(216,226,236,.9) 1px, transparent 1px),
+        linear-gradient(rgba(216,226,236,.70) 1px, transparent 1px);
+      background-size: auto, 96px 96px, 96px 96px;
+      mask-image: linear-gradient(180deg, black 0, transparent 72%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .slide > :not(.hero-band) { position: relative; z-index: 2; }
+    .slide-header { display: flex; justify-content: flex-start; align-items: center; gap: 36px; color: var(--dim); font-size: 28px; margin-bottom: 40px; letter-spacing: .10em; text-transform: uppercase; font-weight: 800; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+    .slide-header::before { content: ""; position: absolute; left: 0; bottom: -1px; width: 320px; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .tag { display: inline-flex; align-items: center; gap: 18px; min-height: 46px; color: var(--accent); font-weight: 800; }
+    .tag::before { content: ""; width: 14px; height: 14px; border-radius: 999px; background: var(--accent); box-shadow: 20px 0 0 var(--accent-2); margin-right: 20px; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 96px; line-height: 1.02; letter-spacing: -.055em; max-width: 1280px; word-break: keep-all; }
+    h2 { font-size: 58px; line-height: 1.12; letter-spacing: -.035em; max-width: 1420px; word-break: keep-all; }
+    h3 { font-size: 34px; line-height: 1.2; }
+    .subtitle { margin-top: 28px; font-size: 34px; line-height: 1.45; color: var(--muted); max-width: 1320px; word-break: keep-all; }
+    .accent { color: var(--accent); }
+    .mono { font-family: var(--mono); }
+    .hero-band {
+      position: absolute;
+      right: -220px;
+      bottom: -160px;
+      width: 820px;
+      height: 820px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.70), transparent 0 22%, rgba(0,174,239,.14) 22% 23%, transparent 24%),
+        conic-gradient(from 210deg, rgba(0,64,152,.18), rgba(0,174,239,.16), rgba(0,64,152,.06), rgba(0,64,152,.18));
+      opacity: .78;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .two-col-title { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; height: 760px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 50px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 54px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--accent); padding: 34px; min-height: 235px; box-shadow: 0 14px 32px rgba(0,64,152,.08); }
+    .card.strong { background: #f4faff; border-top-color: var(--accent-2); }
+    .card.warn { border-top-color: var(--warn); background: #fffaf2; }
+    .small { font-size: 28px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
+    ul.clean, ol.clean { margin: 22px 0 0; padding-left: 30px; font-size: 29px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
+    .image-card { background: #fff; border: 1px solid var(--line); padding: 18px; box-shadow: 0 14px 32px rgba(0,64,152,.08); }
+    .image-card.dark { background: #111525; border-color: #263044; }
+    .screenshot { width: 100%; max-height: 570px; object-fit: contain; border: 1px solid var(--line); box-shadow: 0 18px 44px rgba(0,64,152,.14); background: #fff; }
+    .qr-link { display: inline-grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 24px; margin-top: 44px; padding: 18px 26px 18px 18px; max-width: 980px; color: inherit; text-decoration: none; background: rgba(255,255,255,.84); border-left: 6px solid var(--accent-2); box-shadow: 0 12px 28px rgba(0,64,152,.08); }
+    .qr-frame { display: block; padding: 10px; background: #fff; border: 1px solid var(--line); box-shadow: 0 8px 20px rgba(0,64,152,.10); }
+    .qr-code { display: block; width: 160px; height: 160px; image-rendering: pixelated; }
+    .qr-label { display: block; color: var(--muted); font-size: 26px; line-height: 1.1; font-weight: 800; word-break: keep-all; }
+    .qr-url { display: block; margin-top: 8px; color: var(--accent); font-family: var(--mono); font-size: 27px; line-height: 1.12; font-weight: 900; letter-spacing: -.01em; word-break: break-all; }
+    .qr-link:hover .qr-url, .qr-link:focus-visible .qr-url { color: var(--accent-2); outline: none; }
+    .step-list { display: grid; gap: 24px; margin-top: 42px; }
+    .step { display: grid; grid-template-columns: 88px 1fr; gap: 24px; align-items: start; padding: 28px 30px; background: #fff; border: 1px solid var(--line); box-shadow: 0 12px 26px rgba(0,64,152,.07); }
+    .step-no { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 999px; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent-2)); font-size: 34px; font-weight: 900; }
+    .step p { margin-top: 8px; font-size: 28px; line-height: 1.42; color: var(--muted); word-break: keep-all; }
+    .callout { margin-top: 42px; padding: 30px 34px; color: var(--terminal-ink); background: linear-gradient(180deg, var(--terminal), #162536); border-left: 6px solid var(--accent-2); font-size: 30px; line-height: 1.45; box-shadow: 0 18px 44px rgba(16,25,35,.20); word-break: keep-all; }
+    .footer { position: absolute; left: 110px; right: 110px; bottom: 34px; display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,.86); background: #202832; border-top: 4px solid var(--accent); padding: 14px 18px; font-size: 20px; letter-spacing: .05em; text-transform: uppercase; z-index: 20; box-shadow: 0 14px 30px rgba(16,25,35,.18); }
+    .footer #slideTitle { display: none; }
+    .footer #slideCount { position: absolute; right: 18px; }
+    .progress { width: 420px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.20); overflow: hidden; }
+    .progress > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-2), #fff); border-radius: inherit; }
+    .nav-help { position: fixed; left: 18px; bottom: 16px; z-index: 50; color: rgba(21,21,21,.58); font-size: 13px; font-family: var(--mono); }
+    .controls { position: fixed; right: 18px; bottom: 16px; display: flex; gap: 10px; z-index: 60; }
+    .controls button { width: 46px; height: 46px; border-radius: 50%; border: 0; color: #fff; background: #202832; cursor: pointer; font-size: 22px; }
+    .deck.pointer-dot-active,
+    .deck.pointer-dot-active * { cursor: none; }
+    .pointer-dot {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #ff2b2b;
+      box-shadow: 0 0 0 4px rgba(255,43,43,.18), 0 0 18px rgba(255,43,43,.78);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity .08s ease;
+    }
+    .pointer-dot.visible { opacity: 1; }
+    .pointer-dot[hidden] { display: none; }
+    @media print {
+      @page { size: 16in 9in; margin: 0; }
+      html, body { width: 16in; min-height: 9in; margin: 0; overflow: visible; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body .viewport { display: block; width: 16in; height: auto; padding: 0; overflow: visible; }
+      .viewport .deck { position: relative; left: 0; top: 0; width: 1920px; height: auto; transform: none; transform-origin: top left; zoom: .8; border: 0; box-shadow: none; border-radius: 0; overflow: visible; }
+      .deck .slide { display: block; position: relative; width: 1920px; height: 1080px; overflow: hidden; break-after: page; page-break-after: always; }
+      .deck .slide:last-of-type { break-after: auto; page-break-after: auto; }
+      body .footer, body .controls, body .nav-help, body .pointer-dot { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <main class="deck" id="deck" aria-live="polite">
+      <section class="slide active" data-title="Title">
+        <div class="slide-header"><span class="tag">KSC account intro</span></div>
+        <div class="two-col-title">
+          <div>
+            <h1>KISTI 국가슈퍼컴퓨팅센터 <span class="accent">계정 만들기</span></h1>
+            <p class="subtitle">누리온 실습 전에는 KSC 홈페이지 회원가입과 본인 인증을 먼저 끝내야 한다.</p>
+            <a class="qr-link" href="https://www.ksc.re.kr/member/joinConfirm" target="_blank" rel="noopener" aria-label="KSC 회원가입 바로가기">
+              <span class="qr-frame"><img class="qr-code" src="ksc-account-signup-qr.png" alt="KSC 회원가입 페이지 QR 코드" /></span>
+              <span>
+                <span class="qr-label">회원가입 바로가기</span>
+                <span class="qr-url">www.ksc.re.kr/member/joinConfirm</span>
+              </span>
+            </a>
+          </div>
+          <div class="card strong">
+            <h3>오늘 할 일</h3>
+            <ol class="clean">
+              <li>KSC 홈페이지 접속</li>
+              <li>로그인 창에서 회원가입 선택</li>
+              <li>개인정보 활용동의 후 본인 인증</li>
+              <li>가입 정보 입력 및 계정 생성</li>
+            </ol>
+          </div>
+        </div>
+        <div class="hero-band"></div>
+      </section>
+
+      <section class="slide" data-title="Open KSC homepage">
+        <div class="slide-header"><span class="tag">Step 1</span></div>
+        <h2>먼저 국가슈퍼컴퓨팅센터 홈페이지로 이동한다.</h2>
+        <div class="grid-2">
+          <div>
+            <a class="qr-link" href="https://www.ksc.re.kr/kor/index/main" target="_blank" rel="noopener" aria-label="KSC 홈페이지">
+              <span class="qr-frame"><img class="qr-code" src="ksc-homepage-qr.png" alt="KSC 홈페이지 QR 코드" /></span>
+              <span>
+                <span class="qr-label">주소 입력이 어렵다면 QR을 스캔</span>
+                <span class="qr-url">www.ksc.re.kr/kor/index/main</span>
+              </span>
+            </a>
+            <div class="callout">상단 오른쪽의 <span class="mono">로그인</span>을 눌러 로그인 창을 연다.</div>
+          </div>
+          <div class="image-card"><img class="screenshot" src="ksc-homepage-main.png" alt="KSC 홈페이지 첫 화면과 상단 로그인 메뉴" /></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Click sign up">
+        <div class="slide-header"><span class="tag">Step 2</span></div>
+        <h2>로그인 창 아래의 <span class="accent">회원가입</span> 버튼을 누른다.</h2>
+        <div class="grid-2">
+          <div class="image-card"><img class="screenshot" src="ksc-account-login-dialog.png" alt="KSC 로그인 창의 회원가입 버튼" /></div>
+          <div class="step-list">
+            <div class="step"><div class="step-no">1</div><div><h3>로그인 창 확인</h3><p>ID와 비밀번호 입력칸이 보이면 올바른 창이다.</p></div></div>
+            <div class="step"><div class="step-no">2</div><div><h3>회원가입 선택</h3><p>하단의 <span class="mono">회원가입</span> 버튼을 눌러 가입 절차로 이동한다.</p></div></div>
+            <div class="step"><div class="step-no">3</div><div><h3>URL로 바로 이동 가능</h3><p>막히면 첫 슬라이드의 QR 또는 주소를 사용한다.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Identity verification">
+        <div class="slide-header"><span class="tag">Step 3</span></div>
+        <h2>개인정보 활용동의 후 본인 명의 인증을 진행한다.</h2>
+        <div class="grid-3">
+          <div class="card strong"><h3>개인정보 활용동의</h3><p class="small">회원가입 페이지에서 안내문을 확인하고 <span class="mono">동의</span>를 누른다.</p></div>
+          <div class="card"><h3>휴대폰 인증</h3><p class="small">본인 명의 휴대폰으로 SMS 인증번호를 받아 확인한다.</p></div>
+          <div class="card"><h3>아이핀 인증</h3><p class="small">휴대폰 인증이 어려우면 아이핀 인증을 사용할 수 있다.</p></div>
+        </div>
+        <p class="subtitle">KSC 페이지 안내 기준: 입력한 정보는 본인확인용으로 사용되며 저장되지 않는다고 안내되어 있다.</p>
+      </section>
+
+      <section class="slide" data-title="Finish account setup">
+        <div class="slide-header"><span class="tag">Finish</span></div>
+        <h2>본인 인증 뒤에는 가입 정보를 입력하고 계정을 생성한다.</h2>
+        <div class="grid-2">
+          <div class="card strong"><h3>준비할 정보</h3><ul class="clean"><li>이름과 이메일</li><li>휴대전화 번호</li><li>소속기관/부서 등 추가 사용자 정보</li><li>나중에 찾기 쉬운 계정 ID와 비밀번호</li></ul></div>
+          <div class="card warn"><h3>다음 단계</h3><p class="small">계정 생성 후에는 누리온 로그인 자료로 넘어가 Termius에서 서버 접속을 확인한다.</p><p class="small" style="margin-top:20px"><span class="mono">nurion_login_tutorial.html</span></p></div>
+        </div>
+        <a class="qr-link" href="https://www.ksc.re.kr/member/joinConfirm" target="_blank" rel="noopener" aria-label="KSC 회원가입 페이지">
+          <span class="qr-frame"><img class="qr-code" src="ksc-account-signup-qr.png" alt="KSC 회원가입 페이지 QR 코드" /></span>
+          <span><span class="qr-label">회원가입 페이지</span><span class="qr-url">https://www.ksc.re.kr/member/joinConfirm</span></span>
+        </a>
+      </section>
+
+      <div class="footer">
+        <span id="slideTitle">Title</span>
+        <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+        <span id="slideCount">1 / 5</span>
+      </div>
+    </main>
+  </div>
+  <div class="nav-help">←/→ or Space · F fullscreen · Home/End · Print to PDF supported</div>
+  <div class="controls" aria-label="Slide controls"><button id="prevBtn" type="button" aria-label="Previous slide">‹</button><button id="nextBtn" type="button" aria-label="Next slide">›</button></div>
+  <div class="pointer-dot" id="pointerDot" aria-hidden="true" hidden></div>
+  <script>
+    (() => {
+      const deck = document.getElementById('deck');
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const title = document.getElementById('slideTitle');
+      const count = document.getElementById('slideCount');
+      const progress = document.getElementById('progressBar');
+      const prev = document.getElementById('prevBtn');
+      const next = document.getElementById('nextBtn');
+      const pointerDot = document.getElementById('pointerDot');
+      const STORAGE_KEY = 'ksc-account-signup-intro-slide';
+      let isPrinting = false;
+      let current = Number(localStorage.getItem(STORAGE_KEY) || 0);
+      if (!Number.isFinite(current) || current < 0 || current >= slides.length) current = 0;
+      function scaleDeck() {
+        if (isPrinting) return;
+        const margin = 40;
+        const scale = Math.min((window.innerWidth - margin) / 1920, (window.innerHeight - margin) / 1080);
+        deck.style.transform = `translate(-50%, -50%) scale(${Math.max(0.1, scale)})`;
+      }
+      function preparePrint() {
+        isPrinting = true;
+        deck.style.transform = 'none';
+      }
+      function restoreScreen() {
+        isPrinting = false;
+        scaleDeck();
+      }
+      function show(index) {
+        current = Math.max(0, Math.min(slides.length - 1, index));
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === current);
+        });
+        title.textContent = slides[current].dataset.title || `Slide ${current + 1}`;
+        count.textContent = `${current + 1} / ${slides.length}`;
+        progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+        localStorage.setItem(STORAGE_KEY, String(current));
+      }
+      function showPointerDot(event) {
+        if (!window.matchMedia('(pointer: fine)').matches) return;
+        deck.classList.add('pointer-dot-active');
+        pointerDot.hidden = false;
+        movePointerDot(event);
+        pointerDot.classList.add('visible');
+      }
+      function hidePointerDot() {
+        deck.classList.remove('pointer-dot-active');
+        pointerDot.classList.remove('visible');
+        pointerDot.hidden = true;
+      }
+      function movePointerDot(event) {
+        pointerDot.style.left = `${event.clientX}px`;
+        pointerDot.style.top = `${event.clientY}px`;
+      }
+      function go(delta) { show(current + delta); }
+      document.addEventListener('keydown', (event) => {
+        const key = event.key;
+        if (['ArrowRight', 'PageDown', ' '].includes(key)) { event.preventDefault(); go(1); }
+        if (['ArrowLeft', 'PageUp'].includes(key)) { event.preventDefault(); go(-1); }
+        if (key === 'Home') { event.preventDefault(); show(0); }
+        if (key === 'End') { event.preventDefault(); show(slides.length - 1); }
+        if (key.toLowerCase() === 'f') {
+          event.preventDefault();
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+          else document.exitFullscreen?.();
+        }
+      });
+      prev.addEventListener('click', () => go(-1));
+      next.addEventListener('click', () => go(1));
+      deck.addEventListener('pointerenter', showPointerDot);
+      deck.addEventListener('pointermove', movePointerDot);
+      deck.addEventListener('pointerleave', hidePointerDot);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) hidePointerDot();
+      });
+      window.addEventListener('blur', hidePointerDot);
+      window.addEventListener('resize', scaleDeck);
+      window.addEventListener('beforeprint', preparePrint);
+      window.addEventListener('afterprint', restoreScreen);
+      scaleDeck();
+      show(current);
+    })();
+  </script>
+</body>
+</html>
