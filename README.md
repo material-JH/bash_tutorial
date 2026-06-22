@@ -4,6 +4,12 @@ Windows/macOS 사용자와 리눅스 터미널 초보자를 위한 한국어 튜
 워크숍에서는 먼저 Termius로 KISTI 슈퍼컴퓨터 5호기 누리온(NURION)에 로그인하고, 그 서버 안에서 리눅스 터미널을 실습합니다.
 누리온 로그인용 HTML 자료와 리눅스 명령어 본 수업 HTML 자료를 따로 제공합니다.
 
+## 저장소 QR 코드
+
+[https://github.com/material-JH/bash_tutorial](https://github.com/material-JH/bash_tutorial)
+
+![bash tutorial GitHub QR code](docs/bash-tutorial-github-qr.png)
+
 ## 목차
 
 ### 본편
