@@ -383,6 +383,25 @@
     .controls { position: fixed; right: 18px; bottom: 16px; display: flex; gap: 10px; z-index: 60; }
     .controls button { width: 46px; height: 46px; border-radius: 50%; border: 0; color: #ffffff; background: #202832; cursor: pointer; font-size: 22px; box-shadow: 0 12px 28px rgba(16,25,35,.24); }
     .controls button:hover, .controls button:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; }
+    .deck.pointer-dot-active,
+    .deck.pointer-dot-active * { cursor: none; }
+    .pointer-dot {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #ff2b2b;
+      box-shadow: 0 0 0 4px rgba(255,43,43,.18), 0 0 18px rgba(255,43,43,.78);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity .08s ease;
+    }
+    .pointer-dot.visible { opacity: 1; }
+    .pointer-dot[hidden] { display: none; }
 
     @media print {
       @page { size: 16in 9in; margin: 0; }
@@ -444,7 +463,8 @@
 
       body .footer,
       body .controls,
-      body .nav-help {
+      body .nav-help,
+      body .pointer-dot {
         display: none;
       }
     }
@@ -827,6 +847,7 @@
     <button id="prevBtn" type="button" title="Previous slide" aria-label="Previous slide">‹</button>
     <button id="nextBtn" type="button" title="Next slide" aria-label="Next slide">›</button>
   </div>
+  <div class="pointer-dot" id="pointerDot" aria-hidden="true" hidden></div>
 
   <script>
     (() => {
@@ -836,6 +857,7 @@
       const progress = document.getElementById('progressBar');
       const prev = document.getElementById('prevBtn');
       const next = document.getElementById('nextBtn');
+      const pointerDot = document.getElementById('pointerDot');
       const STORAGE_KEY = 'linux-command-tutorial-presentation-slide';
       let isPrinting = false;
       let current = Number(localStorage.getItem(STORAGE_KEY) || 0);
@@ -867,6 +889,25 @@
         progress.style.width = `${((current + 1) / slides.length) * 100}%`;
         localStorage.setItem(STORAGE_KEY, String(current));
       }
+      function showPointerDot(event) {
+        if (!window.matchMedia('(pointer: fine)').matches) return;
+        deck.classList.add('pointer-dot-active');
+        pointerDot.hidden = false;
+        movePointerDot(event);
+        pointerDot.classList.add('visible');
+      }
+
+      function hidePointerDot() {
+        deck.classList.remove('pointer-dot-active');
+        pointerDot.classList.remove('visible');
+        pointerDot.hidden = true;
+      }
+
+      function movePointerDot(event) {
+        pointerDot.style.left = `${event.clientX}px`;
+        pointerDot.style.top = `${event.clientY}px`;
+      }
+
 
       function go(delta) { show(current + delta); }
 
@@ -885,6 +926,13 @@
 
       prev.addEventListener('click', () => go(-1));
       next.addEventListener('click', () => go(1));
+      deck.addEventListener('pointerenter', showPointerDot);
+      deck.addEventListener('pointermove', movePointerDot);
+      deck.addEventListener('pointerleave', hidePointerDot);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) hidePointerDot();
+      });
+      window.addEventListener('blur', hidePointerDot);
       window.addEventListener('resize', scaleDeck);
       window.addEventListener('beforeprint', preparePrint);
       window.addEventListener('afterprint', restoreScreen);
