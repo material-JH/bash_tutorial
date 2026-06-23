@@ -27,6 +27,17 @@
       --sans: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     * { box-sizing: border-box; }
+    body,
+    .deck,
+    .slide {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    img,
+    a {
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
     html, body { height: 100%; }
     body {
       margin: 0;
@@ -685,6 +696,9 @@ mpirun -np "$NP" xspectra.x -in xspectra_dummy.in &gt; xspectra_dummy.out 2&gt;&
       const STORAGE_KEY = 'this-cluster-qe-pbs-slide';
       let current = Number(localStorage.getItem(STORAGE_KEY) || 0);
       if (!Number.isFinite(current) || current < 0 || current >= slides.length) current = 0;
+      document.addEventListener('dragstart', (event) => {
+        event.preventDefault();
+      });
       function scaleDeck() {
         const margin = 40;
         const scale = Math.min((window.innerWidth - margin) / 1920, (window.innerHeight - margin) / 1080);
