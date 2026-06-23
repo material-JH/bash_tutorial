@@ -842,7 +842,7 @@
     </main>
   </div>
 
-  <div class="nav-help">←/→ or Space · F fullscreen · Home/End · Print to PDF supported</div>
+  <div class="nav-help">Presenter keys: →/↓/PageDown/Enter/Space/N · ←/↑/PageUp/Backspace/P · F fullscreen · Home/End</div>
   <div class="controls" aria-label="Slide controls">
     <button id="prevBtn" type="button" title="Previous slide" aria-label="Previous slide">‹</button>
     <button id="nextBtn" type="button" title="Next slide" aria-label="Next slide">›</button>
@@ -913,11 +913,20 @@
 
       document.addEventListener('keydown', (event) => {
         const key = event.key;
-        if (['ArrowRight', 'PageDown', ' '].includes(key)) { event.preventDefault(); go(1); }
-        if (['ArrowLeft', 'PageUp'].includes(key)) { event.preventDefault(); go(-1); }
-        if (key === 'Home') { event.preventDefault(); show(0); }
-        if (key === 'End') { event.preventDefault(); show(slides.length - 1); }
-        if (key.toLowerCase() === 'f') {
+        const code = event.code;
+        const keyCode = event.keyCode || event.which;
+        const lowerKey = key.toLowerCase();
+        const target = event.target;
+        if (target?.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName)) return;
+        const nextKeys = new Set(['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Spacebar', 'Enter', 'N', 'n', 'MediaTrackNext']);
+        const previousKeys = new Set(['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace', 'P', 'p', 'MediaTrackPrevious']);
+        const nextCodes = new Set(['ArrowRight', 'ArrowDown', 'PageDown', 'Space', 'Enter', 'NumpadEnter', 'KeyN', 'MediaTrackNext']);
+        const previousCodes = new Set(['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace', 'KeyP', 'MediaTrackPrevious']);
+        if (nextKeys.has(key) || nextCodes.has(code) || [13, 32, 34, 39, 40, 78].includes(keyCode)) { event.preventDefault(); go(1); return; }
+        if (previousKeys.has(key) || previousCodes.has(code) || [8, 33, 37, 38, 80].includes(keyCode)) { event.preventDefault(); go(-1); return; }
+        if (key === 'Home') { event.preventDefault(); show(0); return; }
+        if (key === 'End') { event.preventDefault(); show(slides.length - 1); return; }
+        if (lowerKey === 'f') {
           event.preventDefault();
           if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
           else document.exitFullscreen?.();
