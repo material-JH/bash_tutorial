@@ -23,17 +23,6 @@
       --sans: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Noto Sans KR", NanumSquare, Arial, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     * { box-sizing: border-box; }
-    body,
-    .deck,
-    .slide {
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    img,
-    a {
-      -webkit-user-drag: none;
-      user-drag: none;
-    }
     html, body { height: 100%; }
     body {
       margin: 0;
@@ -241,9 +230,6 @@
       let isPrinting = false;
       let current = Number(localStorage.getItem(STORAGE_KEY) || 0);
       if (!Number.isFinite(current) || current < 0 || current >= slides.length) current = 0;
-      document.addEventListener('dragstart', (event) => {
-        event.preventDefault();
-      });
       function scaleDeck() {
         if (isPrinting) return;
         const margin = 40;
